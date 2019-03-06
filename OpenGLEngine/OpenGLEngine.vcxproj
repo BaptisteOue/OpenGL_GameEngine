@@ -19,18 +19,32 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\coreEngine\Camera.cpp" />
     <ClCompile Include="src\App.cpp" />
     <ClCompile Include="src\coreEngine\GameEngine.cpp" />
     <ClCompile Include="src\coreEngine\Timer.cpp" />
     <ClCompile Include="src\coreEngine\Window.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\maths\Transformations.cpp" />
+    <ClCompile Include="src\models\Mesh.cpp" />
+    <ClCompile Include="src\shaders\ShaderProgram.cpp" />
+    <ClCompile Include="src\utils\FileUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\coreEngine\Camera.h" />
     <ClInclude Include="src\App.h" />
     <ClInclude Include="src\coreEngine\GameEngine.h" />
     <ClInclude Include="src\coreEngine\IGameLogic.h" />
     <ClInclude Include="src\coreEngine\Timer.h" />
     <ClInclude Include="src\coreEngine\Window.h" />
+    <ClInclude Include="src\maths\Transformations.h" />
+    <ClInclude Include="src\models\Mesh.h" />
+    <ClInclude Include="src\shaders\ShaderProgram.h" />
+    <ClInclude Include="src\utils\FileUtils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\fragmentShader.glsl" />
+    <None Include="src\shaders\vertexShader.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

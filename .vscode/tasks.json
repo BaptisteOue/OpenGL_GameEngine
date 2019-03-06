@@ -7,6 +7,9 @@
             "label": "Build",
             "type": "shell",
             "command": "msbuild.exe",
+            "args": [
+                "OpenGLEngine.sln"
+            ],
             "group": "build",
             "presentation": {
                 // Reveal the output only if unrecognized errors occur.

@@ -30,8 +30,7 @@ void GameEngine::Init()
 
 void GameEngine::GameLoop()
 {
-
-    float elapsedTime = 0;
+	float elapsedTime = 0;
     float lag = 0;
 
     float msPerUpdate = GameEngine::UPS / 1000.0f;
@@ -67,11 +66,13 @@ void GameEngine::Input()
 {
     if(m_Window.IsKeyPressed(GLFW_KEY_ESCAPE))
         Window::s_ShouldClose = true;
+
+	m_GameLogic.Input(m_Window);
 }
 
-void GameEngine::Update(float Interval)
+void GameEngine::Update(float interval)
 {
-    m_GameLogic.Update(Interval);
+    m_GameLogic.Update(interval);
 }
 
 void GameEngine::Render()

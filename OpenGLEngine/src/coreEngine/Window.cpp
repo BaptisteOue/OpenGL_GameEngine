@@ -3,12 +3,16 @@
 #include <iostream>
 #include <string>
 #include "Window.h"
+#include <glm/glm.hpp>
 
 int Window::s_Width = 0;
 int Window::s_Height = 0;
 std::string Window::s_Title = "";
 bool Window::s_Resized = false;
 bool Window::s_ShouldClose = false;
+bool Window::s_MouseMooved = false;
+float Window::s_CurrentX = 0;
+float Window::s_CurrentY = 0;
 
 Window::Window(int width, int height, const char* title)
 {
@@ -16,7 +20,10 @@ Window::Window(int width, int height, const char* title)
     Window::s_Height = height;
     Window::s_Title = title;
 	Window::s_Resized = false;
-    Window::s_ShouldClose = false;
+	Window::s_ShouldClose = false;
+	Window::s_MouseMooved = false;
+	Window::s_CurrentX = ((float)width) / 2;
+	Window::s_CurrentY = ((float)height) / 2;
 }
 
 Window::~Window()
@@ -28,32 +35,41 @@ void Window::Init()
     if(glfwInit() == GLFW_FALSE)
     {
         std::cout << "Couldn't init GLFW." << std::endl;
+		std::cin.get();
         exit(-1);
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
     m_Window = glfwCreateWindow(Window::s_Width, Window::s_Height, Window::s_Title.c_str(), NULL, NULL);
     if(m_Window == NULL)
     {
         std::cout << "Couldn't create the window." << std::endl;
         glfwTerminate();
+		std::cin.get();
         exit(-1);
     }
 
-    glfwSetKeyCallback(m_Window, [](GLFWwindow* Window, int Key, int Scancode, int Action, int Mods)
+    glfwSetKeyCallback(m_Window, [](GLFWwindow* Window, int key, int scancode, int action, int mods)
     {
-        if(Key == GLFW_KEY_ESCAPE && Action == GLFW_RELEASE)
+        if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
             glfwSetWindowShouldClose(Window, true);
     });
 
-    glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* Window, int Width, int Height)
+	glfwSetCursorPosCallback(m_Window, [](GLFWwindow* Window, double xpos = 0, double ypos = 0)
+	{
+		Window::s_MouseMooved = true;
+		std::cout << "New cursor pos : " << xpos << ";" << ypos << std::endl;
+		Window::s_CurrentX = (float)xpos;
+		Window::s_CurrentY = (float)ypos;
+	});
+
+    glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* Window, int width, int height)
     {
-        Window::s_Width = Width;
-        Window::s_Height = Height;
+        Window::s_Width = width;
+        Window::s_Height = height;
         Window::s_Resized = true;
     });
 
@@ -64,17 +80,24 @@ void Window::Init()
         (vidmode->height - Window::s_Height)/2
     );
 
+	glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPos(m_Window, Window::s_CurrentX, Window::s_CurrentY);
+
     glfwMakeContextCurrent(m_Window);
 
 	if (glewInit() != GLEW_OK)
 	{
 		std::cout << "Couldn't init OpenGL." << std::endl;
 		glfwTerminate();
+		std::cin.get();
 		exit(-1);
 	}
 
+	std::cout << glGetString(GL_VENDOR) << std::endl;
+    std::cout << glGetString(GL_RENDERER) << std::endl;
+	std::cout << glGetString(GL_VERSION) << std::endl;
+
     glfwSwapInterval(1);
-    glfwShowWindow(m_Window);
 }
 
 void Window::Update()
