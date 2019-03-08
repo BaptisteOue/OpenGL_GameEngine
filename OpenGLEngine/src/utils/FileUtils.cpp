@@ -3,6 +3,8 @@
 #include <iostream>
 #include "FileUtils.h"
 
+#pragma region Public API
+
 std::string FileUtils::LoadFile(std::string filePath)
 {
 	std::ifstream file;
@@ -19,3 +21,5 @@ std::string FileUtils::LoadFile(std::string filePath)
 
 	return fileContent.str();
 }
+
+#pragma endregion

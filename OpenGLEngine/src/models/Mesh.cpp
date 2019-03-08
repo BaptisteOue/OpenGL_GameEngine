@@ -2,6 +2,8 @@
 #include "Mesh.h"
 #include <vector>
 
+#pragma region Public API
+
 Mesh::Mesh()
 {
 }
@@ -10,18 +12,7 @@ Mesh::~Mesh()
 {
 }
 
-
-
-#pragma region Public API
-void Mesh::Draw()
-{
-    glBindVertexArray(m_VaoID);
-    glDrawElements(GL_TRIANGLES, m_VertexCount, GL_UNSIGNED_BYTE, 0);
-    glBindVertexArray(0);
-}
-
-
-void Mesh::LoadMesh(std::vector<GLfloat>& positions, std::vector<GLfloat>& colors, std::vector<GLubyte>& indices)
+void Mesh::LoadMesh(std::vector<GLfloat>& positions, std::vector<GLuint>& indices)
 {
 	m_VertexCount = indices.size();
 
@@ -32,12 +23,18 @@ void Mesh::LoadMesh(std::vector<GLfloat>& positions, std::vector<GLfloat>& color
 	glBindVertexArray(m_VaoID);
 
 	AddData(0, 3, positions);
-	AddData(1, 3, colors);
 
 	AddIndices(indices);
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+void Mesh::Draw()
+{
+    glBindVertexArray(m_VaoID);
+    glDrawElements(GL_TRIANGLES, m_VertexCount, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
 }
 
 
@@ -69,14 +66,14 @@ void Mesh::AddData(int attribIndex, int count, std::vector<GLfloat>data)
 	m_Vbos.emplace_back(vboID);
 }
 
-void Mesh::AddIndices(std::vector<GLubyte>indices)
+void Mesh::AddIndices(std::vector<GLuint>indices)
 {
 	GLuint eboId = 0;
 	glGenBuffers(1, &eboId);
 
 	/* Fill ebo */
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLubyte), indices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
 }
 
 #pragma endregion

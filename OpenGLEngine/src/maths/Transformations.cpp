@@ -4,6 +4,7 @@
 #include "../coreEngine/Window.h"
 #include "../coreEngine/Camera.h"
 
+#pragma region Public API
 
 glm::mat4 Transformations::GetProjectionMatrix(float fov, float nearPlane, float farPlane)
 {
@@ -29,3 +30,5 @@ glm::mat4 Transformations::GetViewMatrix(Camera& camera)
 	glm::mat4 viewMatrix = glm::lookAt(camera.GetPos(), target, camera.GetUp());
 	return viewMatrix;
 }
+
+#pragma endregion

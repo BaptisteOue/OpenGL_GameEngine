@@ -29,6 +29,7 @@
     <ClCompile Include="src\models\Mesh.cpp" />
     <ClCompile Include="src\shaders\ShaderProgram.cpp" />
     <ClCompile Include="src\utils\FileUtils.cpp" />
+    <ClCompile Include="src\utils\OBJLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\coreEngine\Camera.h" />
@@ -41,6 +42,7 @@
     <ClInclude Include="src\models\Mesh.h" />
     <ClInclude Include="src\shaders\ShaderProgram.h" />
     <ClInclude Include="src\utils\FileUtils.h" />
+    <ClInclude Include="src\utils\OBJLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\fragmentShader.glsl" />

@@ -14,12 +14,12 @@ private:
 
 private:
     void AddData(int attribIndex, int count, std::vector<GLfloat>data);
-    void AddIndices(std::vector<GLubyte>indices);
+    void AddIndices(std::vector<GLuint>indices);
 public:
     Mesh();
     ~Mesh();
 
-    void LoadMesh(std::vector<GLfloat>& positions, std::vector<GLfloat>& colors, std::vector<GLubyte>& indices);
+    void LoadMesh(std::vector<GLfloat>& positions, std::vector<GLuint>& indices);
     void Draw();
     void CleanUp();
 };

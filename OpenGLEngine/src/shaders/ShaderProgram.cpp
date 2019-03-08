@@ -8,6 +8,7 @@
 
 
 #pragma region Public API
+
 ShaderProgram::ShaderProgram(const char* vertexShaderPath, const char* fragmentShaderPath)
     : m_VertexShaderPath(vertexShaderPath), m_FragmentShaderPath(fragmentShaderPath)
 {

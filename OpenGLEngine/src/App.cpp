@@ -5,12 +5,13 @@
 #include "App.h"
 #include "models/Mesh.h"
 #include "maths/Transformations.h"
+#include "utils/OBJLoader.h"
 
 App::App()
     : dCamera(0, 0, 0), 
 	m_Camera(), 
 	m_Mesh(), 
-	m_ShaderProgram("OpenGLEngine/src/shaders/vertexShader.glsl", "OpenGLEngine/src/shaders/fragmentShader.glsl")
+	m_ShaderProgram("./src/shaders/vertexShader.glsl", "./src/shaders/fragmentShader.glsl")
 {
 
 }
@@ -42,8 +43,11 @@ void App::Init()
 
 	m_Camera.Init();
 
-    m_Mesh.LoadMesh(positions, colors, indices);
+	m_Mesh = OBJLoader::LoadOBJ("./res/monkey.obj");
+
     m_ShaderProgram.CreateShaderProgram();
+
+	
 }
 
 void App::Input(Window& window)
@@ -77,9 +81,17 @@ void App::Input(Window& window)
 		dCamera.y -= 1;
 	}
 
+	if (window.IsKeyPressed(GLFW_KEY_L))
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	else if (window.IsKeyPressed(GLFW_KEY_F))
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+
 	if (Window::s_MouseMooved)
 	{
-		std::cout << "MOUSE MOOVED ! " << std::endl;
 		m_Camera.SetCurrentMouseX(Window::s_CurrentX);
 		m_Camera.SetCurrentMouseY(Window::s_CurrentY);
 		Window::s_MouseMooved = false;
@@ -93,7 +105,7 @@ void App::Update(float interval)
 
 void App::Render()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     m_ShaderProgram.Use(true);
 	
 	glm::vec3 pos(0, 0, -2);

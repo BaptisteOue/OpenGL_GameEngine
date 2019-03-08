@@ -4,6 +4,9 @@
 
 float GameEngine::UPS = 60;
 
+
+#pragma region Public API
+
 GameEngine::GameEngine(const char* Title, int Width, int Height, IGameLogic& GameLogic)
     : m_Window(Width, Height, Title), m_GameLogic(GameLogic), m_Timer(), m_Thread()
 {
@@ -56,6 +59,9 @@ void GameEngine::GameLoop()
     CleanUp();
 }
 
+#pragma endregion
+
+#pragma region Private API
 void GameEngine::CleanUp()
 {
     m_GameLogic.CleanUp();
@@ -80,3 +86,5 @@ void GameEngine::Render()
     m_GameLogic.Render();
     m_Window.Update();
 }
+
+#pragma endregion

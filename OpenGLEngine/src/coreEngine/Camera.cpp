@@ -5,6 +5,8 @@
 #include <iostream>
 
 
+#pragma region Public API
+
 float Camera::s_Sensitivity = 0.3f;
 float Camera::s_Speed = 0.5f;
 
@@ -70,6 +72,11 @@ void Camera::SetCurrentMouseY(float currentY)
 	m_CurrentY = currentY;
 }
 
+#pragma endregion
+
+
+#pragma region Private API
+
 void Camera::Move(glm::uvec3 dCamera)
 {
 	glm::vec3 moveZ(0, 0, 0);
@@ -123,3 +130,5 @@ glm::vec3 Camera::GetUp() const
 {
 	return m_Up;
 }
+
+#pragma endregion

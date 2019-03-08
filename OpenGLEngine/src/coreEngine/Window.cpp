@@ -14,6 +14,8 @@ bool Window::s_MouseMooved = false;
 float Window::s_CurrentX = 0;
 float Window::s_CurrentY = 0;
 
+#pragma region Public API
+
 Window::Window(int width, int height, const char* title)
 {
     Window::s_Width = width;
@@ -61,7 +63,6 @@ void Window::Init()
 	glfwSetCursorPosCallback(m_Window, [](GLFWwindow* Window, double xpos = 0, double ypos = 0)
 	{
 		Window::s_MouseMooved = true;
-		std::cout << "New cursor pos : " << xpos << ";" << ypos << std::endl;
 		Window::s_CurrentX = (float)xpos;
 		Window::s_CurrentY = (float)ypos;
 	});
@@ -98,6 +99,9 @@ void Window::Init()
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
     glfwSwapInterval(1);
+
+	glEnable(GL_DEPTH_TEST);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 void Window::Update()
@@ -128,3 +132,5 @@ bool Window::ShouldClose()
 {
     return s_ShouldClose || glfwWindowShouldClose(m_Window);
 }
+
+#pragma endregion
