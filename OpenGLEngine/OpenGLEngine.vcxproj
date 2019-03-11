@@ -19,19 +19,27 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\lights\BasicLight.cpp" />
     <ClCompile Include="src\coreEngine\Camera.cpp" />
     <ClCompile Include="src\App.cpp" />
     <ClCompile Include="src\coreEngine\GameEngine.cpp" />
     <ClCompile Include="src\coreEngine\Timer.cpp" />
     <ClCompile Include="src\coreEngine\Window.cpp" />
+    <ClCompile Include="src\lights\DirectionalLight.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\materials\Material.cpp" />
     <ClCompile Include="src\maths\Transformations.cpp" />
     <ClCompile Include="src\models\Mesh.cpp" />
-    <ClCompile Include="src\shaders\ShaderProgram.cpp" />
+    <ClCompile Include="src\shaders\BasicShader.cpp" />
+    <ClCompile Include="src\shaders\ShaderBase.cpp" />
     <ClCompile Include="src\utils\FileUtils.cpp" />
     <ClCompile Include="src\utils\OBJLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\lights\BasicLight.h" />
+    <ClInclude Include="src\lights\DirectionalLight.h" />
+    <ClInclude Include="src\materials\Material.h" />
+    <ClInclude Include="src\shaders\BasicShader.h" />
     <ClInclude Include="src\coreEngine\Camera.h" />
     <ClInclude Include="src\App.h" />
     <ClInclude Include="src\coreEngine\GameEngine.h" />
@@ -40,7 +48,7 @@
     <ClInclude Include="src\coreEngine\Window.h" />
     <ClInclude Include="src\maths\Transformations.h" />
     <ClInclude Include="src\models\Mesh.h" />
-    <ClInclude Include="src\shaders\ShaderProgram.h" />
+    <ClInclude Include="src\shaders\ShaderBase.h" />
     <ClInclude Include="src\utils\FileUtils.h" />
     <ClInclude Include="src\utils\OBJLoader.h" />
   </ItemGroup>
@@ -123,6 +131,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/O2 /Oy %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -137,6 +146,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/O2 /Oy %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -153,6 +163,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/O2 /Oy %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -171,6 +182,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/O2 /Oy %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

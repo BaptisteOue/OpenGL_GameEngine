@@ -19,7 +19,7 @@ public:
     Mesh();
     ~Mesh();
 
-    void LoadMesh(std::vector<GLfloat>& positions, std::vector<GLuint>& indices);
+    void LoadMesh(std::vector<GLfloat>& positions, std::vector<GLfloat>& normals, std::vector<GLuint>& indices);
     void Draw();
     void CleanUp();
 };

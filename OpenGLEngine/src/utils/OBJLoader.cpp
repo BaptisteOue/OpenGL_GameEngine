@@ -4,8 +4,6 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include <array>
-#include <memory>
 #include "glm/glm.hpp"
 
 
@@ -13,6 +11,18 @@
 
 Mesh& OBJLoader::LoadOBJ(const char* objFile)
 {
+	std::vector<int> vertexIndices, uvIndices, normalIndices;
+	std::vector<glm::vec3> temp_positions;
+	std::vector<glm::vec3> temp_normals;
+	std::vector<glm::vec2> temp_uvs;
+
+	std::string line;
+	
+	glm::vec3 position;
+	glm::vec3 uvs;
+	glm::vec3 normal;
+	std::string vertices[3];
+
 	std::ifstream file(objFile);
 
 	if (!file.is_open())
@@ -20,45 +30,61 @@ Mesh& OBJLoader::LoadOBJ(const char* objFile)
 		std::cout << "Can't open " << objFile << std::endl;
 	}
 
-	std::string line;
-	std::vector<glm::vec3> positions;
-	std::vector<glm::vec3> normals;
-	std::vector<glm::vec2> texCoords;
-	std::vector<Face> faces;
-
-	// For each line
-	while (std::getline(file, line))
+	while (file >> line)
 	{
-		std::stringstream ss(line);
-
-		//Check line begining
-		if (line.rfind("v ", 0) == 0)
+		if (line.compare("v") == 0)
 		{
-			// Get each component of the line
-			FillBuffer<glm::vec3>(ss, positions);
+			file >> position.x >> position.y >> position.z;
+			temp_positions.push_back(position);
 		}
-		else if (line.rfind("vn ", 0) == 0)
+		else if (line.compare("vn") == 0)
 		{
-			// Get each component of the line
-			FillBuffer<glm::vec3>(ss, normals);
+			file >> normal.x >> normal.y >> normal.z;
+			temp_normals.push_back(normal);
 		}
-		else if (line.rfind("vt ", 0) == 0)
+		else if (line.compare("vt") == 0)
 		{
-			// Get each component of the line
-			FillBuffer<glm::vec2>(ss, texCoords);
+			file >> uvs.x >> uvs.y >> uvs.z;
+			temp_uvs.push_back(uvs);
 		}
-
-		// Break loop to process faces
-		else if (line.rfind("f ", 0) == 0)
+		else if (line.compare("f") == 0)
 		{
-			if (line.rfind("f ", 0) == 0)
-			{
-				faces.emplace_back(ss);
-			}
+			file >> vertices[0] >> vertices[1] >> vertices[2];
+			ParseFace(vertices, vertexIndices, uvIndices, normalIndices);
 		}
 	}
+	
+	std::vector<GLfloat> ordered_positions;
+	ordered_positions.reserve(temp_positions.size() * 3);
+	std::vector<GLfloat> ordered_normals;
+	ordered_normals.reserve(temp_normals.size() * 3);
+	std::vector<GLfloat> ordered_uvs;
+	ordered_uvs.reserve(temp_uvs.size() * 2);
+	std::vector<GLuint> indices;
+	indices.reserve(vertexIndices.size());
 
-	return ProcessFaces(faces, positions, texCoords, normals);
+	for (int i = 0; i < vertexIndices.size(); i++)
+	{
+		indices.push_back(i);
+
+		int indexPos = vertexIndices[i];
+		ordered_positions.push_back(-temp_positions[indexPos].x);
+		ordered_positions.push_back(-temp_positions[indexPos].y);
+		ordered_positions.push_back(temp_positions[indexPos].z);
+
+		int normIndex = normalIndices[i];
+		ordered_normals.push_back(-temp_normals[normIndex].x);
+		ordered_normals.push_back(-temp_normals[normIndex].y);
+		ordered_normals.push_back(temp_normals[normIndex].z);
+
+		/*int texIndex = uvIndices[i];
+		ordered_uvs.push_back(temp_uvs[texIndex].x);
+		ordered_uvs.push_back(temp_uvs[texIndex].y);*/
+	}
+
+	Mesh* m = new Mesh();
+	m->LoadMesh(ordered_positions, ordered_normals, indices);
+	return *m;
 }
 
 #pragma endregion
@@ -67,98 +93,28 @@ Mesh& OBJLoader::LoadOBJ(const char* objFile)
 
 #pragma region Private API
 
-
-Mesh& OBJLoader::ProcessFaces(
-	std::vector<Face>faces,
-	std::vector<glm::vec3>positions,
-	std::vector<glm::vec2>texCoords,
-	std::vector<glm::vec3>normals)
+void OBJLoader::ParseFace(
+	std::string vertices[3],
+	std::vector<int>& vertexIndices,
+	std::vector<int>& uvIndices,
+	std::vector<int>& normalIndices)
 {
-	Mesh* mesh = new Mesh();
 
-	std::vector<float> orderedPositions(positions.size() * 3);
-	std::vector<float> orderedTexCoords(texCoords.size() * 2);
-	std::vector<float> orderedNormals(normals.size() * 3);
-	std::vector<GLuint> indices(faces.size() * 3);
-
-	
-	// Copy "as is" positions
-	int i = 0;
-	for (glm::vec3 pos : positions)
+	for (int i = 0; i < 3; i++)
 	{
-		orderedPositions[i * 3] = pos.x;
-		orderedPositions[i * 3 + 1] = -pos.y;
-		orderedPositions[i * 3 + 2] = pos.z;
-		i++;
+		std::stringstream ss(vertices[i]);
+		std::string item[3];
+
+		for (int j = 0; std::getline(ss, item[j], '/'); j++);
+
+		vertexIndices.push_back(std::stoi(item[0]) - 1);
+		if (!item[1].empty())
+			uvIndices.push_back(std::stoi(item[1]) - 1);
+		else
+			uvIndices.push_back(-1);
+
+		normalIndices.push_back(std::stoi(item[2]) - 1);
 	}
-
-	i = 0;
-	for (Face f : faces) 
-	{
-		for (auto v : f.m_Vertices) 
-		{
-			int posIndex = v->m_PosIndex;
-			indices[i++] = posIndex;
-
-			if (v->m_TexIndex != v->UNDEFINED)
-			{
-				orderedTexCoords[posIndex * 2] = texCoords[v->m_TexIndex].x;
-				orderedTexCoords[posIndex * 2 + 1] = texCoords[v->m_TexIndex].y;
-			}
-
-			if (v->m_NormIndex != v->UNDEFINED)
-			{
-				orderedNormals[posIndex * 3] = normals[v->m_NormIndex].x;
-				orderedNormals[posIndex * 3 + 1] = normals[v->m_NormIndex].y;
-				orderedNormals[posIndex * 3 + 2] = normals[v->m_NormIndex].z;
-			}
-		}
-	}
-
-	mesh->LoadMesh(orderedPositions, indices);
-
-	return *mesh;
-}
-
-OBJLoader::Face::Face(std::stringstream& ss)
-{
-	std::string item;
-	std::vector<std::string> splitedLine;
-
-	// Get each vertex
-	for (int i = 0; std::getline(ss, item, ' '); i++)
-	{
-		if (i != 0)
-		{
-			m_Vertices[i - 1] = std::make_shared<Vertex>(item);
-		}
-	}
-}
-
-OBJLoader::Face::~Face()
-{
-}
-
-OBJLoader::Vertex::Vertex(std::string & item)
-	: m_PosIndex(UNDEFINED), m_NormIndex(UNDEFINED), m_TexIndex(UNDEFINED)
-{
-	std::stringstream ss(item);
-	for (int i = 0; std::getline(ss, item, '/'); i++)
-	{
-		if (!item.empty())
-		{
-			if (i == 0)
-				m_PosIndex = std::stoi(item) - 1;
-			else if(i == 1)
-				m_TexIndex = std::stoi(item) - 1;
-			else if (i == 2)
-				m_NormIndex = std::stoi(item) - 1;
-		}
-	}
-}
-
-OBJLoader::Vertex::~Vertex()
-{
 }
 
 #pragma endregion

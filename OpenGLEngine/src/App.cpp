@@ -8,23 +8,18 @@
 #include "utils/OBJLoader.h"
 
 App::App()
-    : dCamera(0, 0, 0), 
-	m_Camera(), 
-	m_Mesh(), 
-	m_ShaderProgram("./src/shaders/vertexShader.glsl", "./src/shaders/fragmentShader.glsl")
+    : dCamera(0, 0, 0), m_Camera(), m_Mesh(), m_BasicShader()
 {
 
 }
 
 App::~App()
 {
-
+		
 }
 
 void App::Init()
 {
-    glClearColor(0.f, 0.0f, 0.0f, 1.0f);
-
     std::vector<GLfloat> positions = {
         0.0f, 0.5f, 0.0f,
         -0.5f, -0.5f, 0.0f,
@@ -43,11 +38,12 @@ void App::Init()
 
 	m_Camera.Init();
 
-	m_Mesh = OBJLoader::LoadOBJ("./res/monkey.obj");
+	m_Material = new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1, 100);
+	m_DirecationalLight = new DirectionalLight(glm::vec3(0.7, 0.6, 0.9), glm::vec3(-1, 0, 0));
 
-    m_ShaderProgram.CreateShaderProgram();
+	m_Mesh = OBJLoader::LoadOBJ("./res/bunny.obj");
 
-	
+    m_BasicShader.CreateShaderProgram();
 }
 
 void App::Input(Window& window)
@@ -106,7 +102,7 @@ void App::Update(float interval)
 void App::Render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    m_ShaderProgram.Use(true);
+    m_BasicShader.Use(true);
 	
 	glm::vec3 pos(0, 0, -2);
 	glm::vec3 rotation(0, 0, 180.0f);
@@ -120,12 +116,17 @@ void App::Render()
 
 	glm::mat4 viewMatrix = Transformations::GetViewMatrix(m_Camera);
 
-	m_ShaderProgram.LoadMatricesUniforms(modelMatrix, viewMatrix, projectionMatrix);
+	m_BasicShader.LoadCameraUniform(m_Camera);
+	m_BasicShader.LoadMatricesUniforms(modelMatrix, viewMatrix, projectionMatrix);
+	m_BasicShader.LoadLightsUniforms(*m_DirecationalLight);
+	m_BasicShader.LoadMaterialUniforms(*m_Material);
     m_Mesh.Draw();
-	m_ShaderProgram.Use(false);
+	m_BasicShader.Use(false);
 }
 
 void App::CleanUp()
 {
 	m_Mesh.CleanUp();
+	delete m_DirecationalLight;
+	delete m_Material;
 }

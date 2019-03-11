@@ -42,7 +42,7 @@ void Window::Init()
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     m_Window = glfwCreateWindow(Window::s_Width, Window::s_Height, Window::s_Title.c_str(), NULL, NULL);
@@ -100,8 +100,9 @@ void Window::Init()
 
     glfwSwapInterval(1);
 
+	glClearColor(0.2f, 0.1f, 0.1f, 0.0f);
+
 	glEnable(GL_DEPTH_TEST);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 void Window::Update()

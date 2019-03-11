@@ -2,14 +2,21 @@
 
 #include "models/Mesh.h"
 #include "coreEngine/IGameLogic.h"
-#include "shaders/ShaderProgram.h"
 #include "coreEngine/Camera.h"
+#include "shaders/BasicShader.h"
+#include "materials/Material.h"
+#include "lights/DirectionalLight.h"
+#include <memory>
 
 class App : public IGameLogic
 {
 private:
-    ShaderProgram m_ShaderProgram;
-    Mesh m_Mesh;
+    BasicShader m_BasicShader;
+    
+	Mesh m_Mesh;
+	Material* m_Material;
+	DirectionalLight* m_DirecationalLight;
+
 	Camera m_Camera;
 	glm::vec3 dCamera;
 

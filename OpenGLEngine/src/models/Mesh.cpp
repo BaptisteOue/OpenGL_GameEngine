@@ -12,7 +12,7 @@ Mesh::~Mesh()
 {
 }
 
-void Mesh::LoadMesh(std::vector<GLfloat>& positions, std::vector<GLuint>& indices)
+void Mesh::LoadMesh(std::vector<GLfloat>& positions, std::vector<GLfloat>& normals, std::vector<GLuint>& indices)
 {
 	m_VertexCount = indices.size();
 
@@ -23,6 +23,7 @@ void Mesh::LoadMesh(std::vector<GLfloat>& positions, std::vector<GLuint>& indice
 	glBindVertexArray(m_VaoID);
 
 	AddData(0, 3, positions);
+	AddData(1, 3, normals);
 
 	AddIndices(indices);
 
