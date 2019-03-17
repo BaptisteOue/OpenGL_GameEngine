@@ -2,6 +2,8 @@
 #include <iostream>
 #include "Timer.h"
 
+#pragma region Public API
+
 Timer::Timer()
 {
 }
@@ -15,6 +17,7 @@ void Timer::Init()
 	m_StartedTime = std::chrono::high_resolution_clock::now();
 	m_ElapsedTime = 0;
 	m_LastFrameTime = 0;
+	m_LogFPS = false;
 }
 
 float Timer::GetElapsedTime()
@@ -23,13 +26,25 @@ float Timer::GetElapsedTime()
 	m_ElapsedTime = currentTime - m_LastFrameTime;
 	m_LastFrameTime = currentTime;
 
-	return m_ElapsedTime;	
+	return m_ElapsedTime;
 }
 
-void Timer::PrintFPS()
+
+void Timer::LogFPS(bool value)
 {
-	std::cout << 1.0f / m_ElapsedTime << " FPS." << std::endl;
+	m_LogFPS = value;
 }
+
+void Timer::Update()
+{
+	if (m_LogFPS)
+		PrintFPS();
+}
+
+#pragma endregion
+
+
+#pragma region Private API
 
 float Timer::GetTime()
 {
@@ -38,3 +53,13 @@ float Timer::GetTime()
 
 	return time.count();
 }
+
+void Timer::PrintFPS()
+{
+	std::cout << 1.0f / m_ElapsedTime << " FPS." << std::endl;
+}
+
+#pragma endregion
+
+
+

@@ -60,6 +60,9 @@
     <ClCompile Include="src\materials\Material.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="src\shaders\TesselatedShader.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\coreEngine\GameEngine.h">
@@ -107,9 +110,15 @@
     <ClInclude Include="src\materials\Material.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="src\shaders\TesselatedShader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\fragmentShader.glsl" />
     <None Include="src\shaders\vertexShader.glsl" />
+    <None Include="src\shaders\tessCtrlShader.glsl" />
+    <None Include="src\shaders\tessEvalShader.glsl" />
+    <None Include="src\shaders\t_FragmentShader.glsl" />
   </ItemGroup>
 </Project>

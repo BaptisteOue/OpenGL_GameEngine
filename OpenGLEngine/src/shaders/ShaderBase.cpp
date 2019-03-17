@@ -9,9 +9,12 @@
 
 #pragma region Public API
 
-ShaderBase::ShaderBase(const char* vertexShaderPath, const char* fragmentShaderPath)
-    : m_VertexShaderPath(vertexShaderPath), m_FragmentShaderPath(fragmentShaderPath)
+
+ShaderBase::ShaderBase(const char* vertexShaderPath, const char* fragmentShaderPath, const char* tessCtrlPath, const char* tessEvalPath)
+	: m_VertexShaderPath(vertexShaderPath), m_FragmentShaderPath(fragmentShaderPath), 
+	  m_TessCtrlShaderPath(tessCtrlPath), m_TessEvalShaderPath(tessEvalPath)
 {
+
 }
 
 ShaderBase::~ShaderBase()
@@ -21,10 +24,7 @@ ShaderBase::~ShaderBase()
 
 void ShaderBase::CreateShaderProgram()
 {
-    m_VertexShader = CreateVertexShader();
-    m_FragmentShader = CreateFragmentShader();
-    m_Program = CreateProgram();
-
+	ConstructShader();
 	CreateUniforms();
 }
 
@@ -101,16 +101,34 @@ GLuint ShaderBase::CreateVertexShader()
     return CreateShader(GL_VERTEX_SHADER, m_VertexShaderPath);
 }
 
+GLuint ShaderBase::CreateTessCtrlShader()
+{
+	return CreateShader(GL_TESS_CONTROL_SHADER, m_TessCtrlShaderPath);
+}
+
+GLuint ShaderBase::CreateTessEvalShader()
+{
+	return CreateShader(GL_TESS_EVALUATION_SHADER, m_TessEvalShaderPath);
+}
+
 GLuint ShaderBase::CreateFragmentShader()
 {
     return CreateShader(GL_FRAGMENT_SHADER, m_FragmentShaderPath);
 }
 
+
 GLuint ShaderBase::CreateProgram()
 {
     GLuint shaderProgram = glCreateProgram();
+
     glAttachShader(shaderProgram, m_VertexShader);
     glAttachShader(shaderProgram, m_FragmentShader);
+
+	if (glIsShader(m_TessCtrlShader))
+		glAttachShader(shaderProgram, m_TessCtrlShader);
+
+	if (glIsShader(m_TessEvalShader))
+		glAttachShader(shaderProgram, m_TessEvalShader);
 
     glLinkProgram(shaderProgram);
 
@@ -127,6 +145,10 @@ GLuint ShaderBase::CreateProgram()
         delete[] error;
 
         glDeleteProgram(shaderProgram);
+		if (glIsShader(m_TessCtrlShader))
+			glDeleteShader(m_TessCtrlShader);
+		if (glIsShader(m_TessEvalShader))
+			glDeleteShader(m_TessEvalShader);
         glDeleteShader(m_VertexShader);
         glDeleteShader(m_FragmentShader);
 

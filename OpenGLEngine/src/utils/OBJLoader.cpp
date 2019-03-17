@@ -19,7 +19,7 @@ Mesh& OBJLoader::LoadOBJ(const char* objFile)
 	std::string line;
 	
 	glm::vec3 position;
-	glm::vec3 uvs;
+	glm::vec2 uvs;
 	glm::vec3 normal;
 	std::string vertices[3];
 
@@ -44,7 +44,7 @@ Mesh& OBJLoader::LoadOBJ(const char* objFile)
 		}
 		else if (line.compare("vt") == 0)
 		{
-			file >> uvs.x >> uvs.y >> uvs.z;
+			file >> uvs.x >> uvs.y;
 			temp_uvs.push_back(uvs);
 		}
 		else if (line.compare("f") == 0)
@@ -53,34 +53,32 @@ Mesh& OBJLoader::LoadOBJ(const char* objFile)
 			ParseFace(vertices, vertexIndices, uvIndices, normalIndices);
 		}
 	}
-	
+
 	std::vector<GLfloat> ordered_positions;
-	ordered_positions.reserve(temp_positions.size() * 3);
 	std::vector<GLfloat> ordered_normals;
-	ordered_normals.reserve(temp_normals.size() * 3);
 	std::vector<GLfloat> ordered_uvs;
-	ordered_uvs.reserve(temp_uvs.size() * 2);
 	std::vector<GLuint> indices;
-	indices.reserve(vertexIndices.size());
 
 	for (int i = 0; i < vertexIndices.size(); i++)
 	{
 		indices.push_back(i);
 
 		int indexPos = vertexIndices[i];
-		ordered_positions.push_back(-temp_positions[indexPos].x);
-		ordered_positions.push_back(-temp_positions[indexPos].y);
+		ordered_positions.push_back(temp_positions[indexPos].x);
+		ordered_positions.push_back(temp_positions[indexPos].y);
 		ordered_positions.push_back(temp_positions[indexPos].z);
 
 		int normIndex = normalIndices[i];
-		ordered_normals.push_back(-temp_normals[normIndex].x);
-		ordered_normals.push_back(-temp_normals[normIndex].y);
+		ordered_normals.push_back(temp_normals[normIndex].x);
+		ordered_normals.push_back(temp_normals[normIndex].y);
 		ordered_normals.push_back(temp_normals[normIndex].z);
 
 		/*int texIndex = uvIndices[i];
 		ordered_uvs.push_back(temp_uvs[texIndex].x);
 		ordered_uvs.push_back(temp_uvs[texIndex].y);*/
 	}
+
+	file.close();
 
 	Mesh* m = new Mesh();
 	m->LoadMesh(ordered_positions, ordered_normals, indices);
@@ -99,11 +97,12 @@ void OBJLoader::ParseFace(
 	std::vector<int>& uvIndices,
 	std::vector<int>& normalIndices)
 {
+	std::string item[3];
+	std::stringstream ss;
 
 	for (int i = 0; i < 3; i++)
 	{
-		std::stringstream ss(vertices[i]);
-		std::string item[3];
+		ss << vertices[i];
 
 		for (int j = 0; std::getline(ss, item[j], '/'); j++);
 
@@ -114,6 +113,8 @@ void OBJLoader::ParseFace(
 			uvIndices.push_back(-1);
 
 		normalIndices.push_back(std::stoi(item[2]) - 1);
+
+		ss.clear();
 	}
 }
 

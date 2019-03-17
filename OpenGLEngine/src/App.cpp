@@ -2,13 +2,14 @@
 #include <glm/glm.hpp>
 #include <iostream>
 #include <vector>
+#include <chrono>
 #include "App.h"
 #include "models/Mesh.h"
 #include "maths/Transformations.h"
 #include "utils/OBJLoader.h"
 
 App::App()
-    : dCamera(0, 0, 0), m_Camera(), m_Mesh(), m_BasicShader()
+    : dCamera(0, 0, 0), m_Camera(), m_Mesh(), m_TessShader()
 {
 
 }
@@ -26,24 +27,23 @@ void App::Init()
         0.5f, -0.5f, 0.0f
     };
 
-    std::vector<GLfloat> colors = {
-        1.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
+    std::vector<GLfloat> normals = {
+		0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
         0.0f, 0.0f, 1.0f
     };
 
-    std::vector<GLubyte> indices = {
+    std::vector<GLuint> indices = {
         0, 1, 2
     };
 
 	m_Camera.Init();
 
 	m_Material = new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1, 100);
-	m_DirecationalLight = new DirectionalLight(glm::vec3(0.7, 0.6, 0.9), glm::vec3(-1, 0, 0));
-
-	m_Mesh = OBJLoader::LoadOBJ("./res/bunny.obj");
-
-    m_BasicShader.CreateShaderProgram();
+	m_DirecationalLight = new DirectionalLight(glm::vec4(0.7, 0.6, 0.9, 1), glm::vec4(-1,-1, -1, 0));
+	m_Mesh = OBJLoader::LoadOBJ("./res/dragon.obj");
+	//m_Mesh.LoadMesh(positions, normals, indices);
+    m_TessShader.CreateShaderProgram();
 }
 
 void App::Input(Window& window)
@@ -86,6 +86,29 @@ void App::Input(Window& window)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
+	// Tesselation levels
+	if (window.IsKeyPressed(GLFW_KEY_T))
+	{
+		float tessLevelOuter = m_Mesh.GetTessLevelOuter();
+		m_Mesh.SetTessLevelOuter(tessLevelOuter + 0.1f);
+
+	}
+	else if (window.IsKeyPressed(GLFW_KEY_G))
+	{
+		float tessLevelOuter = m_Mesh.GetTessLevelOuter();
+		m_Mesh.SetTessLevelOuter(tessLevelOuter - 0.1f);
+	}
+	if (window.IsKeyPressed(GLFW_KEY_Y))
+	{
+		float tessLevelInner = m_Mesh.GetTessLevelInner();
+		m_Mesh.SetTessLevelInner(tessLevelInner + 0.1f);
+	}
+	else if (window.IsKeyPressed(GLFW_KEY_H))
+	{
+		float tessLevelInner = m_Mesh.GetTessLevelInner();
+		m_Mesh.SetTessLevelInner(tessLevelInner - 0.1f);
+	}
+
 	if (Window::s_MouseMooved)
 	{
 		m_Camera.SetCurrentMouseX(Window::s_CurrentX);
@@ -102,10 +125,10 @@ void App::Update(float interval)
 void App::Render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    m_BasicShader.Use(true);
-	
+    m_TessShader.Use(true);
+
 	glm::vec3 pos(0, 0, -2);
-	glm::vec3 rotation(0, 0, 180.0f);
+	glm::vec3 rotation(0, 0, 0);
 	float scale = 1;
 	glm::mat4 modelMatrix = Transformations::GetModelMatrix(pos, rotation, scale);
 
@@ -116,12 +139,13 @@ void App::Render()
 
 	glm::mat4 viewMatrix = Transformations::GetViewMatrix(m_Camera);
 
-	m_BasicShader.LoadCameraUniform(m_Camera);
-	m_BasicShader.LoadMatricesUniforms(modelMatrix, viewMatrix, projectionMatrix);
-	m_BasicShader.LoadLightsUniforms(*m_DirecationalLight);
-	m_BasicShader.LoadMaterialUniforms(*m_Material);
+	m_TessShader.LoadTessLevels(m_Mesh.GetTessLevelOuter(), m_Mesh.GetTessLevelInner());
+	m_TessShader.LoadMatricesUniforms(modelMatrix, viewMatrix, projectionMatrix);
+	m_TessShader.LoadLightsUniforms(*m_DirecationalLight, viewMatrix);
+	m_TessShader.LoadMaterialUniforms(*m_Material);
+
     m_Mesh.Draw();
-	m_BasicShader.Use(false);
+	m_TessShader.Use(false);
 }
 
 void App::CleanUp()

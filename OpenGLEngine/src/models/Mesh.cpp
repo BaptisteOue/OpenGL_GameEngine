@@ -1,10 +1,12 @@
-#include <GL/glew.h>
 #include "Mesh.h"
+#include <GL/glew.h>
 #include <vector>
+#include <iostream>
 
 #pragma region Public API
 
 Mesh::Mesh()
+	: m_VaoID(0), m_VertexCount(0), m_TessLevelInner(1), m_TessLevelOuter(1)
 {
 }
 
@@ -33,17 +35,49 @@ void Mesh::LoadMesh(std::vector<GLfloat>& positions, std::vector<GLfloat>& norma
 
 void Mesh::Draw()
 {
+	glEnable(GL_CULL_FACE);
     glBindVertexArray(m_VaoID);
-    glDrawElements(GL_TRIANGLES, m_VertexCount, GL_UNSIGNED_INT, 0);
+	glPatchParameteri(GL_PATCH_VERTICES, 3);
+    glDrawElements(GL_PATCHES, m_VertexCount, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+	glDisable(GL_CULL_FACE);
 }
-
 
 void Mesh::CleanUp()
 {
 	glDeleteBuffers(m_Vbos.size(), m_Vbos.data());
 	glDeleteBuffers(1, &m_EboID);
+
 }
+
+float Mesh::GetTessLevelOuter() const
+{
+	return m_TessLevelOuter;
+}
+
+float Mesh::GetTessLevelInner() const
+{
+	return m_TessLevelInner;
+}
+
+void Mesh::SetTessLevelOuter(float value)
+{
+	m_TessLevelOuter = value;
+	if (m_TessLevelOuter < 1)
+		m_TessLevelOuter = 1;
+
+	std::cout << "Outer tesselation level : " << m_TessLevelOuter << std::endl;
+}
+
+void Mesh::SetTessLevelInner(float value)
+{
+	m_TessLevelInner = value;
+	if (m_TessLevelInner < 1)
+		m_TessLevelInner = 1;
+
+	std::cout << "Inner tesselation level : " << m_TessLevelInner << std::endl;
+}
+
 
 #pragma endregion
 

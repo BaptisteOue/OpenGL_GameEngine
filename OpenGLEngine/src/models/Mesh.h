@@ -8,6 +8,8 @@ class Mesh
 private:
     GLuint m_VaoID;
     int m_VertexCount;
+	float m_TessLevelOuter;
+	float m_TessLevelInner;
 
     std::vector<GLuint> m_Vbos;
     GLuint m_EboID;
@@ -22,4 +24,10 @@ public:
     void LoadMesh(std::vector<GLfloat>& positions, std::vector<GLfloat>& normals, std::vector<GLuint>& indices);
     void Draw();
     void CleanUp();
+
+	float GetTessLevelOuter() const;
+	float GetTessLevelInner() const;
+
+	void SetTessLevelOuter(float value);
+	void SetTessLevelInner(float value);
 };

@@ -40,8 +40,6 @@ void GameEngine::GameLoop()
     
     while(!m_Window.ShouldClose())
     {
-		m_Timer.PrintFPS();
-
         elapsedTime = m_Timer.GetElapsedTime();
 		lag += elapsedTime;
 
@@ -72,12 +70,17 @@ void GameEngine::Input()
 {
     if(m_Window.IsKeyPressed(GLFW_KEY_ESCAPE))
         Window::s_ShouldClose = true;
+	if (m_Window.IsKeyPressed(GLFW_KEY_C))
+		m_Timer.LogFPS(true);
+	if (m_Window.IsKeyPressed(GLFW_KEY_X))
+		m_Timer.LogFPS(false);
 
 	m_GameLogic.Input(m_Window);
 }
 
 void GameEngine::Update(float interval)
 {
+	m_Timer.Update();
     m_GameLogic.Update(interval);
 }
 

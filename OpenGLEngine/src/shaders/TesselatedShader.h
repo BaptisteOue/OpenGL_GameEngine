@@ -7,20 +7,23 @@
 #include "../coreEngine/Camera.h"
 
 
-class BasicShader : public ShaderBase
+class TesselatedShader : public ShaderBase
 {
 public:
 	static const char* VERTEX_SHADER;
+	static const char* TESS_CTRL_SHADER;
+	static const char* TESS_EVAL_SHADER;
 	static const char* FRAGMENT_SHADER;
 public:
-	BasicShader();
-	~BasicShader();
+	TesselatedShader();
+	~TesselatedShader();
 
-	void CreateUniforms() override;
 	void ConstructShader() override;
-	void LoadCameraUniform(Camera& camera);
+	void CreateUniforms() override;
+
 	void LoadMatricesUniforms(glm::mat4& modelMatrix, glm::mat4& viewMatrix, glm::mat4& projectionMatrix);
+	void LoadTessLevels(float outer, float inner);
 	void LoadMaterialUniforms(Material& material);
-	void LoadLightsUniforms(DirectionalLight& directionalLight);
+	void LoadLightsUniforms(DirectionalLight& directionalLight, glm::mat4& matrice);
 };
 

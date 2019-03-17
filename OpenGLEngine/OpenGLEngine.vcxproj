@@ -32,6 +32,7 @@
     <ClCompile Include="src\models\Mesh.cpp" />
     <ClCompile Include="src\shaders\BasicShader.cpp" />
     <ClCompile Include="src\shaders\ShaderBase.cpp" />
+    <ClCompile Include="src\shaders\TesselatedShader.cpp" />
     <ClCompile Include="src\utils\FileUtils.cpp" />
     <ClCompile Include="src\utils\OBJLoader.cpp" />
   </ItemGroup>
@@ -49,11 +50,15 @@
     <ClInclude Include="src\maths\Transformations.h" />
     <ClInclude Include="src\models\Mesh.h" />
     <ClInclude Include="src\shaders\ShaderBase.h" />
+    <ClInclude Include="src\shaders\TesselatedShader.h" />
     <ClInclude Include="src\utils\FileUtils.h" />
     <ClInclude Include="src\utils\OBJLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\fragmentShader.glsl" />
+    <None Include="src\shaders\tessCtrlShader.glsl" />
+    <None Include="src\shaders\tessEvalShader.glsl" />
+    <None Include="src\shaders\t_FragmentShader.glsl" />
     <None Include="src\shaders\vertexShader.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -131,7 +136,6 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalOptions>/O2 /Oy %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -146,7 +150,6 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalOptions>/O2 /Oy %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

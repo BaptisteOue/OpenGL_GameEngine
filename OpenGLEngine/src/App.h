@@ -4,6 +4,7 @@
 #include "coreEngine/IGameLogic.h"
 #include "coreEngine/Camera.h"
 #include "shaders/BasicShader.h"
+#include "shaders/TesselatedShader.h"
 #include "materials/Material.h"
 #include "lights/DirectionalLight.h"
 #include <memory>
@@ -11,7 +12,7 @@
 class App : public IGameLogic
 {
 private:
-    BasicShader m_BasicShader;
+	TesselatedShader m_TessShader;
     
 	Mesh m_Mesh;
 	Material* m_Material;

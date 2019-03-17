@@ -7,16 +7,16 @@ uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 
-out VS_OUT
+out OUT
 {
-    vec4 world_pos;
-    vec4 world_normal;
+    vec4 eye_pos;
+    vec4 eye_normal;
 } vs_out;
 
 void main()
 {
-    vs_out.world_pos = modelMatrix * vec4(position, 1);
-    vs_out.world_normal = modelMatrix * vec4(normal, 0);
+    vs_out.eye_pos = viewMatrix * modelMatrix * vec4(position, 1);
+    vs_out.eye_normal = viewMatrix * modelMatrix * vec4(normal, 0);
 
-    gl_Position = projectionMatrix * viewMatrix * vs_out.world_pos;
+    gl_Position = projectionMatrix * vs_out.eye_pos;
 }

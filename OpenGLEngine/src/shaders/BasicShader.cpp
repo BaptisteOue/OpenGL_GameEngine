@@ -8,10 +8,18 @@ const char* BasicShader::FRAGMENT_SHADER = "./src/shaders/fragmentShader.glsl";
 BasicShader::BasicShader()
 	: ShaderBase(BasicShader::VERTEX_SHADER, BasicShader::FRAGMENT_SHADER)
 {
+	
 }
 
 BasicShader::~BasicShader()
 {
+}
+
+void BasicShader::ConstructShader()
+{
+	m_VertexShader = CreateVertexShader();
+	m_FragmentShader = CreateFragmentShader();
+	m_Program = CreateProgram();
 }
 
 void BasicShader::CreateUniforms()
@@ -25,6 +33,7 @@ void BasicShader::CreateUniforms()
 	AddUniform("directionalLight.color");
 	AddUniform("directionalLight.direction");
 	
+	AddUniform("material.Ka");
 	AddUniform("material.Kd");
 	AddUniform("material.Ks");
 	AddUniform("material.reflectivity");
@@ -45,6 +54,7 @@ void BasicShader::LoadMatricesUniforms(glm::mat4& modelMatrix, glm::mat4& viewMa
 
 void BasicShader::LoadMaterialUniforms(Material& material)
 {
+	LoadUniform("material.Ka", material.GetKa());
 	LoadUniform("material.Kd", material.GetKd());
 	LoadUniform("material.Ks", material.GetKs());
 	LoadUniform("material.reflectivity", material.GetReflectivity());

@@ -1,9 +1,9 @@
 #version 460 core
 
-in VS_OUT
+in OUT
 {
-    vec4 world_pos;
-    vec4 world_normal;
+    vec4 eye_pos;
+    vec4 eye_normal;
 } fs_in;
 
 out vec4 fragColor;
@@ -25,8 +25,6 @@ struct DirectionalLight
     vec3 direction;
 };
 
-
-uniform vec3 cameraPos;
 uniform Material material;
 uniform DirectionalLight directionalLight;
 
@@ -35,18 +33,21 @@ vec3 phongModel()
     vec3 color = vec3(0);
 
     vec3 fromLightVector = normalize(directionalLight.direction);
-    vec3 normalize_normal = normalize(fs_in.world_normal.xyz);
+    vec3 normalize_normal = normalize(fs_in.eye_normal.xyz);
 
     // Diffuse 
     float diffuseFactor = max(dot(-fromLightVector, normalize_normal), 0);
     color += material.Kd * directionalLight.color * diffuseFactor;
     
     // Specular
-    vec3 reflectedLight = reflect(fromLightVector, normalize_normal);
-    vec3 toCameraVector = normalize(cameraPos - fs_in.world_pos.xyz);
-    float specularFactor = max(dot(reflectedLight, toCameraVector), 0);
-    specularFactor = pow(specularFactor, material.shineDamper);
-    color += color * material.Ks * directionalLight.color * material.reflectivity * specularFactor;
+    if(diffuseFactor > 0)
+    {
+        vec3 reflectedLight = reflect(fromLightVector, normalize_normal);
+        vec3 toCameraVector = normalize(- fs_in.eye_pos.xyz);
+        float specularFactor = max(dot(reflectedLight, toCameraVector), 0);
+        specularFactor = pow(specularFactor, material.shineDamper);
+        color += material.Ks * directionalLight.color * material.reflectivity * specularFactor;
+    }
     
     // Ambiant
     color += material.Ka * directionalLight.color;
