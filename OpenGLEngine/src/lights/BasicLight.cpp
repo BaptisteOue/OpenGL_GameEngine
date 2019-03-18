@@ -2,7 +2,7 @@
 
 
 
-BasicLight::BasicLight(glm::vec4& color)
+BasicLight::BasicLight(const glm::vec3& color)
 	: m_Color(color)
 {
 }
@@ -12,7 +12,12 @@ BasicLight::~BasicLight()
 {
 }
 
-const glm::vec4 BasicLight::GetColor() const
+const glm::vec3 BasicLight::GetColor() const
 {
 	return m_Color;
+}
+
+void BasicLight::SetColor(const glm::vec3& color)
+{
+	m_Color = color;
 }

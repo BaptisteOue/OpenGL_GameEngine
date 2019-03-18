@@ -32,7 +32,7 @@ void Camera::Init()
 	m_Pitch = 0.0f;
 }
 
-void Camera::Update(glm::vec3 dCamera)
+void Camera::Update(const glm::vec3& dCamera)
 {
 	float deltaX = (m_CurrentX - m_LastX) * s_Sensitivity;
 	float deltaY = -(m_CurrentY - m_LastY) * s_Sensitivity;
@@ -77,7 +77,7 @@ void Camera::SetCurrentMouseY(float currentY)
 
 #pragma region Private API
 
-void Camera::Move(glm::uvec3 dCamera)
+void Camera::Move(const glm::uvec3& dCamera)
 {
 	glm::vec3 moveZ(0, 0, 0);
 	glm::vec3 moveX(0, 0, 0);

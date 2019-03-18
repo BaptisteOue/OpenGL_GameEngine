@@ -1,6 +1,6 @@
 #version 460 core
 
-layout(triangles, fractional_odd_spacing, ccw) in;
+layout(triangles, fractional_even_spacing, ccw) in;
 
 in TESS_CTRL_OUT
 {

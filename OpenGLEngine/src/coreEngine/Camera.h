@@ -23,14 +23,14 @@ public:
 	static float s_Speed;
 
 private:
-	void Move(glm::uvec3 dCamera);
+	void Move(const glm::uvec3& dCamera);
 
 public:
 	Camera();
 	~Camera();
 
 	void Init();
-	void Update(glm::vec3 dCamera);
+	void Update(const glm::vec3& dCamera);
 	void SetCurrentMouseX(float currentX);
 	void SetCurrentMouseY(float currentY);
 	glm::vec3 GetPos() const;

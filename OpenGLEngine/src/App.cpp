@@ -37,13 +37,21 @@ void App::Init()
         0, 1, 2
     };
 
+	m_TessShader.CreateShaderProgram();
+
 	m_Camera.Init();
 
-	m_Material = new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1, 100);
-	m_DirecationalLight = new DirectionalLight(glm::vec4(0.7, 0.6, 0.9, 1), glm::vec4(-1,-1, -1, 0));
-	m_Mesh = OBJLoader::LoadOBJ("./res/dragon.obj");
-	//m_Mesh.LoadMesh(positions, normals, indices);
-    m_TessShader.CreateShaderProgram();
+	m_Mesh = OBJLoader::LoadOBJ("OpenGLEngine/res/bunny.obj");
+	m_Material = new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1, 150);
+
+	m_DirecationalLight = new DirectionalLight(glm::vec3(0.5), glm::vec3(-1, -1, -1));
+	m_PointLight = new PointLight(glm::vec3(1), glm::vec3(0, 1.5f, 3));
+	m_PointLight->SetAttenuation(1, 0.2f, 0.02f);
+	m_SpotLight = new SpotLight(*m_PointLight, 10, glm::vec3(0, 0, -1));
+
+	m_PointLight->SetPosition(glm::vec3(2, 2, 0));
+	m_PointLight->SetColor(glm::vec3(1, 0, 0));
+
 }
 
 void App::Input(Window& window)
@@ -120,6 +128,8 @@ void App::Input(Window& window)
 void App::Update(float interval)
 {
 	m_Camera.Update(dCamera);
+	m_SpotLight->SetPosition(m_Camera.GetPos());
+	m_SpotLight->SetDirection(m_Camera.GetFront());
 }
 
 void App::Render()
@@ -141,7 +151,7 @@ void App::Render()
 
 	m_TessShader.LoadTessLevels(m_Mesh.GetTessLevelOuter(), m_Mesh.GetTessLevelInner());
 	m_TessShader.LoadMatricesUniforms(modelMatrix, viewMatrix, projectionMatrix);
-	m_TessShader.LoadLightsUniforms(*m_DirecationalLight, viewMatrix);
+	m_TessShader.LoadLightsUniforms(*m_DirecationalLight, *m_PointLight, *m_SpotLight, viewMatrix);
 	m_TessShader.LoadMaterialUniforms(*m_Material);
 
     m_Mesh.Draw();
@@ -152,5 +162,6 @@ void App::CleanUp()
 {
 	m_Mesh.CleanUp();
 	delete m_DirecationalLight;
+	delete m_PointLight;
 	delete m_Material;
 }

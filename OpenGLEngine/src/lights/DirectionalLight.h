@@ -7,10 +7,10 @@
 class DirectionalLight : public BasicLight
 {
 private:
-	glm::vec4 m_Direction;
+	glm::vec3 m_Direction;
 public:
-	DirectionalLight(glm::vec4&& color, glm::vec4&& direction);
+	DirectionalLight(const glm::vec3& color, const glm::vec3& direction);
 	~DirectionalLight();
 
-	const glm::vec4 GetDirection() const;
+	const glm::vec3 GetDirection() const;
 };

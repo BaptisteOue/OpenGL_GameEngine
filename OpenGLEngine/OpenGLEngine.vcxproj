@@ -26,6 +26,8 @@
     <ClCompile Include="src\coreEngine\Timer.cpp" />
     <ClCompile Include="src\coreEngine\Window.cpp" />
     <ClCompile Include="src\lights\DirectionalLight.cpp" />
+    <ClCompile Include="src\lights\PointLight.cpp" />
+    <ClCompile Include="src\lights\SpotLight.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\materials\Material.cpp" />
     <ClCompile Include="src\maths\Transformations.cpp" />
@@ -39,6 +41,8 @@
   <ItemGroup>
     <ClInclude Include="src\lights\BasicLight.h" />
     <ClInclude Include="src\lights\DirectionalLight.h" />
+    <ClInclude Include="src\lights\PointLight.h" />
+    <ClInclude Include="src\lights\SpotLight.h" />
     <ClInclude Include="src\materials\Material.h" />
     <ClInclude Include="src\shaders\BasicShader.h" />
     <ClInclude Include="src\coreEngine\Camera.h" />
@@ -58,7 +62,6 @@
     <None Include="src\shaders\fragmentShader.glsl" />
     <None Include="src\shaders\tessCtrlShader.glsl" />
     <None Include="src\shaders\tessEvalShader.glsl" />
-    <None Include="src\shaders\t_FragmentShader.glsl" />
     <None Include="src\shaders\vertexShader.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

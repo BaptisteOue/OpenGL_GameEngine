@@ -7,6 +7,8 @@
 #include "shaders/TesselatedShader.h"
 #include "materials/Material.h"
 #include "lights/DirectionalLight.h"
+#include "lights/PointLight.h"
+#include "lights/SpotLight.h"
 #include <memory>
 
 class App : public IGameLogic
@@ -16,7 +18,10 @@ private:
     
 	Mesh m_Mesh;
 	Material* m_Material;
+
 	DirectionalLight* m_DirecationalLight;
+	PointLight* m_PointLight;
+	SpotLight* m_SpotLight;
 
 	Camera m_Camera;
 	glm::vec3 dCamera;

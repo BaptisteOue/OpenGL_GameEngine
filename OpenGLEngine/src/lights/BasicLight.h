@@ -5,10 +5,11 @@
 class BasicLight
 {
 protected :
-	glm::vec4 m_Color;
+	glm::vec3 m_Color;
 public:
-	BasicLight(glm::vec4& color);
+	BasicLight(const glm::vec3& color);
 	~BasicLight();
 
-	const glm::vec4 GetColor() const;
+	const glm::vec3 GetColor() const;
+	void SetColor(const glm::vec3& color);
 };
