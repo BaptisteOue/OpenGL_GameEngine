@@ -20,15 +20,21 @@ struct Material
 };
 
 /* Lights */
-struct DirectionalLight
+struct BaseLight
 {
     vec3 color;
+    float intensity;
+};
+
+struct DirectionalLight
+{
+    BaseLight baseLight;
     vec3 direction;
 };
 
 struct PointLight
 {
-    vec3 color;
+    BaseLight baseLight;
     vec3 position;
     float constAtt;
     float linearAtt;
@@ -81,8 +87,9 @@ vec3 phongModel(vec3 fromLightVector, vec3 lightColor)
 vec4 ComputeDirectionalLight(DirectionalLight directionalLight)
 {
     vec3 fromLightVector = normalize(directionalLight.direction);
+    vec3 color = phongModel(fromLightVector, directionalLight.baseLight.color) * directionalLight.baseLight.intensity;
 
-    return vec4(phongModel(fromLightVector, directionalLight.color), 1);
+    return vec4(color, 1);
 }
 
 vec4 ComputePointLight(PointLight pointLight)
@@ -91,7 +98,7 @@ vec4 ComputePointLight(PointLight pointLight)
     float d = length(fromLightVector);
 
     fromLightVector = normalize(fromLightVector);
-    vec3 color = phongModel(fromLightVector, pointLight.color);
+    vec3 color = phongModel(fromLightVector, pointLight.baseLight.color) * pointLight.baseLight.intensity;
 
     float attenuation =  1.0f / (pointLight.constAtt + d * pointLight.linearAtt + d * d * pointLight.quadraticAtt);
     color *= attenuation;

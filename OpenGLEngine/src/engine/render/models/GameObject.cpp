@@ -3,12 +3,12 @@
 
 #pragma region Public API
 
-GameObject::GameObject(const Mesh& mesh, const Material& material)
+GameObject::GameObject(const Mesh& mesh, const Material& material, glm::vec3 position, glm::vec3 rotation, float scale)
 	: m_Mesh(mesh),
 	m_Material(material),
-	m_Position(0),
-	m_Rotation(0),
-	m_Scale(0),
+	m_Position(position),
+	m_Rotation(rotation),
+	m_Scale(scale),
 	m_TessLevelInner(1),
 	m_TessLevelOuter(1)
 {
@@ -94,6 +94,7 @@ void GameObject::Draw()
 void GameObject::CleanUp()
 {
 	m_Mesh.CleanUp();
+	m_Material.CleanUp();
 }
 
 #pragma endregion

@@ -31,6 +31,12 @@ void ShaderBase::Use(bool use)
     glUseProgram(m_Program * (int)use);
 }
 
+void ShaderBase::CleanUp()
+{
+	if (glIsProgram(m_Program))
+		glDeleteProgram(m_Program);
+}
+
 #pragma endregion
 
 
@@ -152,6 +158,15 @@ GLuint ShaderBase::CreateProgram()
 
         return -1;
     }
+
+	if (glIsShader(m_VertexShader))
+		glDeleteShader(m_VertexShader);
+	if (glIsShader(m_FragmentShader))
+		glDeleteShader(m_FragmentShader);
+	if (glIsShader(m_TessCtrlShader))
+		glDeleteShader(m_TessCtrlShader);
+	if (glIsShader(m_TessEvalShader))
+		glDeleteShader(m_TessEvalShader);
 
     return shaderProgram;
 }

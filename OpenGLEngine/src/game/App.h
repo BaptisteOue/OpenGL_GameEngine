@@ -2,26 +2,20 @@
 
 #include "../engine/render/core/IGameLogic.h"
 #include "../engine/render/core/Camera.h"
-#include "../engine/render/shaders/BasicShader.h"
-#include "../engine/render/shaders/TesselatedShader.h"
-#include "../engine/render/lights/DirectionalLight.h"
-#include "../engine/render/lights/PointLight.h"
-#include "../engine/render/lights/SpotLight.h"
 #include "../engine/render/models/GameObject.h"
+#include "../engine/render/lights/LightScene.h"
+#include "../engine/render/renderers/GameObjectRenderer.h"
+#include <vector>
 
 class App : public IGameLogic
 {
 private:
-	TesselatedShader m_TessShader;
-    
-	GameObject* m_GameObject;
-
-	DirectionalLight* m_DirecationalLight;
-	PointLight* m_PointLight;
-	SpotLight* m_SpotLight;
-
 	Camera m_Camera;
 	glm::vec3 dCamera;
+
+	GameObjectRenderer m_GameObjectRenderer;
+	std::vector<GameObject> m_GameObjects;
+	LightScene m_LightScene;
 
 public:
     App();

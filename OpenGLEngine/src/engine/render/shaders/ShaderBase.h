@@ -40,6 +40,7 @@ public:
 
 	void CreateShaderProgram();
 	void Use(bool use);
+	void CleanUp();
 	virtual void CreateUniforms() = 0;
 	virtual void ConstructShader() = 0;
 };

@@ -63,16 +63,19 @@ void TesselatedShader::LoadMaterialUniforms(const Material& material)
 
 void TesselatedShader::LoadLightsUniforms(const DirectionalLight& directionalLight, const PointLight& pointLight, const SpotLight& spotLight, const glm::mat4& matrice)
 {
-	LoadUniform("directionalLight.color", directionalLight.GetColor());
+	LoadUniform("directionalLight.baseLight.color", directionalLight.GetColor());
+	LoadUniform("directionalLight.baseLight.intensity", directionalLight.GetIntensity());
 	LoadUniform("directionalLight.direction", matrice * glm::vec4(directionalLight.GetDirection(), 0));
 
-	LoadUniform("pointLight.color", pointLight.GetColor());
+	LoadUniform("pointLight.baseLight.color", pointLight.GetColor());
+	LoadUniform("pointLight.baseLight.intensity", pointLight.GetIntensity());
 	LoadUniform("pointLight.constAtt", pointLight.GetConstAtt());
 	LoadUniform("pointLight.linearAtt", pointLight.GetLinearAtt());
 	LoadUniform("pointLight.quadraticAtt", pointLight.GetQuadraticAtt());
 	LoadUniform("pointLight.position", matrice * glm::vec4(pointLight.GetPosition(), 1));
 
-	LoadUniform("spotLight.pointLight.color", spotLight.GetColor());
+	LoadUniform("spotLight.pointLight.baseLight.color", spotLight.GetColor());
+	LoadUniform("spotLight.pointLight.baseLight.intensity", spotLight.GetIntensity());
 	LoadUniform("spotLight.pointLight.constAtt", spotLight.GetConstAtt());
 	LoadUniform("spotLight.pointLight.linearAtt", spotLight.GetLinearAtt());
 	LoadUniform("spotLight.pointLight.quadraticAtt", spotLight.GetQuadraticAtt());
@@ -88,16 +91,19 @@ void TesselatedShader::LoadLightsUniforms(const DirectionalLight& directionalLig
 
 void TesselatedShader::AddLightUniforms()
 {
-	AddUniform("directionalLight.color");
+	AddUniform("directionalLight.baseLight.color");
+	AddUniform("directionalLight.baseLight.intensity");
 	AddUniform("directionalLight.direction");
 
-	AddUniform("pointLight.color");
+	AddUniform("pointLight.baseLight.color");
+	AddUniform("pointLight.baseLight.intensity");
 	AddUniform("pointLight.position");
 	AddUniform("pointLight.constAtt");
 	AddUniform("pointLight.linearAtt");
 	AddUniform("pointLight.quadraticAtt");
 
-	AddUniform("spotLight.pointLight.color");
+	AddUniform("spotLight.pointLight.baseLight.color");
+	AddUniform("spotLight.pointLight.baseLight.intensity");
 	AddUniform("spotLight.pointLight.constAtt");
 	AddUniform("spotLight.pointLight.linearAtt");
 	AddUniform("spotLight.pointLight.quadraticAtt");

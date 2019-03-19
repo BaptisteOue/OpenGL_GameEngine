@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PointLight.h"
+#include "../core/Camera.h"
 #include <glm/glm.hpp>
 
 class SpotLight : public PointLight
@@ -18,5 +19,7 @@ public:
 
 	void SetCutoffAngle(const float cutoffAngle);
 	void SetDirection(const glm::vec3& direction);
+
+	void SimulateTorch(Camera& camera);
 
 };

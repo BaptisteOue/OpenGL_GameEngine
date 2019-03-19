@@ -12,7 +12,7 @@ glm::mat4 Transformations::GetProjectionMatrix(float fov, float nearPlane, float
     return projectionMatrix;
 }
 
-glm::mat4 Transformations::GetModelMatrix(glm::vec3& translation, glm::vec3& rotation, float scale)
+glm::mat4 Transformations::GetModelMatrix(const glm::vec3& translation, const glm::vec3& rotation, float scale)
 {
     glm::mat4 modelMatrix = glm::translate(glm::mat4(1), translation);
     modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.x), glm::vec3(1, 0, 0));
@@ -23,7 +23,7 @@ glm::mat4 Transformations::GetModelMatrix(glm::vec3& translation, glm::vec3& rot
     return modelMatrix;    
 }
 
-glm::mat4 Transformations::GetViewMatrix(Camera& camera)
+glm::mat4 Transformations::GetViewMatrix(const Camera& camera)
 {
 	glm::vec3 target = camera.GetPos() + camera.GetFront();
 	glm::mat4 viewMatrix = glm::lookAt(camera.GetPos(), target, camera.GetUp());

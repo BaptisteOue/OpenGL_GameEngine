@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="src\engine\render\lights\BasicLight.cpp" />
     <ClCompile Include="src\engine\render\core\Camera.cpp" />
+    <ClCompile Include="src\engine\render\lights\LightScene.cpp" />
+    <ClCompile Include="src\engine\render\renderers\GameObjectRenderer.cpp" />
     <ClCompile Include="src\game\App.cpp" />
     <ClCompile Include="src\engine\render\core\RenderEngine.cpp" />
     <ClCompile Include="src\engine\render\core\Timer.cpp" />
@@ -43,11 +45,13 @@
   <ItemGroup>
     <ClInclude Include="src\engine\render\lights\BasicLight.h" />
     <ClInclude Include="src\engine\render\lights\DirectionalLight.h" />
+    <ClInclude Include="src\engine\render\lights\LightScene.h" />
     <ClInclude Include="src\engine\render\lights\PointLight.h" />
     <ClInclude Include="src\engine\render\lights\SpotLight.h" />
     <ClInclude Include="src\engine\render\materials\Material.h" />
     <ClInclude Include="src\engine\render\materials\Texture.h" />
     <ClInclude Include="src\engine\render\models\GameObject.h" />
+    <ClInclude Include="src\engine\render\renderers\GameObjectRenderer.h" />
     <ClInclude Include="src\engine\render\shaders\BasicShader.h" />
     <ClInclude Include="src\engine\render\core\Camera.h" />
     <ClInclude Include="src\game\App.h" />

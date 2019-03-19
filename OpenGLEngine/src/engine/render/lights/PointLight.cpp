@@ -3,8 +3,8 @@
 
 #pragma region Public API
 
-PointLight::PointLight(const glm::vec3& color, const glm::vec3& position)
-	: BasicLight(color), m_Position(position)
+PointLight::PointLight(const glm::vec3& color, const glm::vec3& position, float intensity)
+	: BasicLight(color, intensity), m_Position(position)
 {
 }
 

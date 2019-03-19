@@ -33,6 +33,12 @@ void SpotLight::SetDirection(const glm::vec3& direction)
 	m_Direction = direction;
 }
 
+void SpotLight::SimulateTorch(Camera & camera)
+{
+	m_Position = camera.GetPos();
+	m_Direction = camera.GetFront();
+}
+
 #pragma endregion
 
 

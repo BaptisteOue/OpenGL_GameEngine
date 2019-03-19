@@ -13,7 +13,7 @@ protected:
 	float m_QuadraticAtt;
 	
 public:
-	PointLight(const glm::vec3& color, const glm::vec3& position);
+	PointLight(const glm::vec3& color, const glm::vec3& position, float intensity = 1);
 	~PointLight();
 
 	const glm::vec3 GetPosition() const;

@@ -10,6 +10,6 @@ public:
     ~Transformations() { }
 
     static glm::mat4 GetProjectionMatrix(float fov, float nearPlane, float farPlane);
-    static glm::mat4 GetModelMatrix(glm::vec3& translation, glm::vec3& rotation, float scale);
-    static glm::mat4 GetViewMatrix(Camera& camera);
+    static glm::mat4 GetModelMatrix(const glm::vec3& translation, const glm::vec3& rotation, float scale);
+    static glm::mat4 GetViewMatrix(const Camera& camera);
 };
