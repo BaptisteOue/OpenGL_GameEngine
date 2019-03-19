@@ -1,7 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "../coreEngine/Camera.h"
+#include "../core/Camera.h"
 
 class Transformations
 {

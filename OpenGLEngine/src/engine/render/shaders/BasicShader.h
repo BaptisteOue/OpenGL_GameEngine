@@ -4,7 +4,7 @@
 #include "ShaderBase.h"
 #include "../materials/Material.h"
 #include "../lights/DirectionalLight.h"
-#include "../coreEngine/Camera.h"
+#include "../core/Camera.h"
 
 
 class BasicShader : public ShaderBase

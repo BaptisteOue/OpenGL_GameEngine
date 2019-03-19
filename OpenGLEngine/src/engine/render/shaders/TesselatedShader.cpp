@@ -1,9 +1,9 @@
 #include "TesselatedShader.h"
 
-const char* TesselatedShader::VERTEX_SHADER = "./src/shaders/vertexShader.glsl";
-const char* TesselatedShader::TESS_CTRL_SHADER = "./src/shaders/tessCtrlShader.glsl";
-const char* TesselatedShader::TESS_EVAL_SHADER = "./src/shaders/tessEvalShader.glsl";
-const char* TesselatedShader::FRAGMENT_SHADER = "./src/shaders/fragmentShader.glsl";
+const char* TesselatedShader::VERTEX_SHADER = "./src/engine/render/shaders/vertexShader.glsl";
+const char* TesselatedShader::TESS_CTRL_SHADER = "./src/engine/render/shaders/tessCtrlShader.glsl";
+const char* TesselatedShader::TESS_EVAL_SHADER = "./src/engine/render/shaders/tessEvalShader.glsl";
+const char* TesselatedShader::FRAGMENT_SHADER = "./src/engine/render/shaders/fragmentShader.glsl";
 
 #pragma region Public API
 

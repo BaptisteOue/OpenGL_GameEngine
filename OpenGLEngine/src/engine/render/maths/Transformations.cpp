@@ -1,7 +1,7 @@
 #include "Transformations.h"
 #include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
-#include "../coreEngine/Window.h"
-#include "../coreEngine/Camera.h"
+#include "../core/Window.h"
+#include "../core/Camera.h"
 
 #pragma region Public API
 

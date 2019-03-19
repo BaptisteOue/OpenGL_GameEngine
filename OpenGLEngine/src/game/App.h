@@ -1,13 +1,13 @@
 #pragma once
 
-#include "coreEngine/IGameLogic.h"
-#include "coreEngine/Camera.h"
-#include "shaders/BasicShader.h"
-#include "shaders/TesselatedShader.h"
-#include "lights/DirectionalLight.h"
-#include "lights/PointLight.h"
-#include "lights/SpotLight.h"
-#include "models/GameObject.h"
+#include "../engine/render/core/IGameLogic.h"
+#include "../engine/render/core/Camera.h"
+#include "../engine/render/shaders/BasicShader.h"
+#include "../engine/render/shaders/TesselatedShader.h"
+#include "../engine/render/lights/DirectionalLight.h"
+#include "../engine/render/lights/PointLight.h"
+#include "../engine/render/lights/SpotLight.h"
+#include "../engine/render/models/GameObject.h"
 
 class App : public IGameLogic
 {

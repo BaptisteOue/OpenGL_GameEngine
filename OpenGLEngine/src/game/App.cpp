@@ -3,9 +3,9 @@
 #include <glm/glm.hpp>
 #include <iostream>
 #include <vector>
-#include "models/Mesh.h"
-#include "maths/Transformations.h"
-#include "utils/Loader.h"
+#include "../engine/render/models/Mesh.h"
+#include "../engine/render/maths/Transformations.h"
+#include "../engine/render/utils/Loader.h"
 
 App::App()
     : dCamera(0, 0, 0),
@@ -41,13 +41,13 @@ void App::Init()
 
 	m_Camera.Init();
 
-	Mesh mesh(Loader::LoadOBJ("./res/cube.obj"));
-	Material material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1, 150);
+	Mesh mesh(Loader::LoadOBJ("./res/bunny.obj"));
+	Material material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1, 150);
 	material.AddTexture(Loader::LoadTexture("./res/Abstract_Organic_002_COLOR.jpg"));
 	m_GameObject = new GameObject(mesh, material);
 
-	m_DirecationalLight = new DirectionalLight(glm::vec3(0.5), glm::vec3(-1, -1, -1));
-	m_PointLight = new PointLight(glm::vec3(1), glm::vec3(0, 1.5f, 3));
+	m_DirecationalLight = new DirectionalLight(glm::vec3(0.2), glm::vec3(-1, -1, -1));
+	m_PointLight = new PointLight(glm::vec3(0, 0.4f, 0.7f), glm::vec3(0, 1.5f, 3));
 	m_PointLight->SetAttenuation(1, 0.2f, 0.02f);
 	m_SpotLight = new SpotLight(*m_PointLight, 10, glm::vec3(0, 0, -1));
 

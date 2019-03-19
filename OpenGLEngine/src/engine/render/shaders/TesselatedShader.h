@@ -6,7 +6,7 @@
 #include "../lights/DirectionalLight.h"
 #include "../lights/PointLight.h"
 #include "../lights/SpotLight.h"
-#include "../coreEngine/Camera.h"
+#include "../core/Camera.h"
 
 
 class TesselatedShader : public ShaderBase

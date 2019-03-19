@@ -19,54 +19,54 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\lights\BasicLight.cpp" />
-    <ClCompile Include="src\coreEngine\Camera.cpp" />
-    <ClCompile Include="src\App.cpp" />
-    <ClCompile Include="src\coreEngine\GameEngine.cpp" />
-    <ClCompile Include="src\coreEngine\Timer.cpp" />
-    <ClCompile Include="src\coreEngine\Window.cpp" />
-    <ClCompile Include="src\lights\DirectionalLight.cpp" />
-    <ClCompile Include="src\lights\PointLight.cpp" />
-    <ClCompile Include="src\lights\SpotLight.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\materials\Material.cpp" />
-    <ClCompile Include="src\materials\Texture.cpp" />
-    <ClCompile Include="src\maths\Transformations.cpp" />
-    <ClCompile Include="src\models\GameObject.cpp" />
-    <ClCompile Include="src\models\Mesh.cpp" />
-    <ClCompile Include="src\shaders\BasicShader.cpp" />
-    <ClCompile Include="src\shaders\ShaderBase.cpp" />
-    <ClCompile Include="src\shaders\TesselatedShader.cpp" />
-    <ClCompile Include="src\utils\FileUtils.cpp" />
-    <ClCompile Include="src\utils\Loader.cpp" />
+    <ClCompile Include="src\engine\render\lights\BasicLight.cpp" />
+    <ClCompile Include="src\engine\render\core\Camera.cpp" />
+    <ClCompile Include="src\game\App.cpp" />
+    <ClCompile Include="src\engine\render\core\RenderEngine.cpp" />
+    <ClCompile Include="src\engine\render\core\Timer.cpp" />
+    <ClCompile Include="src\engine\render\core\Window.cpp" />
+    <ClCompile Include="src\engine\render\lights\DirectionalLight.cpp" />
+    <ClCompile Include="src\engine\render\lights\PointLight.cpp" />
+    <ClCompile Include="src\engine\render\lights\SpotLight.cpp" />
+    <ClCompile Include="src\engine\coreEngine\main.cpp" />
+    <ClCompile Include="src\engine\render\materials\Material.cpp" />
+    <ClCompile Include="src\engine\render\materials\Texture.cpp" />
+    <ClCompile Include="src\engine\render\maths\Transformations.cpp" />
+    <ClCompile Include="src\engine\render\models\GameObject.cpp" />
+    <ClCompile Include="src\engine\render\models\Mesh.cpp" />
+    <ClCompile Include="src\engine\render\shaders\BasicShader.cpp" />
+    <ClCompile Include="src\engine\render\shaders\ShaderBase.cpp" />
+    <ClCompile Include="src\engine\render\shaders\TesselatedShader.cpp" />
+    <ClCompile Include="src\engine\render\utils\FileUtils.cpp" />
+    <ClCompile Include="src\engine\render\utils\Loader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\lights\BasicLight.h" />
-    <ClInclude Include="src\lights\DirectionalLight.h" />
-    <ClInclude Include="src\lights\PointLight.h" />
-    <ClInclude Include="src\lights\SpotLight.h" />
-    <ClInclude Include="src\materials\Material.h" />
-    <ClInclude Include="src\materials\Texture.h" />
-    <ClInclude Include="src\models\GameObject.h" />
-    <ClInclude Include="src\shaders\BasicShader.h" />
-    <ClInclude Include="src\coreEngine\Camera.h" />
-    <ClInclude Include="src\App.h" />
-    <ClInclude Include="src\coreEngine\GameEngine.h" />
-    <ClInclude Include="src\coreEngine\IGameLogic.h" />
-    <ClInclude Include="src\coreEngine\Timer.h" />
-    <ClInclude Include="src\coreEngine\Window.h" />
-    <ClInclude Include="src\maths\Transformations.h" />
-    <ClInclude Include="src\models\Mesh.h" />
-    <ClInclude Include="src\shaders\ShaderBase.h" />
-    <ClInclude Include="src\shaders\TesselatedShader.h" />
-    <ClInclude Include="src\utils\FileUtils.h" />
-    <ClInclude Include="src\utils\Loader.h" />
+    <ClInclude Include="src\engine\render\lights\BasicLight.h" />
+    <ClInclude Include="src\engine\render\lights\DirectionalLight.h" />
+    <ClInclude Include="src\engine\render\lights\PointLight.h" />
+    <ClInclude Include="src\engine\render\lights\SpotLight.h" />
+    <ClInclude Include="src\engine\render\materials\Material.h" />
+    <ClInclude Include="src\engine\render\materials\Texture.h" />
+    <ClInclude Include="src\engine\render\models\GameObject.h" />
+    <ClInclude Include="src\engine\render\shaders\BasicShader.h" />
+    <ClInclude Include="src\engine\render\core\Camera.h" />
+    <ClInclude Include="src\game\App.h" />
+    <ClInclude Include="src\engine\render\core\RenderEngine.h" />
+    <ClInclude Include="src\engine\render\core\IGameLogic.h" />
+    <ClInclude Include="src\engine\render\core\Timer.h" />
+    <ClInclude Include="src\engine\render\core\Window.h" />
+    <ClInclude Include="src\engine\render\maths\Transformations.h" />
+    <ClInclude Include="src\engine\render\models\Mesh.h" />
+    <ClInclude Include="src\engine\render\shaders\ShaderBase.h" />
+    <ClInclude Include="src\engine\render\shaders\TesselatedShader.h" />
+    <ClInclude Include="src\engine\render\utils\FileUtils.h" />
+    <ClInclude Include="src\engine\render\utils\Loader.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\shaders\fragmentShader.glsl" />
-    <None Include="src\shaders\tessCtrlShader.glsl" />
-    <None Include="src\shaders\tessEvalShader.glsl" />
-    <None Include="src\shaders\vertexShader.glsl" />
+    <None Include="src\engine\render\shaders\fragmentShader.glsl" />
+    <None Include="src\engine\render\shaders\tessCtrlShader.glsl" />
+    <None Include="src\engine\render\shaders\tessEvalShader.glsl" />
+    <None Include="src\engine\render\shaders\vertexShader.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

@@ -6,7 +6,7 @@
 #include "IGameLogic.h"
 
 
-class GameEngine
+class RenderEngine
 {
 private:
     Window m_Window;
@@ -27,7 +27,7 @@ private:
 	void Render();
 
 public:
-    GameEngine(const char* title, int width, int height, IGameLogic& gameLogic);
-    ~GameEngine();
+	RenderEngine(const char* title, int width, int height, IGameLogic& gameLogic);
+    ~RenderEngine();
     void Start();   
 };
