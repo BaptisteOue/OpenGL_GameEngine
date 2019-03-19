@@ -1,7 +1,7 @@
 #pragma once
 
-#include <glm/glm.hpp>
 #include "PointLight.h"
+#include <glm/glm.hpp>
 
 class SpotLight : public PointLight
 {
@@ -11,11 +11,10 @@ private:
 
 public:
 	SpotLight(PointLight pointLight, float cutoffAngle, const glm::vec3& direction);
-
 	~SpotLight();
 
-	float GetCutoffAngle() const;
-	glm::vec3 GetDirection() const;
+	const float GetCutoffAngle() const;
+	const glm::vec3 GetDirection() const;
 
 	void SetCutoffAngle(const float cutoffAngle);
 	void SetDirection(const glm::vec3& direction);

@@ -1,9 +1,5 @@
 #include "Camera.h"
-#include <glm/gtc/matrix_transform.hpp>
-#include <math.h>
 #include "Window.h"
-#include <iostream>
-
 
 #pragma region Public API
 
@@ -116,17 +112,17 @@ void Camera::Move(const glm::uvec3& dCamera)
 	m_Position += move;
 }
 
-glm::vec3 Camera::GetPos() const
+const glm::vec3 Camera::GetPos() const
 {
 	return m_Position;
 }
 
-glm::vec3 Camera::GetFront() const
+const glm::vec3 Camera::GetFront() const
 {
 	return m_Front;
 }
 
-glm::vec3 Camera::GetUp() const
+const glm::vec3 Camera::GetUp() const
 {
 	return m_Up;
 }

@@ -27,9 +27,9 @@ public:
 	void CreateUniforms() override;
 
 
-	void LoadMatricesUniforms(glm::mat4& modelMatrix, glm::mat4& viewMatrix, glm::mat4& projectionMatrix);
+	void LoadMatricesUniforms(const glm::mat4& modelMatrix, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
 	void LoadTessLevels(float outer, float inner);
-	void LoadMaterialUniforms(Material& material);
-	void LoadLightsUniforms(DirectionalLight& directionalLight, PointLight& pointLight, SpotLight& spotLight, glm::mat4& matrice);
+	void LoadMaterialUniforms(const Material& material);
+	void LoadLightsUniforms(const DirectionalLight& directionalLight, const PointLight& pointLight, const SpotLight& spotLight, const glm::mat4& matrice);
 };
 

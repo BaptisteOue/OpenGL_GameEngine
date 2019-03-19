@@ -1,15 +1,18 @@
-#include "OBJLoader.h"
+#include "Loader.h"
 #include "FileUtils.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include "glm/glm.hpp"
+#include <GL/glew.h>
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb/stb_image.h>
 
 
 #pragma region Public API
 
-Mesh& OBJLoader::LoadOBJ(const char* objFile)
+Mesh& Loader::LoadOBJ(const char* objFile)
 {
 	std::vector<int> vertexIndices, uvIndices, normalIndices;
 	std::vector<glm::vec3> temp_positions;
@@ -73,16 +76,49 @@ Mesh& OBJLoader::LoadOBJ(const char* objFile)
 		ordered_normals.push_back(temp_normals[normIndex].y);
 		ordered_normals.push_back(temp_normals[normIndex].z);
 
-		/*int texIndex = uvIndices[i];
+		int texIndex = uvIndices[i];
 		ordered_uvs.push_back(temp_uvs[texIndex].x);
-		ordered_uvs.push_back(temp_uvs[texIndex].y);*/
+		ordered_uvs.push_back(temp_uvs[texIndex].y);
 	}
 
 	file.close();
 
 	Mesh* m = new Mesh();
-	m->LoadMesh(ordered_positions, ordered_normals, indices);
+	m->LoadMesh(ordered_positions, ordered_normals, ordered_uvs, indices);
 	return *m;
+}
+
+Texture& Loader::LoadTexture(const char * textureFile, GLuint activeTexture)
+{
+	Texture* texture = nullptr;
+	GLuint textureID;
+
+	glGenTextures(1, &textureID);
+	glActiveTexture(activeTexture);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	int width, height, nrChannels;
+	unsigned char *data = stbi_load(textureFile, &width, &height, &nrChannels, 0);
+	if (data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		texture = new Texture(textureID, activeTexture);
+	}
+	else
+	{
+		std::cout << "Failed to load texture" << std::endl;
+	}
+
+	stbi_image_free(data);
+
+	return *texture;
 }
 
 #pragma endregion
@@ -91,7 +127,7 @@ Mesh& OBJLoader::LoadOBJ(const char* objFile)
 
 #pragma region Private API
 
-void OBJLoader::ParseFace(
+void Loader::ParseFace(
 	std::string vertices[3],
 	std::vector<int>& vertexIndices,
 	std::vector<int>& uvIndices,

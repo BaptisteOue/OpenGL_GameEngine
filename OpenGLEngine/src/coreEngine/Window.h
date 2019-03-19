@@ -1,8 +1,8 @@
 #pragma once
 
+#include <GL/glew.h> // Include before gl.h before glfw3.h
 #include <GLFW/glfw3.h>
 #include <string>
-#include <glm/glm.hpp>
 
 class Window
 {

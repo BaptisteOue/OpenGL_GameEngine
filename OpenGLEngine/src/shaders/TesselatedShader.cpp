@@ -1,9 +1,9 @@
 #include "TesselatedShader.h"
 
-const char* TesselatedShader::VERTEX_SHADER = "OpenGLEngine/src/shaders/vertexShader.glsl";
-const char* TesselatedShader::TESS_CTRL_SHADER = "OpenGLEngine/src/shaders/tessCtrlShader.glsl";
-const char* TesselatedShader::TESS_EVAL_SHADER = "OpenGLEngine/src/shaders/tessEvalShader.glsl";
-const char* TesselatedShader::FRAGMENT_SHADER = "OpenGLEngine/src/shaders/fragmentShader.glsl";
+const char* TesselatedShader::VERTEX_SHADER = "./src/shaders/vertexShader.glsl";
+const char* TesselatedShader::TESS_CTRL_SHADER = "./src/shaders/tessCtrlShader.glsl";
+const char* TesselatedShader::TESS_EVAL_SHADER = "./src/shaders/tessEvalShader.glsl";
+const char* TesselatedShader::FRAGMENT_SHADER = "./src/shaders/fragmentShader.glsl";
 
 #pragma region Public API
 
@@ -39,7 +39,7 @@ void TesselatedShader::CreateUniforms()
 	AddMaterialUniforms();	
 }
 
-void TesselatedShader::LoadMatricesUniforms(glm::mat4 & modelMatrix, glm::mat4 & viewMatrix, glm::mat4 & projectionMatrix)
+void TesselatedShader::LoadMatricesUniforms(const glm::mat4 & modelMatrix, const glm::mat4 & viewMatrix, const glm::mat4 & projectionMatrix)
 {
 	LoadUniform("modelMatrix", modelMatrix);
 	LoadUniform("viewMatrix", viewMatrix);
@@ -52,7 +52,7 @@ void TesselatedShader::LoadTessLevels(float outer, float inner)
 	LoadUniform("tessLevelInner", inner);
 }
 
-void TesselatedShader::LoadMaterialUniforms(Material& material)
+void TesselatedShader::LoadMaterialUniforms(const Material& material)
 {
 	LoadUniform("material.Ka", material.GetKa());
 	LoadUniform("material.Kd", material.GetKd());
@@ -61,7 +61,7 @@ void TesselatedShader::LoadMaterialUniforms(Material& material)
 	LoadUniform("material.shineDamper", material.GetShineDamper());
 }
 
-void TesselatedShader::LoadLightsUniforms(DirectionalLight& directionalLight, PointLight& pointLight, SpotLight& spotLight, glm::mat4& matrice)
+void TesselatedShader::LoadLightsUniforms(const DirectionalLight& directionalLight, const PointLight& pointLight, const SpotLight& spotLight, const glm::mat4& matrice)
 {
 	LoadUniform("directionalLight.color", directionalLight.GetColor());
 	LoadUniform("directionalLight.direction", matrice * glm::vec4(directionalLight.GetDirection(), 0));

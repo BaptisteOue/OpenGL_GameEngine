@@ -1,15 +1,15 @@
+#include "App.h"
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <iostream>
 #include <vector>
-#include <chrono>
-#include "App.h"
 #include "models/Mesh.h"
 #include "maths/Transformations.h"
-#include "utils/OBJLoader.h"
+#include "utils/Loader.h"
 
 App::App()
-    : dCamera(0, 0, 0), m_Camera(), m_Mesh(), m_TessShader()
+    : dCamera(0, 0, 0),
+	m_Camera()
 {
 
 }
@@ -41,8 +41,10 @@ void App::Init()
 
 	m_Camera.Init();
 
-	m_Mesh = OBJLoader::LoadOBJ("OpenGLEngine/res/bunny.obj");
-	m_Material = new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1, 150);
+	Mesh mesh(Loader::LoadOBJ("./res/cube.obj"));
+	Material material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1, 150);
+	material.AddTexture(Loader::LoadTexture("./res/Abstract_Organic_002_COLOR.jpg"));
+	m_GameObject = new GameObject(mesh, material);
 
 	m_DirecationalLight = new DirectionalLight(glm::vec3(0.5), glm::vec3(-1, -1, -1));
 	m_PointLight = new PointLight(glm::vec3(1), glm::vec3(0, 1.5f, 3));
@@ -51,7 +53,6 @@ void App::Init()
 
 	m_PointLight->SetPosition(glm::vec3(2, 2, 0));
 	m_PointLight->SetColor(glm::vec3(1, 0, 0));
-
 }
 
 void App::Input(Window& window)
@@ -97,24 +98,24 @@ void App::Input(Window& window)
 	// Tesselation levels
 	if (window.IsKeyPressed(GLFW_KEY_T))
 	{
-		float tessLevelOuter = m_Mesh.GetTessLevelOuter();
-		m_Mesh.SetTessLevelOuter(tessLevelOuter + 0.1f);
+		float tessLevelOuter = m_GameObject->GetTessLevelOuter();
+		m_GameObject->SetTessLevelOuter(tessLevelOuter + 0.1f);
 
 	}
 	else if (window.IsKeyPressed(GLFW_KEY_G))
 	{
-		float tessLevelOuter = m_Mesh.GetTessLevelOuter();
-		m_Mesh.SetTessLevelOuter(tessLevelOuter - 0.1f);
+		float tessLevelOuter = m_GameObject->GetTessLevelOuter();
+		m_GameObject->SetTessLevelOuter(tessLevelOuter - 0.1f);
 	}
 	if (window.IsKeyPressed(GLFW_KEY_Y))
 	{
-		float tessLevelInner = m_Mesh.GetTessLevelInner();
-		m_Mesh.SetTessLevelInner(tessLevelInner + 0.1f);
+		float tessLevelInner = m_GameObject->GetTessLevelInner();
+		m_GameObject->SetTessLevelInner(tessLevelInner + 0.1f);
 	}
 	else if (window.IsKeyPressed(GLFW_KEY_H))
 	{
-		float tessLevelInner = m_Mesh.GetTessLevelInner();
-		m_Mesh.SetTessLevelInner(tessLevelInner - 0.1f);
+		float tessLevelInner = m_GameObject->GetTessLevelInner();
+		m_GameObject->SetTessLevelInner(tessLevelInner - 0.1f);
 	}
 
 	if (Window::s_MouseMooved)
@@ -149,19 +150,25 @@ void App::Render()
 
 	glm::mat4 viewMatrix = Transformations::GetViewMatrix(m_Camera);
 
-	m_TessShader.LoadTessLevels(m_Mesh.GetTessLevelOuter(), m_Mesh.GetTessLevelInner());
+	if (m_GameObject->GetMaterial().IsTextured())
+	{
+		glActiveTexture(m_GameObject->GetMaterial().GetTexture().GetActiveTexture());
+		glBindTexture(GL_TEXTURE_2D, m_GameObject->GetMaterial().GetTexture().GetTextureID());
+	}
+		
+	m_TessShader.LoadTessLevels(m_GameObject->GetTessLevelOuter(), m_GameObject->GetTessLevelInner());
 	m_TessShader.LoadMatricesUniforms(modelMatrix, viewMatrix, projectionMatrix);
 	m_TessShader.LoadLightsUniforms(*m_DirecationalLight, *m_PointLight, *m_SpotLight, viewMatrix);
-	m_TessShader.LoadMaterialUniforms(*m_Material);
+	m_TessShader.LoadMaterialUniforms(m_GameObject->GetMaterial());
 
-    m_Mesh.Draw();
+	m_GameObject->Draw();
 	m_TessShader.Use(false);
 }
 
 void App::CleanUp()
 {
-	m_Mesh.CleanUp();
+	m_GameObject->CleanUp();
 	delete m_DirecationalLight;
 	delete m_PointLight;
-	delete m_Material;
+	delete m_GameObject;
 }

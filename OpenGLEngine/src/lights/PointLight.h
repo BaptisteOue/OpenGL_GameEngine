@@ -1,7 +1,7 @@
 #pragma once
 
-#include <glm/glm.hpp>
 #include "BasicLight.h"
+#include <glm/glm.hpp>
 
 class PointLight : public BasicLight
 {
@@ -17,10 +17,10 @@ public:
 	~PointLight();
 
 	const glm::vec3 GetPosition() const;
-	void SetPosition(const glm::vec3& position);
+	const float GetConstAtt() const;
+	const float GetLinearAtt() const;
+	const float GetQuadraticAtt() const;
 
+	void SetPosition(const glm::vec3& position);
 	void SetAttenuation(const float constant, const float linear, const float quadratic);
-	float GetConstAtt() const;
-	float GetLinearAtt() const;
-	float GetQuadraticAtt() const;
 };

@@ -1,6 +1,8 @@
 #include "SpotLight.h"
 #include <glm/glm.hpp>
 
+#pragma region Public API
+
 SpotLight::SpotLight(PointLight pointLight, float cutoffAngle, const glm::vec3& direction)
 	: PointLight(pointLight), m_Direction(direction)
 {
@@ -11,12 +13,12 @@ SpotLight::~SpotLight()
 {
 }
 
-float SpotLight::GetCutoffAngle() const
+const float SpotLight::GetCutoffAngle() const
 {
 	return m_CutoffAngle;
 }
 
-glm::vec3 SpotLight::GetDirection() const
+const glm::vec3 SpotLight::GetDirection() const
 {
 	return m_Direction;
 }
@@ -30,3 +32,7 @@ void SpotLight::SetDirection(const glm::vec3& direction)
 {
 	m_Direction = direction;
 }
+
+#pragma endregion
+
+

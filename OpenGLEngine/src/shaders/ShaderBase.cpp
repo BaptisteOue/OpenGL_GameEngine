@@ -1,9 +1,7 @@
-#include <GL/glew.h>
-#include <glm/glm.hpp>
+#include "ShaderBase.h"
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
 #include <iostream>
-#include "ShaderBase.h"
 #include "../utils/FileUtils.h"
 
 
@@ -51,12 +49,12 @@ void ShaderBase::AddUniform(const char* uniformName)
     }
 }
 
-void ShaderBase::LoadUniform(const char* uniformName, glm::mat4& value)
+void ShaderBase::LoadUniform(const char* uniformName, const glm::mat4& value)
 {
     glUniformMatrix4fv(m_Uniforms[uniformName], 1, GL_FALSE, glm::value_ptr(value));
 }
 
-void ShaderBase::LoadUniform(const char * uniformName, glm::vec3 value)
+void ShaderBase::LoadUniform(const char * uniformName, const glm::vec3& value)
 {
 	glUniform3f(m_Uniforms[uniformName], value.x, value.y, value.z);
 }
@@ -66,7 +64,7 @@ void ShaderBase::LoadUniform(const char * uniformName, float value)
 	glUniform1f(m_Uniforms[uniformName], value);
 }
 
-GLuint ShaderBase::CreateShader(GLuint shaderType, std::string& shaderFilePath)
+GLuint ShaderBase::CreateShader(GLuint shaderType, const std::string& shaderFilePath)
 {
 	std::string stringShaderSource = FileUtils::LoadFile(shaderFilePath);
 

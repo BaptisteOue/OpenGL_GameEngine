@@ -1,5 +1,6 @@
 #include "DirectionalLight.h"
-#include <glm/glm.hpp>
+
+#pragma region Public API
 
 DirectionalLight::DirectionalLight(const glm::vec3& color, const glm::vec3& direction)
 	: BasicLight(color), m_Direction(direction)
@@ -14,3 +15,5 @@ const glm::vec3 DirectionalLight::GetDirection() const
 {
 	return m_Direction;
 }
+
+#pragma endregion

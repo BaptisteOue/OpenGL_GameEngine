@@ -1,23 +1,20 @@
 #pragma once
 
-#include "models/Mesh.h"
 #include "coreEngine/IGameLogic.h"
 #include "coreEngine/Camera.h"
 #include "shaders/BasicShader.h"
 #include "shaders/TesselatedShader.h"
-#include "materials/Material.h"
 #include "lights/DirectionalLight.h"
 #include "lights/PointLight.h"
 #include "lights/SpotLight.h"
-#include <memory>
+#include "models/GameObject.h"
 
 class App : public IGameLogic
 {
 private:
 	TesselatedShader m_TessShader;
     
-	Mesh m_Mesh;
-	Material* m_Material;
+	GameObject* m_GameObject;
 
 	DirectionalLight* m_DirecationalLight;
 	PointLight* m_PointLight;

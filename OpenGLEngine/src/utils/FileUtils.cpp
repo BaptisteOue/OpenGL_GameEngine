@@ -5,7 +5,7 @@
 
 #pragma region Public API
 
-std::string FileUtils::LoadFile(std::string filePath)
+std::string FileUtils::LoadFile(const std::string filePath)
 {
 	std::ifstream file;
 	file.open(filePath);

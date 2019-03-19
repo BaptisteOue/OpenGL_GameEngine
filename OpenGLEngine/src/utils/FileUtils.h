@@ -9,5 +9,5 @@ public:
     FileUtils() = delete;
     ~FileUtils() = delete;
 
-    static std::string LoadFile(std::string filePath);
+    static std::string LoadFile(const std::string filePath);
 };

@@ -4,6 +4,7 @@ in OUT
 {
     vec4 eye_pos;
     vec4 eye_normal;
+    vec2 texCoords;
 } fs_in;
 
 out vec4 fragColor;
@@ -43,6 +44,7 @@ struct SpotLight
 
 
 uniform Material material;
+layout(binding = 0) uniform sampler2D textureSampler;
 
 uniform DirectionalLight directionalLight;
 uniform PointLight pointLight;
@@ -116,4 +118,6 @@ vec4 ComputeSpotLight(SpotLight spotLight)
 void main()
 {
     fragColor = ComputeDirectionalLight(directionalLight) + ComputePointLight(pointLight) + ComputeSpotLight(spotLight);
+    vec4 texColor = texture(textureSampler, fs_in.texCoords);
+    fragColor += texColor;
 }

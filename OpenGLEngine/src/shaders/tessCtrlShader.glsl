@@ -6,12 +6,14 @@ in OUT
 {
     vec4 eye_pos;
     vec4 eye_normal;
+    vec2 texCoords;
 } tess_in[];
 
 out TESS_CTRL_OUT
 {
     vec4 eye_pos;
     vec4 eye_normal;
+    vec2 texCoords;
 } tess_out[];
 
 uniform float tessLevelOuter;
@@ -25,6 +27,7 @@ void main(void)
 
     tess_out[gl_InvocationID].eye_pos = tess_in[gl_InvocationID].eye_pos;
     tess_out[gl_InvocationID].eye_normal = tess_in[gl_InvocationID].eye_normal;
+    tess_out[gl_InvocationID].texCoords = tess_in[gl_InvocationID].texCoords;
 
     gl_TessLevelOuter[0] = tessLevelOuter;
     gl_TessLevelOuter[1] = tessLevelOuter;

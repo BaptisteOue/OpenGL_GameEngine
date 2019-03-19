@@ -1,9 +1,5 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
-#include <string>
 #include "Window.h"
-#include <glm/glm.hpp>
+#include <iostream>
 
 int Window::s_Width = 0;
 int Window::s_Height = 0;

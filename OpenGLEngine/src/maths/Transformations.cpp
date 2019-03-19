@@ -1,6 +1,5 @@
-#include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
-#include <glm/glm.hpp>
 #include "Transformations.h"
+#include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
 #include "../coreEngine/Window.h"
 #include "../coreEngine/Camera.h"
 

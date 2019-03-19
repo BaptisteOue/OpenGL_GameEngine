@@ -1,6 +1,5 @@
-#include <chrono>
-#include <iostream>
 #include "Timer.h"
+#include <iostream>
 
 #pragma region Public API
 

@@ -22,16 +22,16 @@ protected:
 	std::map<const char*, GLuint> m_Uniforms;
 
 protected:
-	GLuint CreateShader(GLuint shaderType, std::string& shaderFilePath);
+	GLuint CreateShader(GLuint shaderType, const std::string& shaderFilePath);
 	GLuint CreateVertexShader();
 	GLuint CreateFragmentShader();
 	GLuint CreateTessCtrlShader();
 	GLuint CreateTessEvalShader();
 	GLuint CreateProgram();
 	void AddUniform(const char* uniformName);
-	void LoadUniform(const char* uniformName, glm::mat4& value);
-	void LoadUniform(const char* uniformName, glm::vec3 value);
-	void LoadUniform(const char* uniformName, float value);
+	void LoadUniform(const char* uniformName, const glm::mat4& value);
+	void LoadUniform(const char* uniformName, const glm::vec3& value);
+	void LoadUniform(const char* uniformName, const float value);
 
 public:
 	ShaderBase(const char* vertexShaderPath = "", const char* fragmentShaderPath = "",

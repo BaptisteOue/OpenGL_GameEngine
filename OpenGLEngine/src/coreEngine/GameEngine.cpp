@@ -1,6 +1,4 @@
-#include <thread>
 #include "GameEngine.h"
-#include "Timer.h"
 
 float GameEngine::UPS = 60;
 

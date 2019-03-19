@@ -29,17 +29,17 @@ void PointLight::SetAttenuation(float constant, float linear, float quadratic)
 	m_QuadraticAtt = quadratic;
 }
 
-float PointLight::GetConstAtt() const
+const float PointLight::GetConstAtt() const
 {
 	return m_ConstAtt;
 }
 
-float PointLight::GetLinearAtt() const
+const float PointLight::GetLinearAtt() const
 {
 	return m_LinearAtt;
 }
 
-float PointLight::GetQuadraticAtt() const
+const float PointLight::GetQuadraticAtt() const
 {
 	return m_QuadraticAtt;
 }

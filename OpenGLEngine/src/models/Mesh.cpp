@@ -6,7 +6,8 @@
 #pragma region Public API
 
 Mesh::Mesh()
-	: m_VaoID(0), m_VertexCount(0), m_TessLevelInner(1), m_TessLevelOuter(1)
+	: m_VaoID(0),
+	m_VertexCount(0)
 {
 }
 
@@ -14,7 +15,10 @@ Mesh::~Mesh()
 {
 }
 
-void Mesh::LoadMesh(std::vector<GLfloat>& positions, std::vector<GLfloat>& normals, std::vector<GLuint>& indices)
+void Mesh::LoadMesh(const std::vector<GLfloat>& positions, 
+	const std::vector<GLfloat>& normals,
+	const std::vector<GLfloat>& texCoords,
+	const std::vector<GLuint>& indices)
 {
 	m_VertexCount = indices.size();
 
@@ -26,6 +30,7 @@ void Mesh::LoadMesh(std::vector<GLfloat>& positions, std::vector<GLfloat>& norma
 
 	AddData(0, 3, positions);
 	AddData(1, 3, normals);
+	AddData(2, 2, texCoords);
 
 	AddIndices(indices);
 
@@ -47,35 +52,6 @@ void Mesh::CleanUp()
 {
 	glDeleteBuffers(m_Vbos.size(), m_Vbos.data());
 	glDeleteBuffers(1, &m_EboID);
-
-}
-
-float Mesh::GetTessLevelOuter() const
-{
-	return m_TessLevelOuter;
-}
-
-float Mesh::GetTessLevelInner() const
-{
-	return m_TessLevelInner;
-}
-
-void Mesh::SetTessLevelOuter(float value)
-{
-	m_TessLevelOuter = value;
-	if (m_TessLevelOuter < 1)
-		m_TessLevelOuter = 1;
-
-	std::cout << "Outer tesselation level : " << m_TessLevelOuter << std::endl;
-}
-
-void Mesh::SetTessLevelInner(float value)
-{
-	m_TessLevelInner = value;
-	if (m_TessLevelInner < 1)
-		m_TessLevelInner = 1;
-
-	std::cout << "Inner tesselation level : " << m_TessLevelInner << std::endl;
 }
 
 
@@ -84,7 +60,7 @@ void Mesh::SetTessLevelInner(float value)
 
 #pragma region Private API
 
-void Mesh::AddData(int attribIndex, int count, std::vector<GLfloat>data)
+void Mesh::AddData(const int attribIndex, const int count, const std::vector<GLfloat>data)
 {
 	GLuint vboID = 0;
 	glGenBuffers(1, &vboID);
@@ -101,7 +77,7 @@ void Mesh::AddData(int attribIndex, int count, std::vector<GLfloat>data)
 	m_Vbos.emplace_back(vboID);
 }
 
-void Mesh::AddIndices(std::vector<GLuint>indices)
+void Mesh::AddIndices(const std::vector<GLuint>indices)
 {
 	GLuint eboId = 0;
 	glGenBuffers(1, &eboId);

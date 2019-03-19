@@ -30,13 +30,15 @@
     <ClCompile Include="src\lights\SpotLight.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\materials\Material.cpp" />
+    <ClCompile Include="src\materials\Texture.cpp" />
     <ClCompile Include="src\maths\Transformations.cpp" />
+    <ClCompile Include="src\models\GameObject.cpp" />
     <ClCompile Include="src\models\Mesh.cpp" />
     <ClCompile Include="src\shaders\BasicShader.cpp" />
     <ClCompile Include="src\shaders\ShaderBase.cpp" />
     <ClCompile Include="src\shaders\TesselatedShader.cpp" />
     <ClCompile Include="src\utils\FileUtils.cpp" />
-    <ClCompile Include="src\utils\OBJLoader.cpp" />
+    <ClCompile Include="src\utils\Loader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\lights\BasicLight.h" />
@@ -44,6 +46,8 @@
     <ClInclude Include="src\lights\PointLight.h" />
     <ClInclude Include="src\lights\SpotLight.h" />
     <ClInclude Include="src\materials\Material.h" />
+    <ClInclude Include="src\materials\Texture.h" />
+    <ClInclude Include="src\models\GameObject.h" />
     <ClInclude Include="src\shaders\BasicShader.h" />
     <ClInclude Include="src\coreEngine\Camera.h" />
     <ClInclude Include="src\App.h" />
@@ -56,7 +60,7 @@
     <ClInclude Include="src\shaders\ShaderBase.h" />
     <ClInclude Include="src\shaders\TesselatedShader.h" />
     <ClInclude Include="src\utils\FileUtils.h" />
-    <ClInclude Include="src\utils\OBJLoader.h" />
+    <ClInclude Include="src\utils\Loader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\fragmentShader.glsl" />
