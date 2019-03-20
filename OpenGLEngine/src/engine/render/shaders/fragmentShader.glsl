@@ -17,6 +17,7 @@ struct Material
     vec3 Ks;
     float reflectivity;
     float shineDamper;
+    bool isTextured;
 };
 
 /* Lights */
@@ -125,6 +126,9 @@ vec4 ComputeSpotLight(SpotLight spotLight)
 void main()
 {
     fragColor = ComputeDirectionalLight(directionalLight) + ComputePointLight(pointLight) + ComputeSpotLight(spotLight);
-    vec4 texColor = texture(textureSampler, fs_in.texCoords);
-    fragColor += texColor;
+    if(material.isTextured)
+    {
+        vec4 texColor = texture(textureSampler, fs_in.texCoords);
+        fragColor += texColor;
+    }    
 }

@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include "ShaderBase.h"
 #include "../materials/Material.h"
+#include "../lights/BasicLight.h"
 #include "../lights/DirectionalLight.h"
 #include "../lights/PointLight.h"
 #include "../lights/SpotLight.h"
@@ -18,7 +19,17 @@ public:
 	static const char* FRAGMENT_SHADER;
 private:
 	void AddLightUniforms();
+	void AddBasicLightUniforms(const std::string& uniformName);
+	void AddDirectionalLightUniforms(const std::string& uniformName);
+	void AddPointLightUniforms(const std::string& uniformName);
+	void AddSpotLightUniforms(const std::string& uniformName);
+
 	void AddMaterialUniforms();
+
+	void LoadBasicLightUniforms(const std::string& uniformName, const BasicLight& basicLight);
+	void LoadDirectionalLightUniforms(const std::string& uniformName, const DirectionalLight& directionalLight, const glm::mat4& matrice);
+	void LoadPointLightUniforms(const std::string& uniformName, const PointLight& pointLight, const glm::mat4& matrice);
+	void LoadSpotLightUniforms(const std::string& uniformName, const SpotLight& spotLight, const glm::mat4& matrice);
 public:
 	TesselatedShader();
 	~TesselatedShader();

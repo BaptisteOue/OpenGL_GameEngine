@@ -12,9 +12,10 @@ private:
 	float m_Reflectivity;
 	float m_ShineDamper;
 
-	Texture* m_texture;
+	Texture* m_Texture;
 
 public:
+	Material(const Material& material);
 	Material(glm::vec3&& Ka, glm::vec3&& Kd, glm::vec3&& Ks, float reflectivity, float shineDamper);
 	~Material();
 

@@ -60,6 +60,7 @@ Mesh& Loader::LoadOBJ(const char* objFile)
 	std::vector<GLfloat> ordered_positions;
 	std::vector<GLfloat> ordered_normals;
 	std::vector<GLfloat> ordered_uvs;
+	std::vector<GLfloat> ordered_tangents;
 	std::vector<GLuint> indices;
 
 	for (int i = 0; i < vertexIndices.size(); i++)
@@ -153,7 +154,6 @@ void Loader::ParseFace(
 		ss.clear();
 	}
 }
-
 #pragma endregion
 
 

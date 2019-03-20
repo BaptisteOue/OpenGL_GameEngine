@@ -42,12 +42,12 @@ void ShaderBase::CleanUp()
 
 #pragma region Private API
 
-void ShaderBase::AddUniform(const char* uniformName)
+void ShaderBase::AddUniform(const std::string& uniformName)
 {
-    GLuint uniformLocation = glGetUniformLocation(m_Program, uniformName);
+    GLuint uniformLocation = glGetUniformLocation(m_Program, uniformName.c_str());
     if(uniformLocation != -1)
     {
-        m_Uniforms.emplace(std::pair<const char* , GLuint>(uniformName, uniformLocation));
+        m_Uniforms.emplace(std::pair<const std::string, GLuint>(uniformName, uniformLocation));
     }
     else
     {
@@ -55,20 +55,29 @@ void ShaderBase::AddUniform(const char* uniformName)
     }
 }
 
-void ShaderBase::LoadUniform(const char* uniformName, const glm::mat4& value)
+void ShaderBase::LoadUniform(const std::string& uniformName, const glm::mat4& value)
 {
     glUniformMatrix4fv(m_Uniforms[uniformName], 1, GL_FALSE, glm::value_ptr(value));
 }
 
-void ShaderBase::LoadUniform(const char * uniformName, const glm::vec3& value)
+void ShaderBase::LoadUniform(const std::string& uniformName, const glm::vec3& value)
 {
 	glUniform3f(m_Uniforms[uniformName], value.x, value.y, value.z);
 }
 
-void ShaderBase::LoadUniform(const char * uniformName, float value)
+void ShaderBase::LoadUniform(const std::string& uniformName, float value)
 {
 	glUniform1f(m_Uniforms[uniformName], value);
 }
+
+void ShaderBase::LoadUniform(const std::string& uniformName, bool value)
+{
+	if(value)
+		glUniform1i(m_Uniforms[uniformName], 1);
+	else
+		glUniform1i(m_Uniforms[uniformName], 0);
+}
+
 
 GLuint ShaderBase::CreateShader(GLuint shaderType, const std::string& shaderFilePath)
 {

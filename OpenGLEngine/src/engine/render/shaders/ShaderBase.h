@@ -19,7 +19,7 @@ protected:
 	std::string m_TessEvalShaderPath;
 	std::string m_FragmentShaderPath;
 
-	std::map<const char*, GLuint> m_Uniforms;
+	std::map<const std::string, GLuint> m_Uniforms;
 
 protected:
 	GLuint CreateShader(GLuint shaderType, const std::string& shaderFilePath);
@@ -28,10 +28,11 @@ protected:
 	GLuint CreateTessCtrlShader();
 	GLuint CreateTessEvalShader();
 	GLuint CreateProgram();
-	void AddUniform(const char* uniformName);
-	void LoadUniform(const char* uniformName, const glm::mat4& value);
-	void LoadUniform(const char* uniformName, const glm::vec3& value);
-	void LoadUniform(const char* uniformName, const float value);
+	void AddUniform(const std::string& uniformName);
+	void LoadUniform(const std::string& uniformName, const glm::mat4& value);
+	void LoadUniform(const std::string& uniformName, const glm::vec3& value);
+	void LoadUniform(const std::string& uniformName, const float value);
+	void LoadUniform(const std::string& uniformName, bool value);
 
 public:
 	ShaderBase(const char* vertexShaderPath = "", const char* fragmentShaderPath = "",

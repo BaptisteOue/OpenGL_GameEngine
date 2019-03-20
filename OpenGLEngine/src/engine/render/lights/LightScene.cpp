@@ -22,7 +22,7 @@ void LightScene::Init()
 	m_SpotLight = new SpotLight(*m_PointLight, 10, glm::vec3(0, 0, -1));
 
 	// Point light
-	m_PointLight->SetIntensity(10);
+	m_PointLight->SetIntensity(1);
 	m_PointLight->SetPosition(glm::vec3(2, 2, 0));
 	m_PointLight->SetColor(glm::vec3(1, 0, 0));
 }

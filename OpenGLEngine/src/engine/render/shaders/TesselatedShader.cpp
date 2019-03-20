@@ -59,29 +59,17 @@ void TesselatedShader::LoadMaterialUniforms(const Material& material)
 	LoadUniform("material.Ks", material.GetKs());
 	LoadUniform("material.reflectivity", material.GetReflectivity());
 	LoadUniform("material.shineDamper", material.GetShineDamper());
+	LoadUniform("material.isTextured", material.IsTextured());
 }
 
 void TesselatedShader::LoadLightsUniforms(const DirectionalLight& directionalLight, const PointLight& pointLight, const SpotLight& spotLight, const glm::mat4& matrice)
 {
-	LoadUniform("directionalLight.baseLight.color", directionalLight.GetColor());
-	LoadUniform("directionalLight.baseLight.intensity", directionalLight.GetIntensity());
-	LoadUniform("directionalLight.direction", matrice * glm::vec4(directionalLight.GetDirection(), 0));
 
-	LoadUniform("pointLight.baseLight.color", pointLight.GetColor());
-	LoadUniform("pointLight.baseLight.intensity", pointLight.GetIntensity());
-	LoadUniform("pointLight.constAtt", pointLight.GetConstAtt());
-	LoadUniform("pointLight.linearAtt", pointLight.GetLinearAtt());
-	LoadUniform("pointLight.quadraticAtt", pointLight.GetQuadraticAtt());
-	LoadUniform("pointLight.position", matrice * glm::vec4(pointLight.GetPosition(), 1));
+	LoadDirectionalLightUniforms("directionalLight", directionalLight, matrice);
 
-	LoadUniform("spotLight.pointLight.baseLight.color", spotLight.GetColor());
-	LoadUniform("spotLight.pointLight.baseLight.intensity", spotLight.GetIntensity());
-	LoadUniform("spotLight.pointLight.constAtt", spotLight.GetConstAtt());
-	LoadUniform("spotLight.pointLight.linearAtt", spotLight.GetLinearAtt());
-	LoadUniform("spotLight.pointLight.quadraticAtt", spotLight.GetQuadraticAtt());
-	LoadUniform("spotLight.pointLight.position", matrice * glm::vec4(spotLight.GetPosition(), 1));
-	LoadUniform("spotLight.cutoffAngle", spotLight.GetCutoffAngle());
-	LoadUniform("spotLight.direction", matrice * glm::vec4(spotLight.GetDirection(), 0));
+	LoadPointLightUniforms("pointLight", pointLight, matrice);
+
+	LoadSpotLightUniforms("spotLight", spotLight, matrice);
 }
 
 #pragma endregion
@@ -91,25 +79,38 @@ void TesselatedShader::LoadLightsUniforms(const DirectionalLight& directionalLig
 
 void TesselatedShader::AddLightUniforms()
 {
-	AddUniform("directionalLight.baseLight.color");
-	AddUniform("directionalLight.baseLight.intensity");
-	AddUniform("directionalLight.direction");
+	AddDirectionalLightUniforms("directionalLight");
+	AddPointLightUniforms("pointLight");
+	AddSpotLightUniforms("spotLight");	
+}
 
-	AddUniform("pointLight.baseLight.color");
-	AddUniform("pointLight.baseLight.intensity");
-	AddUniform("pointLight.position");
-	AddUniform("pointLight.constAtt");
-	AddUniform("pointLight.linearAtt");
-	AddUniform("pointLight.quadraticAtt");
+void TesselatedShader::AddBasicLightUniforms(const std::string & uniformName)
+{
+	AddUniform(uniformName + ".color");
+	AddUniform(uniformName + ".intensity");
+}
 
-	AddUniform("spotLight.pointLight.baseLight.color");
-	AddUniform("spotLight.pointLight.baseLight.intensity");
-	AddUniform("spotLight.pointLight.constAtt");
-	AddUniform("spotLight.pointLight.linearAtt");
-	AddUniform("spotLight.pointLight.quadraticAtt");
-	AddUniform("spotLight.pointLight.position");
-	AddUniform("spotLight.cutoffAngle");
-	AddUniform("spotLight.direction");
+void TesselatedShader::AddDirectionalLightUniforms(const std::string & uniformName)
+{
+	AddBasicLightUniforms(uniformName + ".baseLight");
+	AddUniform(uniformName + ".direction");
+}
+
+void TesselatedShader::AddPointLightUniforms(const std::string & uniformName)
+{
+	AddBasicLightUniforms(uniformName + ".baseLight");
+	AddUniform(uniformName + ".position");
+	AddUniform(uniformName + ".constAtt");
+	AddUniform(uniformName + ".linearAtt");
+	AddUniform(uniformName + ".quadraticAtt");
+}
+
+void TesselatedShader::AddSpotLightUniforms(const std::string & uniformName)
+{
+	AddBasicLightUniforms(uniformName + ".pointLight.baseLight");
+	AddPointLightUniforms(uniformName + ".pointLight");
+	AddUniform(uniformName + ".cutoffAngle");
+	AddUniform(uniformName + ".direction");
 }
 
 void TesselatedShader::AddMaterialUniforms()
@@ -119,7 +120,38 @@ void TesselatedShader::AddMaterialUniforms()
 	AddUniform("material.Ks");
 	AddUniform("material.reflectivity");
 	AddUniform("material.shineDamper");
+	AddUniform("material.isTextured");
 }
+
+
+void TesselatedShader::LoadBasicLightUniforms(const std::string& uniformName, const BasicLight & basicLight)
+{
+	LoadUniform(uniformName + ".color", basicLight.GetColor());
+	LoadUniform(uniformName + ".intensity", basicLight.GetIntensity());
+}
+
+void TesselatedShader::LoadDirectionalLightUniforms(const std::string & uniformName, const DirectionalLight & directionalLight, const glm::mat4 & matrice)
+{
+	LoadBasicLightUniforms(uniformName + ".baseLight", directionalLight);
+	LoadUniform(uniformName + ".direction", matrice * glm::vec4(directionalLight.GetDirection(), 0));
+}
+
+void TesselatedShader::LoadPointLightUniforms(const std::string & uniformName, const PointLight & pointLight, const glm::mat4 & matrice)
+{
+	LoadBasicLightUniforms(uniformName + ".baseLight", pointLight);
+	LoadUniform(uniformName + ".constAtt", pointLight.GetConstAtt());
+	LoadUniform(uniformName + ".linearAtt", pointLight.GetLinearAtt());
+	LoadUniform(uniformName + ".quadraticAtt", pointLight.GetQuadraticAtt());
+	LoadUniform(uniformName + ".position", matrice * glm::vec4(pointLight.GetPosition(), 1));
+}
+
+void TesselatedShader::LoadSpotLightUniforms(const std::string & uniformName, const SpotLight & spotLight, const glm::mat4 & matrice)
+{
+	LoadPointLightUniforms(uniformName + ".pointLight", spotLight, matrice);
+	LoadUniform(uniformName + ".cutoffAngle", spotLight.GetCutoffAngle());
+	LoadUniform(uniformName + ".direction", matrice * glm::vec4(spotLight.GetDirection(), 0));
+}
+
 #pragma endregion
 
 

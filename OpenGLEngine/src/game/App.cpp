@@ -30,17 +30,17 @@ void App::Init()
 
 	m_LightScene.Init();
 
-	Material material1(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1, 150);
-	material1.AddTexture(Loader::LoadTexture("./res/Abstract_Organic_002_COLOR.jpg"));
+	Mesh m(Loader::LoadOBJ("./res/cube.obj"));
+	Material material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1, 100);
+	//material.AddTexture(Loader::LoadTexture("./res/Abstract_Organic_002_COLOR.jpg"));
 
-	Material material2(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1, 150);
-
-	Material material3(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1, 150);
-	material3.AddTexture(Loader::LoadTexture("./res/Abstract_Organic_002_COLOR.jpg"));
-
-	m_GameObjects.emplace_back(Mesh(Loader::LoadOBJ("./res/cube.obj")) , material1);
-	m_GameObjects.emplace_back(Mesh(Loader::LoadOBJ("./res/cube.obj")) , material2, glm::vec3(-3, 0, 0));
-	m_GameObjects.emplace_back(Mesh(Loader::LoadOBJ("./res/cube.obj")), material3, glm::vec3(3, 0, 0));
+	for (int i = -10; i < 10; i++)
+	{
+		for (int j = -10; j < 10; j++)
+		{
+			m_GameObjects.emplace_back(m, material, glm::vec3(-2.5f * i, 0, -2.5f * j));
+		}
+	}
 }
 
 void App::Input(Window& window)
@@ -122,6 +122,13 @@ void App::Update(float interval)
 {
 	m_Camera.Update(dCamera);
 	m_LightScene.GetSpotLight().SimulateTorch(m_Camera);
+
+	for (GameObject& gameObject : m_GameObjects)
+	{
+		glm::vec3 rotation = gameObject.GetRotation();
+		rotation += glm::vec3(0.5f, 0.5f, 0.5f);
+		gameObject.SetRotation(rotation);
+	}
 }
 
 void App::Render()
