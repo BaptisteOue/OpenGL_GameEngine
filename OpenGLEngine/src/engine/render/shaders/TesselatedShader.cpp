@@ -35,7 +35,7 @@ void TesselatedShader::CreateUniforms()
 	AddUniform("tessLevelOuter");
 	AddUniform("tessLevelInner");
 
-	AddLightUniforms();
+	AddLightUniforms(1, 2, 3);
 	AddMaterialUniforms();	
 }
 
@@ -62,14 +62,28 @@ void TesselatedShader::LoadMaterialUniforms(const Material& material)
 	LoadUniform("material.isTextured", material.IsTextured());
 }
 
-void TesselatedShader::LoadLightsUniforms(const DirectionalLight& directionalLight, const PointLight& pointLight, const SpotLight& spotLight, const glm::mat4& matrice)
-{
+void TesselatedShader::LoadLightsUniforms(const LightScene& lightScene, const glm::mat4& matrice)
+{	
+	int i = 0;
+	for (const DirectionalLight& directionalLight : lightScene.GetDirectionalLights())
+	{
+		LoadDirectionalLightUniforms("directionalLights[" + std::to_string(i) + "]", directionalLight, matrice);
+		i++;
+	}
 
-	LoadDirectionalLightUniforms("directionalLight", directionalLight, matrice);
+	i = 0;
+	for (const PointLight& pointLight : lightScene.GetPointLights())
+	{
+		LoadPointLightUniforms("pointLights[" + std::to_string(i) + "]", pointLight, matrice);
+		i++;
+	}
 
-	LoadPointLightUniforms("pointLight", pointLight, matrice);
-
-	LoadSpotLightUniforms("spotLight", spotLight, matrice);
+	i = 0;
+	for (const SpotLight& spotLight : lightScene.GetSpotLights())
+	{
+		LoadSpotLightUniforms("spotLights[" + std::to_string(i) + "]", spotLight, matrice);
+		i++;
+	}
 }
 
 #pragma endregion
@@ -77,11 +91,14 @@ void TesselatedShader::LoadLightsUniforms(const DirectionalLight& directionalLig
 
 #pragma region Private API
 
-void TesselatedShader::AddLightUniforms()
+void TesselatedShader::AddLightUniforms(int numDir, int numPoint, int numSpot)
 {
-	AddDirectionalLightUniforms("directionalLight");
-	AddPointLightUniforms("pointLight");
-	AddSpotLightUniforms("spotLight");	
+	for(int i = 0; i < numDir; i++)
+		AddDirectionalLightUniforms("directionalLights[" + std::to_string(i) + "]");
+	for (int i = 0; i < numPoint; i++)
+		AddPointLightUniforms("pointLights[" + std::to_string(i) + "]");
+	for (int i = 0; i < numSpot; i++)
+		AddSpotLightUniforms("spotLights[" + std::to_string(i) + "]");
 }
 
 void TesselatedShader::AddBasicLightUniforms(const std::string & uniformName)

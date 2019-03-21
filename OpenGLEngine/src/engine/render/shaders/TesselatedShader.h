@@ -7,6 +7,7 @@
 #include "../lights/DirectionalLight.h"
 #include "../lights/PointLight.h"
 #include "../lights/SpotLight.h"
+#include "../lights/LightScene.h"
 #include "../core/Camera.h"
 
 
@@ -18,7 +19,7 @@ public:
 	static const char* TESS_EVAL_SHADER;
 	static const char* FRAGMENT_SHADER;
 private:
-	void AddLightUniforms();
+	void AddLightUniforms(int numDir, int numPoint, int numSpot);
 	void AddBasicLightUniforms(const std::string& uniformName);
 	void AddDirectionalLightUniforms(const std::string& uniformName);
 	void AddPointLightUniforms(const std::string& uniformName);
@@ -41,6 +42,6 @@ public:
 	void LoadMatricesUniforms(const glm::mat4& modelMatrix, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
 	void LoadTessLevels(float outer, float inner);
 	void LoadMaterialUniforms(const Material& material);
-	void LoadLightsUniforms(const DirectionalLight& directionalLight, const PointLight& pointLight, const SpotLight& spotLight, const glm::mat4& matrice);
+	void LoadLightsUniforms(const LightScene& lightScene, const glm::mat4& matrice);
 };
 

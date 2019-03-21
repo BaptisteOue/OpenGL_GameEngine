@@ -78,8 +78,11 @@ Mesh& Loader::LoadOBJ(const char* objFile)
 		ordered_normals.push_back(temp_normals[normIndex].z);
 
 		int texIndex = uvIndices[i];
-		ordered_uvs.push_back(temp_uvs[texIndex].x);
-		ordered_uvs.push_back(temp_uvs[texIndex].y);
+		if (texIndex != -1)
+		{
+			ordered_uvs.push_back(temp_uvs[texIndex].x);
+			ordered_uvs.push_back(temp_uvs[texIndex].y);
+		}
 	}
 
 	file.close();

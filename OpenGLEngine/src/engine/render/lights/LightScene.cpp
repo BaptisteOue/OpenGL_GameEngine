@@ -1,9 +1,13 @@
 #include "LightScene.h"
 
+
+#pragma region Public API
+
+
 LightScene::LightScene()
-	:m_DirecationalLight(nullptr),
-	m_PointLight(nullptr),
-	m_SpotLight(nullptr)
+	:m_DirecationalLights(),
+	m_PointLights(),
+	m_SpotLights()
 {
 }
 
@@ -13,38 +17,80 @@ LightScene::~LightScene()
 
 void LightScene::Init()
 {
-	// Directional Light
-	m_DirecationalLight = new DirectionalLight(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(-1, -1, -1));
+	// Directional Lights
+	m_DirecationalLights.push_back(DirectionalLight(glm::vec3(1), glm::vec3(-1, -1, -1), 0.01f));
 
-	// Spot light
-	m_PointLight = new PointLight(glm::vec3(0, 0.4f, 0.7f), glm::vec3(0, 1.5f, 3), 2);
-	m_PointLight->SetAttenuation(1, 0.2f, 0.02f);
-	m_SpotLight = new SpotLight(*m_PointLight, 10, glm::vec3(0, 0, -1));
+	// Point lights
+	PointLight pointLight(glm::vec3(1, 0, 0), glm::vec3(-6, 3, 0), 1);
+	pointLight.SetAttenuation(1, 0.2f, 0.02f);
+	m_PointLights.push_back(pointLight);
 
-	// Point light
-	m_PointLight->SetIntensity(1);
-	m_PointLight->SetPosition(glm::vec3(2, 2, 0));
-	m_PointLight->SetColor(glm::vec3(1, 0, 0));
+	pointLight.SetColor(glm::vec3(0, 1, 0));
+	pointLight.SetPosition(glm::vec3(-3, 3, 0));
+	m_PointLights.push_back(pointLight);
+
+	// Torch
+	pointLight.SetIntensity(2);
+	pointLight.SetColor(glm::vec3(1));
+	m_SpotLights.push_back(SpotLight(pointLight, 10, glm::vec3(0, 0, -1)));
+
+	// Other Spot lights...
+	pointLight.SetIntensity(1);
+	pointLight.SetColor(glm::vec3(0, 0, 1));
+	pointLight.SetPosition(glm::vec3(3, 3, 0));
+	m_SpotLights.push_back(SpotLight(pointLight, 30, glm::vec3(0, -1, 0)));
+	pointLight.SetIntensity(1);
+	pointLight.SetColor(glm::vec3(1, 1, 0));
+	pointLight.SetPosition(glm::vec3(6, 3, 0));
+	m_SpotLights.push_back(SpotLight(pointLight, 30, glm::vec3(0, -1, 0)));
+
 }
 
 void LightScene::CleanUp()
 {
-	delete m_DirecationalLight;
-	delete m_PointLight;
-	delete m_SpotLight;
+	m_DirecationalLights.clear();
+	m_PointLights.clear();
+	m_SpotLights.clear();
 }
 
-DirectionalLight& LightScene::GetDirectionalLight() const
+const std::vector<DirectionalLight>& LightScene::GetDirectionalLights() const
 {
-	return *m_DirecationalLight;
+	return m_DirecationalLights;
 }
 
-PointLight& LightScene::GetPointLight() const
+const std::vector<PointLight>& LightScene::GetPointLights() const
 {
-	return *m_PointLight;
+	return m_PointLights;
 }
 
-SpotLight& LightScene::GetSpotLight() const
+const std::vector<SpotLight>& LightScene::GetSpotLights() const
 {
-	return *m_SpotLight;
+	return m_SpotLights;
 }
+
+const SpotLight & LightScene::GetTorch() const
+{
+	return m_SpotLights[0];
+}
+
+std::vector<DirectionalLight>& LightScene::GetDirectionalLights()
+{
+	return m_DirecationalLights;
+}
+
+std::vector<PointLight>& LightScene::GetPointLights()
+{
+	return m_PointLights;
+}
+
+std::vector<SpotLight>& LightScene::GetSpotLights()
+{
+	return m_SpotLights;
+}
+
+SpotLight & LightScene::GetTorch()
+{
+	return m_SpotLights[0];
+}
+
+#pragma endregion

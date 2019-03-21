@@ -1,5 +1,10 @@
 #version 460 core
 
+#define MAX_DIR_LIGHT 3
+#define MAX_POINT_LIGHTS 10
+#define MAX_SPOT_LIGHTS 5
+
+
 in OUT
 {
     vec4 eye_pos;
@@ -53,9 +58,9 @@ struct SpotLight
 uniform Material material;
 layout(binding = 0) uniform sampler2D textureSampler;
 
-uniform DirectionalLight directionalLight;
-uniform PointLight pointLight;
-uniform SpotLight spotLight;
+uniform DirectionalLight directionalLights[MAX_DIR_LIGHT];
+uniform PointLight pointLights[MAX_POINT_LIGHTS];
+uniform SpotLight spotLights[MAX_SPOT_LIGHTS];
 
 
 vec3 phongModel(vec3 fromLightVector, vec3 lightColor)
@@ -125,7 +130,30 @@ vec4 ComputeSpotLight(SpotLight spotLight)
 
 void main()
 {
-    fragColor = ComputeDirectionalLight(directionalLight) + ComputePointLight(pointLight) + ComputeSpotLight(spotLight);
+    fragColor = vec4(0);
+
+    for(int i = 0; i < MAX_DIR_LIGHT; i++)
+	{
+		if(directionalLights[i].baseLight.intensity <= 0)
+			break;
+        fragColor += ComputeDirectionalLight(directionalLights[i]);
+	}
+        
+    for(int i = 0; i < MAX_POINT_LIGHTS; i++)
+	{
+		if(pointLights[i].baseLight.intensity <= 0)
+			break;
+        fragColor += ComputePointLight(pointLights[i]);
+	}
+
+    for(int i = 0; i < MAX_SPOT_LIGHTS; i++)
+	{
+        if(spotLights[i].pointLight.baseLight.intensity <= 0)
+			break;
+        fragColor += ComputeSpotLight(spotLights[i]);
+	}
+
+    
     if(material.isTextured)
     {
         vec4 texColor = texture(textureSampler, fs_in.texCoords);

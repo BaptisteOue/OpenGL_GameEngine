@@ -26,11 +26,11 @@ void App::Init()
 {
 	m_Camera.Init();
 
-	m_GameObjectRenderer.Init();
-
 	m_LightScene.Init();
 
-	Mesh m(Loader::LoadOBJ("./res/cube.obj"));
+	m_GameObjectRenderer.Init();
+
+	Mesh m(Loader::LoadOBJ("./res/sphere.obj"));
 	Material material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1, 100);
 	//material.AddTexture(Loader::LoadTexture("./res/Abstract_Organic_002_COLOR.jpg"));
 
@@ -38,9 +38,14 @@ void App::Init()
 	{
 		for (int j = -10; j < 10; j++)
 		{
-			m_GameObjects.emplace_back(m, material, glm::vec3(-2.5f * i, 0, -2.5f * j));
+			m_GameObjects.push_back(GameObject(m, material, glm::vec3(-2.5f * i, 0, -2.5f * j)));
 		}
 	}
+
+	for (PointLight& p : m_LightScene.GetPointLights())
+		m_GameObjects.push_back(p.GetLightObject());
+	for (SpotLight& s : m_LightScene.GetSpotLights())
+		m_GameObjects.push_back(s.GetLightObject());
 }
 
 void App::Input(Window& window)
@@ -121,14 +126,7 @@ void App::Input(Window& window)
 void App::Update(float interval)
 {
 	m_Camera.Update(dCamera);
-	m_LightScene.GetSpotLight().SimulateTorch(m_Camera);
-
-	for (GameObject& gameObject : m_GameObjects)
-	{
-		glm::vec3 rotation = gameObject.GetRotation();
-		rotation += glm::vec3(0.5f, 0.5f, 0.5f);
-		gameObject.SetRotation(rotation);
-	}
+	m_LightScene.GetTorch().SimulateTorch(m_Camera);
 }
 
 void App::Render()

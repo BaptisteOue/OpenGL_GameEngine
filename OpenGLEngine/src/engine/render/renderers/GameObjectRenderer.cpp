@@ -41,7 +41,7 @@ void GameObjectRenderer::Render(std::vector<GameObject>& gameObjects, LightScene
 
 		m_TesselatedShader.LoadTessLevels(gameObject.GetTessLevelOuter(), gameObject.GetTessLevelInner());
 		m_TesselatedShader.LoadMatricesUniforms(modelMatrix, viewMatrix, projectionMatrix);
-		m_TesselatedShader.LoadLightsUniforms(lightScene.GetDirectionalLight(), lightScene.GetPointLight(), lightScene.GetSpotLight(), viewMatrix);
+		m_TesselatedShader.LoadLightsUniforms(lightScene, viewMatrix);
 		m_TesselatedShader.LoadMaterialUniforms(material);
 
 		gameObject.Draw();

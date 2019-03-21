@@ -3,7 +3,7 @@
 
 #pragma region Public API
 
-GameObject::GameObject(const Mesh& mesh, const Material& material, glm::vec3 position, glm::vec3 rotation, float scale)
+GameObject::GameObject(const Mesh& mesh, Material& material, glm::vec3 position, glm::vec3 rotation, float scale)
 	: m_Mesh(mesh),
 	m_Material(material),
 	m_Position(position),
@@ -11,6 +11,23 @@ GameObject::GameObject(const Mesh& mesh, const Material& material, glm::vec3 pos
 	m_Scale(scale),
 	m_TessLevelInner(1),
 	m_TessLevelOuter(1)
+{
+	if (material.IsTextured() && !mesh.HasTextureCoords())
+	{
+		std::cout << "Model doesn't have uvs coordinates. Remove texture flag from material";
+		material.SetTexturedFlag(false);
+		material.RemoveTexture();
+	}
+}
+
+GameObject::GameObject(const GameObject & gameObject)
+	: m_Mesh(gameObject.m_Mesh),
+	m_Material(gameObject.m_Material),
+	m_Position(gameObject.m_Position),
+	m_Rotation(gameObject.m_Rotation),
+	m_Scale(gameObject.m_Scale),
+	m_TessLevelInner(gameObject.m_TessLevelInner),
+	m_TessLevelOuter(gameObject.m_TessLevelOuter)
 {
 }
 

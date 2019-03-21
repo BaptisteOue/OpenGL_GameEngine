@@ -7,7 +7,8 @@
 
 Mesh::Mesh()
 	: m_VaoID(0),
-	m_VertexCount(0)
+	m_VertexCount(0),
+	m_hasTextureCoords(false)
 {
 }
 
@@ -20,7 +21,7 @@ void Mesh::LoadMesh(const std::vector<GLfloat>& positions,
 	const std::vector<GLfloat>& texCoords,
 	const std::vector<GLuint>& indices)
 {
-	m_VertexCount = indices.size();
+	m_VertexCount = (int) indices.size();
 
 	/* Generate vo, vbo and ebo */
 	glGenVertexArrays(1, &m_VaoID);
@@ -30,7 +31,13 @@ void Mesh::LoadMesh(const std::vector<GLfloat>& positions,
 
 	AddData(0, 3, positions);
 	AddData(1, 3, normals);
-	AddData(2, 2, texCoords);
+
+	if (!texCoords.empty())
+	{
+		m_hasTextureCoords = true;
+		AddData(2, 2, texCoords);
+	}
+		
 
 	AddIndices(indices);
 
@@ -50,10 +57,14 @@ void Mesh::Draw()
 
 void Mesh::CleanUp()
 {
-	glDeleteBuffers(m_Vbos.size(), m_Vbos.data());
+	glDeleteBuffers((GLsizei)m_Vbos.size(), m_Vbos.data());
 	glDeleteBuffers(1, &m_EboID);
 }
 
+bool Mesh::HasTextureCoords() const
+{
+	return m_hasTextureCoords;
+}
 
 #pragma endregion
 

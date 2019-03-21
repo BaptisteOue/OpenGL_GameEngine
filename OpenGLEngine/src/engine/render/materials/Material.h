@@ -12,6 +12,8 @@ private:
 	float m_Reflectivity;
 	float m_ShineDamper;
 
+	bool m_IsTextured;
+
 	Texture* m_Texture;
 
 public:
@@ -25,10 +27,20 @@ public:
 	const float GetReflectivity() const;
 	const float GetShineDamper() const;
 
+	void SetKa(const glm::vec3& Ka);
+	void SetKd(const glm::vec3& Kd);
+	void SetKs(const glm::vec3& Ks);
+	void SetReflectivity(float reflectivity);
+	void SetShineDamper(float shineDamper);
+
+
 	void AddTexture(const Texture& texture);
+	void RemoveTexture();
+
 	const Texture GetTexture() const;
 
 	bool IsTextured() const;
+	void SetTexturedFlag(bool value);
 
 	void CleanUp();
 };
