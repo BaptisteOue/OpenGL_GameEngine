@@ -44,7 +44,7 @@ void ShaderBase::CleanUp()
 
 void ShaderBase::AddUniform(const std::string& uniformName)
 {
-    GLuint uniformLocation = glGetUniformLocation(m_Program, uniformName.c_str());
+	auto uniformLocation = glGetUniformLocation(m_Program, uniformName.c_str());
     if(uniformLocation != -1)
     {
         m_Uniforms.emplace(std::pair<const std::string, GLuint>(uniformName, uniformLocation));
@@ -81,22 +81,22 @@ void ShaderBase::LoadUniform(const std::string& uniformName, bool value)
 
 GLuint ShaderBase::CreateShader(GLuint shaderType, const std::string& shaderFilePath)
 {
-	std::string stringShaderSource = FileUtils::LoadFile(shaderFilePath);
+	auto stringShaderSource = FileUtils::LoadFile(shaderFilePath);
 
-	const GLchar* const shaderSource = stringShaderSource.c_str();
+	auto shaderSource = stringShaderSource.c_str();
 
-    GLuint shader = glCreateShader(shaderType);
+    auto shader = glCreateShader(shaderType);
     glShaderSource(shader, 1, &shaderSource, NULL);
 	glCompileShader(shader);
 
-    GLint success = 0;
+    auto success = 0;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
 	if (success == GL_FALSE)
 	{
-		GLint maxLength = 0;
+		auto maxLength = 0;
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
 
-		char* error = new char[maxLength];
+		auto error = new char[maxLength];
 		glGetShaderInfoLog(shader, maxLength, &maxLength, error);
 
 		std::cout << error << std::endl;
@@ -145,14 +145,14 @@ GLuint ShaderBase::CreateProgram()
 
     glLinkProgram(shaderProgram);
 
-    GLint isLinked = 0;
+    auto isLinked = 0;
     glGetProgramiv(shaderProgram, GL_LINK_STATUS, (int *)&isLinked);
     if (isLinked == GL_FALSE)
     {
-        GLint maxLength = 0;
+		auto maxLength = 0;
         glGetProgramiv(shaderProgram, GL_INFO_LOG_LENGTH, &maxLength);
 
-        char* error = new char[maxLength];
+		auto error = new char[maxLength];
         glGetProgramInfoLog(shaderProgram, maxLength, &maxLength, error);
         std::cout << error << std::endl;
         delete[] error;

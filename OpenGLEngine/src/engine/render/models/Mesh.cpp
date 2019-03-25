@@ -16,6 +16,7 @@ Mesh::~Mesh()
 {
 }
 
+
 void Mesh::LoadMesh(const std::vector<GLfloat>& positions, 
 	const std::vector<GLfloat>& normals,
 	const std::vector<GLfloat>& texCoords,
@@ -71,7 +72,7 @@ bool Mesh::HasTextureCoords() const
 
 #pragma region Private API
 
-void Mesh::AddData(const int attribIndex, const int count, const std::vector<GLfloat>data)
+void Mesh::AddData(const int attribIndex, const int count, const std::vector<GLfloat>& data)
 {
 	GLuint vboID = 0;
 	glGenBuffers(1, &vboID);
@@ -88,7 +89,7 @@ void Mesh::AddData(const int attribIndex, const int count, const std::vector<GLf
 	m_Vbos.emplace_back(vboID);
 }
 
-void Mesh::AddIndices(const std::vector<GLuint>indices)
+void Mesh::AddIndices(const std::vector<GLuint>& indices)
 {
 	GLuint eboId = 0;
 	glGenBuffers(1, &eboId);

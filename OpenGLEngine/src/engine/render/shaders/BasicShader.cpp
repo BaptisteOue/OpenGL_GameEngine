@@ -2,9 +2,6 @@
 #include "ShaderBase.h"
 #include "../core/Camera.h"
 
-const char* BasicShader::VERTEX_SHADER = "./src/engine/render/shaders/vertexShader.glsl";
-const char* BasicShader::FRAGMENT_SHADER = "./src/engine/render/shaders/fragmentShader.glsl";
-
 BasicShader::BasicShader()
 	: ShaderBase(BasicShader::VERTEX_SHADER, BasicShader::FRAGMENT_SHADER)
 {

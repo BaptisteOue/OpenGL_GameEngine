@@ -18,7 +18,7 @@ private:
 
 public:
 	Material(const Material& material);
-	Material(glm::vec3&& Ka, glm::vec3&& Kd, glm::vec3&& Ks, float reflectivity, float shineDamper);
+	Material(const glm::vec3& Ka, const glm::vec3& Kd, const glm::vec3& Ks, float reflectivity, float shineDamper);
 	~Material();
 
 	const glm::vec3 GetKa() const;

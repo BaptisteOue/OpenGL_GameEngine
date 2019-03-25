@@ -29,6 +29,7 @@ GameObject::GameObject(const GameObject & gameObject)
 	m_TessLevelInner(gameObject.m_TessLevelInner),
 	m_TessLevelOuter(gameObject.m_TessLevelOuter)
 {
+
 }
 
 GameObject::~GameObject()
@@ -55,7 +56,7 @@ const glm::vec3 GameObject::GetRotation() const
 	return m_Rotation;
 }
 
-const float GameObject::GetScale() const
+const glm::vec3 GameObject::GetScale() const
 {
 	return m_Scale;
 }
@@ -80,15 +81,14 @@ void GameObject::SetRotation(const glm::vec3 & rotation)
 	m_Rotation = rotation;
 }
 
-void GameObject::SetScale(const float scale)
+void GameObject::SetScale(const glm::vec3& scale)
 {
 	m_Scale = scale;
 }
 
 void GameObject::SetTessLevelOuter(float value)
 {
-	m_TessLevelOuter = value;
-	if (m_TessLevelOuter < 1)
+	if (m_TessLevelOuter = value; m_TessLevelOuter < 1)
 		m_TessLevelOuter = 1;
 
 	std::cout << "Outer tesselation level : " << m_TessLevelOuter << std::endl;
@@ -96,8 +96,7 @@ void GameObject::SetTessLevelOuter(float value)
 
 void GameObject::SetTessLevelInner(float value)
 {
-	m_TessLevelInner = value;
-	if (m_TessLevelInner < 1)
+	if (m_TessLevelInner = value; m_TessLevelInner < 1)
 		m_TessLevelInner = 1;
 
 	std::cout << "Inner tesselation level : " << m_TessLevelInner << std::endl;

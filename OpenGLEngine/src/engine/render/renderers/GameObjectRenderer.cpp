@@ -27,7 +27,7 @@ void GameObjectRenderer::Render(std::vector<GameObject>& gameObjects, LightScene
 	glm::mat4 viewMatrix(Transformations::GetViewMatrix(camera));
 	glm::mat4 modelMatrix;
 
-	for (GameObject& gameObject : gameObjects)
+	for (auto& gameObject : gameObjects)
 	{
 		Material material(gameObject.GetMaterial());
 

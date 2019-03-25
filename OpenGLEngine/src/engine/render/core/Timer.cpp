@@ -21,7 +21,7 @@ void Timer::Init()
 
 float Timer::GetElapsedTime()
 {
-	float currentTime = GetTime();
+	auto currentTime = GetTime();
 	m_ElapsedTime = currentTime - m_LastFrameTime;
 	m_LastFrameTime = currentTime;
 

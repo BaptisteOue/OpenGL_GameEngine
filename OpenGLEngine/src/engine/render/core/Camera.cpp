@@ -3,9 +3,6 @@
 
 #pragma region Public API
 
-float Camera::s_Sensitivity = 0.3f;
-float Camera::s_Speed = 0.5f;
-
 Camera::Camera()
 	: m_Position(0, 0, 0), m_Front(0, 0, -1), m_Up(0, 1, 0)
 {

@@ -15,7 +15,7 @@ Material::Material(const Material& material)
 		m_Texture = new Texture(material.m_Texture->GetTextureID(), material.m_Texture->GetActiveTexture());
 }
 
-Material::Material(glm::vec3&& Ka, glm::vec3&& Kd, glm::vec3&& Ks, float reflectivity, float shineDamper)
+Material::Material(const glm::vec3& Ka, const glm::vec3& Kd, const glm::vec3& Ks, float reflectivity, float shineDamper)
 	: m_Ka(Ka),
 	m_Kd(Kd),
 	m_Ks(Ks),

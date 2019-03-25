@@ -15,7 +15,7 @@ private:
     std::thread m_Thread;
 
 public:
-	static float UPS;
+	static constexpr auto UPS = 60;
 
 private:
 	void Init();

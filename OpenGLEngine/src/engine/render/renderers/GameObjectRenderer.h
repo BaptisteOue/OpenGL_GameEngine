@@ -8,9 +8,9 @@
 class GameObjectRenderer
 {
 private:
-	const float FOV = 45.0f;
-	const float nearPlane = 0.01f;
-	const float farPlane = 1000.0f;
+	static constexpr float FOV = 45.0f;
+	static constexpr float nearPlane = 0.01f;
+	static constexpr float farPlane = 1000.0f;
 
 	TesselatedShader m_TesselatedShader;
 

@@ -15,8 +15,8 @@ private:
 	bool m_hasTextureCoords;
 
 private:
-    void AddData(const int attribIndex, const int count, const std::vector<GLfloat>data);
-    void AddIndices(const std::vector<GLuint>indices);
+    void AddData(const int attribIndex, const int count, const std::vector<GLfloat>& data);
+    void AddIndices(const std::vector<GLuint>& indices);
 public:
     Mesh();
     ~Mesh();

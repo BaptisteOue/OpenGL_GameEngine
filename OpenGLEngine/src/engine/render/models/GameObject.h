@@ -12,7 +12,7 @@ private:
 
 	glm::vec3 m_Position;
 	glm::vec3 m_Rotation;
-	float m_Scale;
+	glm::vec3 m_Scale;
 
 	float m_TessLevelOuter;
 	float m_TessLevelInner;
@@ -26,13 +26,13 @@ public:
 	Mesh& GetMesh();
 	const glm::vec3 GetPosition() const;
 	const glm::vec3 GetRotation() const;
-	const float GetScale() const;
+	const glm::vec3 GetScale() const;
 	const float GetTessLevelOuter() const;
 	const float GetTessLevelInner() const;
 
 	void SetPosition(const glm::vec3& position);
 	void SetRotation(const glm::vec3& rotation);
-	void SetScale(const float scale);
+	void SetScale(const glm::vec3& scale);
 
 	void SetTessLevelOuter(float value);
 	void SetTessLevelInner(float value);

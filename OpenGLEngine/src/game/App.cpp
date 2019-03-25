@@ -6,6 +6,7 @@
 #include "../engine/render/models/Mesh.h"
 #include "../engine/render/maths/Transformations.h"
 #include "../engine/render/utils/Loader.h"
+#include <chrono>
 
 App::App()
     : dCamera(0, 0, 0),
@@ -30,22 +31,16 @@ void App::Init()
 
 	m_GameObjectRenderer.Init();
 
-	Mesh m(Loader::LoadOBJ("./res/sphere.obj"));
-	Material material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1, 100);
-	//material.AddTexture(Loader::LoadTexture("./res/Abstract_Organic_002_COLOR.jpg"));
+	Mesh mesh{ Loader::LoadOBJ("./res/cube.obj") };
+	Material material{ glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 0.8f, 100 };
 
 	for (int i = -10; i < 10; i++)
 	{
 		for (int j = -10; j < 10; j++)
 		{
-			m_GameObjects.push_back(GameObject(m, material, glm::vec3(-2.5f * i, 0, -2.5f * j)));
+			m_GameObjects.emplace_back(mesh, material, glm::vec3(-2.5f * i, 0, -2.5f * j));
 		}
 	}
-
-	for (PointLight& p : m_LightScene.GetPointLights())
-		m_GameObjects.push_back(p.GetLightObject());
-	for (SpotLight& s : m_LightScene.GetSpotLights())
-		m_GameObjects.push_back(s.GetLightObject());
 }
 
 void App::Input(Window& window)
@@ -89,27 +84,27 @@ void App::Input(Window& window)
 	}
 
 	// Tesselation levels
-	for (GameObject& gameObject : m_GameObjects)
+	for (auto& gameObject : m_GameObjects)
 	{
 		if (window.IsKeyPressed(GLFW_KEY_T))
 		{
-			float tessLevelOuter = gameObject.GetTessLevelOuter();
+			auto tessLevelOuter = gameObject.GetTessLevelOuter();
 			gameObject.SetTessLevelOuter(tessLevelOuter + 0.1f);
 
 		}
 		else if (window.IsKeyPressed(GLFW_KEY_G))
 		{
-			float tessLevelOuter = gameObject.GetTessLevelOuter();
+			auto tessLevelOuter = gameObject.GetTessLevelOuter();
 			gameObject.SetTessLevelOuter(tessLevelOuter - 0.1f);
 		}
 		if (window.IsKeyPressed(GLFW_KEY_Y))
 		{
-			float tessLevelInner = gameObject.GetTessLevelInner();
+			auto tessLevelInner = gameObject.GetTessLevelInner();
 			gameObject.SetTessLevelInner(tessLevelInner + 0.1f);
 		}
 		else if (window.IsKeyPressed(GLFW_KEY_H))
 		{
-			float tessLevelInner = gameObject.GetTessLevelInner();
+			auto tessLevelInner = gameObject.GetTessLevelInner();
 			gameObject.SetTessLevelInner(tessLevelInner - 0.1f);
 		}
 	}
@@ -126,7 +121,24 @@ void App::Input(Window& window)
 void App::Update(float interval)
 {
 	m_Camera.Update(dCamera);
-	m_LightScene.GetTorch().SimulateTorch(m_Camera);
+	if(m_LightScene.GetSpotLights().size() > 0)
+		m_LightScene.GetTorch().SimulateTorch(m_Camera);
+
+	static float time = 0;
+	time += interval;
+
+	for (auto& gameObject : m_GameObjects)
+	{
+		auto scale = gameObject.GetScale();
+		auto position = gameObject.GetPosition();
+
+		auto d = glm::distance(glm::vec2(0, 0), glm::vec2(position.x, position.z));
+		auto offset = d;
+		scale.y += cos(-time * 3 + offset/4.0f) * 1;
+		if (scale.y <= 0.5f)
+			scale.y = 0.5f;
+		gameObject.SetScale(scale);
+	}
 }
 
 void App::Render()
@@ -136,7 +148,7 @@ void App::Render()
 
 void App::CleanUp()
 {
-	for(GameObject& gameObject : m_GameObjects)
+	for(auto& gameObject : m_GameObjects)
 		gameObject.CleanUp();
 
 	m_GameObjects.clear();

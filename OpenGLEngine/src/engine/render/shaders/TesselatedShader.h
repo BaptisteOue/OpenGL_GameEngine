@@ -14,10 +14,10 @@
 class TesselatedShader : public ShaderBase
 {
 public:
-	static const char* VERTEX_SHADER;
-	static const char* TESS_CTRL_SHADER;
-	static const char* TESS_EVAL_SHADER;
-	static const char* FRAGMENT_SHADER;
+	static constexpr auto VERTEX_SHADER = "./src/engine/render/shaders/vertexShader.glsl";
+	static constexpr auto TESS_CTRL_SHADER = "./src/engine/render/shaders/tessCtrlShader.glsl";
+	static constexpr auto TESS_EVAL_SHADER = "./src/engine/render/shaders/tessEvalShader.glsl";
+	static constexpr auto FRAGMENT_SHADER = "./src/engine/render/shaders/fragmentShader.glsl";
 private:
 	void AddLightUniforms(int numDir, int numPoint, int numSpot);
 	void AddBasicLightUniforms(const std::string& uniformName);

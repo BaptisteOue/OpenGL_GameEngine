@@ -19,8 +19,8 @@ private:
 	float m_CurrentY;
 
 public:
-	static float s_Sensitivity;
-	static float s_Speed;
+	static constexpr auto s_Sensitivity = 0.3f;
+	static constexpr auto s_Speed = 2.0f;
 
 private:
 	void Move(const glm::uvec3& dCamera);

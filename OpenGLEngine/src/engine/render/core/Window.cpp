@@ -96,7 +96,7 @@ void Window::Init()
 
     glfwSwapInterval(1);
 
-	glClearColor(0.1f, 0.111f, 0.105f, 0.0f);
+	glClearColor(0.001f, 0.0111f, 0.0105f, 0.0f);
 
 	glEnable(GL_DEPTH_TEST);
 }

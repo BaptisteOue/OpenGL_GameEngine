@@ -1,7 +1,5 @@
 #include "RenderEngine.h"
 
-float RenderEngine::UPS = 60;
-
 
 #pragma region Public API
 

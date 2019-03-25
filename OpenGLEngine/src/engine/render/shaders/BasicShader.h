@@ -10,8 +10,8 @@
 class BasicShader : public ShaderBase
 {
 public:
-	static const char* VERTEX_SHADER;
-	static const char* FRAGMENT_SHADER;
+	static constexpr auto VERTEX_SHADER = "./src/engine/render/shaders/vertexShader.glsl";
+	static constexpr auto FRAGMENT_SHADER = "./src/engine/render/shaders/fragmentShader.glsl";
 public:
 	BasicShader();
 	~BasicShader();

@@ -1,9 +1,5 @@
 #include "TesselatedShader.h"
 
-const char* TesselatedShader::VERTEX_SHADER = "./src/engine/render/shaders/vertexShader.glsl";
-const char* TesselatedShader::TESS_CTRL_SHADER = "./src/engine/render/shaders/tessCtrlShader.glsl";
-const char* TesselatedShader::TESS_EVAL_SHADER = "./src/engine/render/shaders/tessEvalShader.glsl";
-const char* TesselatedShader::FRAGMENT_SHADER = "./src/engine/render/shaders/fragmentShader.glsl";
 
 #pragma region Public API
 
@@ -35,7 +31,7 @@ void TesselatedShader::CreateUniforms()
 	AddUniform("tessLevelOuter");
 	AddUniform("tessLevelInner");
 
-	AddLightUniforms(1, 2, 3);
+	AddLightUniforms(1, 10, 5);
 	AddMaterialUniforms();	
 }
 
@@ -64,7 +60,7 @@ void TesselatedShader::LoadMaterialUniforms(const Material& material)
 
 void TesselatedShader::LoadLightsUniforms(const LightScene& lightScene, const glm::mat4& matrice)
 {	
-	int i = 0;
+	auto i = 0;
 	for (const DirectionalLight& directionalLight : lightScene.GetDirectionalLights())
 	{
 		LoadDirectionalLightUniforms("directionalLights[" + std::to_string(i) + "]", directionalLight, matrice);

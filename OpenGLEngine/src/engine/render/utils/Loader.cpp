@@ -38,17 +38,17 @@ Mesh& Loader::LoadOBJ(const char* objFile)
 		if (line.compare("v") == 0)
 		{
 			file >> position.x >> position.y >> position.z;
-			temp_positions.push_back(position);
+			temp_positions.emplace_back(position.x, position.y, position.z);
 		}
 		else if (line.compare("vn") == 0)
 		{
 			file >> normal.x >> normal.y >> normal.z;
-			temp_normals.push_back(normal);
+			temp_normals.emplace_back(normal.x, normal.y, normal.z);
 		}
 		else if (line.compare("vt") == 0)
 		{
 			file >> uvs.x >> uvs.y;
-			temp_uvs.push_back(uvs);
+			temp_uvs.emplace_back(uvs.x, uvs.y);
 		}
 		else if (line.compare("f") == 0)
 		{
@@ -60,25 +60,23 @@ Mesh& Loader::LoadOBJ(const char* objFile)
 	std::vector<GLfloat> ordered_positions;
 	std::vector<GLfloat> ordered_normals;
 	std::vector<GLfloat> ordered_uvs;
-	std::vector<GLfloat> ordered_tangents;
 	std::vector<GLuint> indices;
 
 	for (int i = 0; i < vertexIndices.size(); i++)
 	{
 		indices.push_back(i);
 
-		int indexPos = vertexIndices[i];
+		auto indexPos = vertexIndices[i];
 		ordered_positions.push_back(temp_positions[indexPos].x);
 		ordered_positions.push_back(temp_positions[indexPos].y);
 		ordered_positions.push_back(temp_positions[indexPos].z);
 
-		int normIndex = normalIndices[i];
+		auto normIndex = normalIndices[i];
 		ordered_normals.push_back(temp_normals[normIndex].x);
 		ordered_normals.push_back(temp_normals[normIndex].y);
 		ordered_normals.push_back(temp_normals[normIndex].z);
 
-		int texIndex = uvIndices[i];
-		if (texIndex != -1)
+		if (auto texIndex = uvIndices[i]; texIndex != -1)
 		{
 			ordered_uvs.push_back(temp_uvs[texIndex].x);
 			ordered_uvs.push_back(temp_uvs[texIndex].y);

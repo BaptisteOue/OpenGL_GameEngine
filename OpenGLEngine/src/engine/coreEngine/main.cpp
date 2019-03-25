@@ -6,7 +6,7 @@ int main(void)
 {
 
 	IGameLogic* app = new App();
-	RenderEngine renderEngine("Test OpenGL", 1080, 720, *app);
+	RenderEngine renderEngine{ "Test OpenGL", 1080, 720, *app };
 	renderEngine.Start();
 	
 	delete app;
