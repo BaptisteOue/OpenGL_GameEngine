@@ -18,7 +18,7 @@ LightScene::~LightScene()
 void LightScene::Init()
 {
 	// Directional Lights
-	m_DirecationalLights.push_back(DirectionalLight(glm::vec3(1), glm::vec3(1, -1, 1), 0.1f));
+	m_DirecationalLights.push_back(DirectionalLight(glm::vec3(1), glm::vec3(1, -1, 1), 0.6f));
 
 	// Point lights
 	PointLight pointLight(glm::vec3(1, 0, 0), glm::vec3(-10, 20, 0), 4);
@@ -34,27 +34,26 @@ void LightScene::Init()
 	m_PointLights.push_back(pointLight);
 
 	// Torch
-	pointLight.SetIntensity(2);
+	pointLight.SetIntensity(4);
 	pointLight.SetColor(glm::vec3(1));
 	m_SpotLights.push_back(SpotLight(pointLight, 10, glm::vec3(0, 0, -1)));
 
 	// Other Spot lights...
-	pointLight.SetIntensity(10);
 	pointLight.SetColor(glm::vec3(1, 1, 0));
 	pointLight.SetPosition(glm::vec3(0, 20, -60));
-	m_SpotLights.push_back(SpotLight(pointLight, 40, glm::vec3(0, -1, 1)));
+	m_SpotLights.push_back(SpotLight(pointLight, 60, glm::vec3(0, -1, 1)));
 
 	pointLight.SetColor(glm::vec3(0, 1, 1));
 	pointLight.SetPosition(glm::vec3(0, 20, 60));
-	m_SpotLights.push_back(SpotLight(pointLight, 40, glm::vec3(0, -1, -1)));
+	m_SpotLights.push_back(SpotLight(pointLight, 60, glm::vec3(0, -1, -1)));
 
 	pointLight.SetColor(glm::vec3(1, 0, 1));
 	pointLight.SetPosition(glm::vec3(-60, 20, 0));
-	m_SpotLights.push_back(SpotLight(pointLight, 40, glm::vec3(1, -1, 0)));
+	m_SpotLights.push_back(SpotLight(pointLight, 60, glm::vec3(1, -1, 0)));
 
 	pointLight.SetColor(glm::vec3(1, 1, 1));
 	pointLight.SetPosition(glm::vec3(60, 20, 0));
-	m_SpotLights.push_back(SpotLight(pointLight, 40, glm::vec3(-1, -1, 0)));
+	m_SpotLights.push_back(SpotLight(pointLight, 60, glm::vec3(-1, -1, 0)));
 
 }
 

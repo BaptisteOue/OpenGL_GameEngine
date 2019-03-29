@@ -4,7 +4,7 @@
 #pragma region Public API
 
 GameObjectRenderer::GameObjectRenderer()
-	: m_TesselatedShader()
+	: m_BasicShader{}, m_TesselatedShader{}
 {
 }
 
@@ -15,6 +15,7 @@ GameObjectRenderer::~GameObjectRenderer()
 void GameObjectRenderer::Init()
 {
 	m_TesselatedShader.CreateShaderProgram();
+	m_BasicShader.CreateShaderProgram();
 }
 
 void GameObjectRenderer::Render(std::vector<GameObject>& gameObjects, LightScene& lightScene, Camera& camera)
@@ -44,7 +45,7 @@ void GameObjectRenderer::Render(std::vector<GameObject>& gameObjects, LightScene
 		m_TesselatedShader.LoadLightsUniforms(lightScene, viewMatrix);
 		m_TesselatedShader.LoadMaterialUniforms(material);
 
-		gameObject.Draw();
+		gameObject.DrawTesselated();
 	}
 
 	m_TesselatedShader.Use(false);

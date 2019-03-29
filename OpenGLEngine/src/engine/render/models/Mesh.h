@@ -20,9 +20,10 @@ private:
 public:
     Mesh();
     ~Mesh();
-
+	
     void LoadMesh(const std::vector<GLfloat>& positions, const std::vector<GLfloat>& normals, const std::vector<GLfloat>& texCoords, const std::vector<GLuint>& indices);
     void Draw();
+	void DrawTesselated();
     void CleanUp();
 
 	bool HasTextureCoords() const;

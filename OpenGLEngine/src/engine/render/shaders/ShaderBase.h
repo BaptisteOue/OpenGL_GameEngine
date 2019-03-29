@@ -34,9 +34,13 @@ protected:
 	void LoadUniform(const std::string& uniformName, const float value);
 	void LoadUniform(const std::string& uniformName, bool value);
 
+	void RegisterVertexShader(const char* vertexShaderPath);
+	void RegisterFragmentShader(const char* fragmentShaderPath);
+	void RegisterTessCtrlShader(const char* tessCtrlPath);
+	void RegisterTessEvalShader(const char* tessEvalPath);
+
 public:
-	ShaderBase(const char* vertexShaderPath = "", const char* fragmentShaderPath = "",
-				const char* tessCtrlPath = "", const char* tessEvalPath = "");
+	ShaderBase();
 	~ShaderBase();
 
 	void CreateShaderProgram();

@@ -17,7 +17,6 @@ public:
 	float GetElapsedTime();
 	void LogFPS(bool value);
 	void Update();
-
 private:
 	void PrintFPS();
 	float GetTime();

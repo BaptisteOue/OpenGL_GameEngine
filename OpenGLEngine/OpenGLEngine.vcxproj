@@ -22,7 +22,12 @@
     <ClCompile Include="src\engine\render\lights\BasicLight.cpp" />
     <ClCompile Include="src\engine\render\core\Camera.cpp" />
     <ClCompile Include="src\engine\render\lights\LightScene.cpp" />
+    <ClCompile Include="src\engine\render\particules\ParticuleGroup.cpp" />
+    <ClCompile Include="src\engine\render\particules\ParticuleGenerator.cpp" />
+    <ClCompile Include="src\engine\render\particules\ParticuleSystem.cpp" />
     <ClCompile Include="src\engine\render\renderers\GameObjectRenderer.cpp" />
+    <ClCompile Include="src\engine\render\renderers\ParticuleRender.cpp" />
+    <ClCompile Include="src\engine\render\shaders\ParticuleShader.cpp" />
     <ClCompile Include="src\game\App.cpp" />
     <ClCompile Include="src\engine\render\core\RenderEngine.cpp" />
     <ClCompile Include="src\engine\render\core\Timer.cpp" />
@@ -51,9 +56,14 @@
     <ClInclude Include="src\engine\render\materials\Material.h" />
     <ClInclude Include="src\engine\render\materials\Texture.h" />
     <ClInclude Include="src\engine\render\models\GameObject.h" />
+    <ClInclude Include="src\engine\render\particules\ParticuleGroup.h" />
+    <ClInclude Include="src\engine\render\particules\ParticuleGenerator.h" />
+    <ClInclude Include="src\engine\render\particules\ParticuleSystem.h" />
     <ClInclude Include="src\engine\render\renderers\GameObjectRenderer.h" />
+    <ClInclude Include="src\engine\render\renderers\ParticuleRender.h" />
     <ClInclude Include="src\engine\render\shaders\BasicShader.h" />
     <ClInclude Include="src\engine\render\core\Camera.h" />
+    <ClInclude Include="src\engine\render\shaders\ParticuleShader.h" />
     <ClInclude Include="src\game\App.h" />
     <ClInclude Include="src\engine\render\core\RenderEngine.h" />
     <ClInclude Include="src\engine\render\core\IGameLogic.h" />
@@ -65,12 +75,6 @@
     <ClInclude Include="src\engine\render\shaders\TesselatedShader.h" />
     <ClInclude Include="src\engine\render\utils\FileUtils.h" />
     <ClInclude Include="src\engine\render\utils\Loader.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\engine\render\shaders\fragmentShader.glsl" />
-    <None Include="src\engine\render\shaders\tessCtrlShader.glsl" />
-    <None Include="src\engine\render\shaders\tessEvalShader.glsl" />
-    <None Include="src\engine\render\shaders\vertexShader.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

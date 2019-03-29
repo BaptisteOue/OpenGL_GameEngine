@@ -156,7 +156,7 @@ void main()
     
     if(material.isTextured)
     {
-        vec4 texColor = texture(textureSampler, fs_in.texCoords);
+        vec4 texColor = texture(textureSampler, fs_in.texCoords * 10);
         fragColor += texColor;
     }    
 }

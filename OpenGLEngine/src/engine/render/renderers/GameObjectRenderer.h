@@ -4,6 +4,7 @@
 #include "../lights/LightScene.h"
 #include "../core/Camera.h"
 #include "../shaders/TesselatedShader.h"
+#include "../shaders/BasicShader.h"
 
 class GameObjectRenderer
 {
@@ -12,6 +13,7 @@ private:
 	static constexpr float nearPlane = 0.01f;
 	static constexpr float farPlane = 1000.0f;
 
+	BasicShader m_BasicShader;
 	TesselatedShader m_TesselatedShader;
 
 public:

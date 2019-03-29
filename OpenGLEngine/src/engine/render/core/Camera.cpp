@@ -4,7 +4,7 @@
 #pragma region Public API
 
 Camera::Camera()
-	: m_Position(0, 0, 0), m_Front(0, 0, -1), m_Up(0, 1, 0)
+	: m_Position(0, 1, -5), m_Front(0, 0, -1), m_Up(0, 1, 0)
 {
 }
 

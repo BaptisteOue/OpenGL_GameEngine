@@ -19,7 +19,7 @@ private:
 
 public:
 	GameObject(const GameObject& gameObject);
-	GameObject(const Mesh& mesh, Material& material, glm::vec3 position = glm::vec3(0), glm::vec3 rotation = glm::vec3(0), float scale = 1);
+	GameObject(const Mesh& mesh, Material& material, const glm::vec3& position = glm::vec3(0), const glm::vec3& rotation = glm::vec3(0), float scale = 1);
 	~GameObject();
 
 	Material& GetMaterial();
@@ -38,5 +38,6 @@ public:
 	void SetTessLevelInner(float value);
 
 	void Draw();
+	void DrawTesselated();
 	void CleanUp();
 };

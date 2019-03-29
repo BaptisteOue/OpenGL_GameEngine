@@ -1,11 +1,14 @@
 #include "BasicShader.h"
-#include "ShaderBase.h"
 #include "../core/Camera.h"
 
+
+#pragma region Public API
+
 BasicShader::BasicShader()
-	: ShaderBase(BasicShader::VERTEX_SHADER, BasicShader::FRAGMENT_SHADER)
+	: ShaderBase()
 {
-	
+	RegisterVertexShader(BasicShader::VERTEX_SHADER);
+	RegisterFragmentShader(BasicShader::FRAGMENT_SHADER);
 }
 
 BasicShader::~BasicShader()
@@ -25,41 +28,135 @@ void BasicShader::CreateUniforms()
 	AddUniform("viewMatrix");
 	AddUniform("projectionMatrix");
 
-	AddUniform("cameraPos");
-
-	AddUniform("directionalLight.color");
-	AddUniform("directionalLight.direction");
-	
-	AddUniform("material.Ka");
-	AddUniform("material.Kd");
-	AddUniform("material.Ks");
-	AddUniform("material.reflectivity");
-	AddUniform("material.shineDamper");
+	AddLightUniforms(1, 10, 5);
+	AddMaterialUniforms();
 }
 
-void BasicShader::LoadCameraUniform(Camera& camera)
-{
-	LoadUniform("cameraPos", camera.GetPos());
-}
-
-void BasicShader::LoadMatricesUniforms(glm::mat4& modelMatrix, glm::mat4& viewMatrix, glm::mat4& projectionMatrix)
+void BasicShader::LoadMatricesUniforms(const glm::mat4 & modelMatrix, const glm::mat4 & viewMatrix, const glm::mat4 & projectionMatrix)
 {
 	LoadUniform("modelMatrix", modelMatrix);
 	LoadUniform("viewMatrix", viewMatrix);
 	LoadUniform("projectionMatrix", projectionMatrix);
 }
 
-void BasicShader::LoadMaterialUniforms(Material& material)
+void BasicShader::LoadMaterialUniforms(const Material& material)
 {
 	LoadUniform("material.Ka", material.GetKa());
 	LoadUniform("material.Kd", material.GetKd());
 	LoadUniform("material.Ks", material.GetKs());
 	LoadUniform("material.reflectivity", material.GetReflectivity());
 	LoadUniform("material.shineDamper", material.GetShineDamper());
+	LoadUniform("material.isTextured", material.IsTextured());
 }
 
-void BasicShader::LoadLightsUniforms(DirectionalLight& directionalLight)
+void BasicShader::LoadLightsUniforms(const LightScene& lightScene, const glm::mat4& matrice)
 {
-	LoadUniform("directionalLight.color", directionalLight.GetColor());
-	LoadUniform("directionalLight.direction", directionalLight.GetDirection());
+	auto i = 0;
+	for (const DirectionalLight& directionalLight : lightScene.GetDirectionalLights())
+	{
+		LoadDirectionalLightUniforms("directionalLights[" + std::to_string(i) + "]", directionalLight, matrice);
+		i++;
+	}
+
+	i = 0;
+	for (const PointLight& pointLight : lightScene.GetPointLights())
+	{
+		LoadPointLightUniforms("pointLights[" + std::to_string(i) + "]", pointLight, matrice);
+		i++;
+	}
+
+	i = 0;
+	for (const SpotLight& spotLight : lightScene.GetSpotLights())
+	{
+		LoadSpotLightUniforms("spotLights[" + std::to_string(i) + "]", spotLight, matrice);
+		i++;
+	}
 }
+
+
+#pragma endregion
+
+
+#pragma region Private API
+
+void BasicShader::AddLightUniforms(int numDir, int numPoint, int numSpot)
+{
+	for (int i = 0; i < numDir; i++)
+		AddDirectionalLightUniforms("directionalLights[" + std::to_string(i) + "]");
+	for (int i = 0; i < numPoint; i++)
+		AddPointLightUniforms("pointLights[" + std::to_string(i) + "]");
+	for (int i = 0; i < numSpot; i++)
+		AddSpotLightUniforms("spotLights[" + std::to_string(i) + "]");
+}
+
+void BasicShader::AddBasicLightUniforms(const std::string & uniformName)
+{
+	AddUniform(uniformName + ".color");
+	AddUniform(uniformName + ".intensity");
+}
+
+void BasicShader::AddDirectionalLightUniforms(const std::string & uniformName)
+{
+	AddBasicLightUniforms(uniformName + ".baseLight");
+	AddUniform(uniformName + ".direction");
+}
+
+void BasicShader::AddPointLightUniforms(const std::string & uniformName)
+{
+	AddBasicLightUniforms(uniformName + ".baseLight");
+	AddUniform(uniformName + ".position");
+	AddUniform(uniformName + ".constAtt");
+	AddUniform(uniformName + ".linearAtt");
+	AddUniform(uniformName + ".quadraticAtt");
+}
+
+void BasicShader::AddSpotLightUniforms(const std::string & uniformName)
+{
+	AddBasicLightUniforms(uniformName + ".pointLight.baseLight");
+	AddPointLightUniforms(uniformName + ".pointLight");
+	AddUniform(uniformName + ".cutoffAngle");
+	AddUniform(uniformName + ".direction");
+}
+
+void BasicShader::AddMaterialUniforms()
+{
+	AddUniform("material.Ka");
+	AddUniform("material.Kd");
+	AddUniform("material.Ks");
+	AddUniform("material.reflectivity");
+	AddUniform("material.shineDamper");
+	AddUniform("material.isTextured");
+}
+
+
+void BasicShader::LoadBasicLightUniforms(const std::string& uniformName, const BasicLight & basicLight)
+{
+	LoadUniform(uniformName + ".color", basicLight.GetColor());
+	LoadUniform(uniformName + ".intensity", basicLight.GetIntensity());
+}
+
+void BasicShader::LoadDirectionalLightUniforms(const std::string & uniformName, const DirectionalLight & directionalLight, const glm::mat4 & matrice)
+{
+	LoadBasicLightUniforms(uniformName + ".baseLight", directionalLight);
+	LoadUniform(uniformName + ".direction", matrice * glm::vec4(directionalLight.GetDirection(), 0));
+}
+
+void BasicShader::LoadPointLightUniforms(const std::string & uniformName, const PointLight & pointLight, const glm::mat4 & matrice)
+{
+	LoadBasicLightUniforms(uniformName + ".baseLight", pointLight);
+	LoadUniform(uniformName + ".constAtt", pointLight.GetConstAtt());
+	LoadUniform(uniformName + ".linearAtt", pointLight.GetLinearAtt());
+	LoadUniform(uniformName + ".quadraticAtt", pointLight.GetQuadraticAtt());
+	LoadUniform(uniformName + ".position", matrice * glm::vec4(pointLight.GetPosition(), 1));
+}
+
+void BasicShader::LoadSpotLightUniforms(const std::string & uniformName, const SpotLight & spotLight, const glm::mat4 & matrice)
+{
+	LoadPointLightUniforms(uniformName + ".pointLight", spotLight, matrice);
+	LoadUniform(uniformName + ".cutoffAngle", spotLight.GetCutoffAngle());
+	LoadUniform(uniformName + ".direction", matrice * glm::vec4(spotLight.GetDirection(), 0));
+}
+
+#pragma endregion
+
+

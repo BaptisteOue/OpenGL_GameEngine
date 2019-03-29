@@ -81,6 +81,21 @@
     <ClCompile Include="src\engine\render\renderers\GameObjectRenderer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\render\particules\ParticuleSystem.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\render\particules\ParticuleGenerator.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\render\renderers\ParticuleRender.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\render\shaders\ParticuleShader.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\render\particules\ParticuleGroup.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\App.h">
@@ -149,11 +164,20 @@
     <ClInclude Include="src\engine\render\renderers\GameObjectRenderer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\engine\render\shaders\fragmentShader.glsl" />
-    <None Include="src\engine\render\shaders\tessCtrlShader.glsl" />
-    <None Include="src\engine\render\shaders\tessEvalShader.glsl" />
-    <None Include="src\engine\render\shaders\vertexShader.glsl" />
+    <ClInclude Include="src\engine\render\shaders\ParticuleShader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\render\particules\ParticuleSystem.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\render\particules\ParticuleGenerator.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\render\renderers\ParticuleRender.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\render\particules\ParticuleGroup.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

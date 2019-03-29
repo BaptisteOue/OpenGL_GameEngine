@@ -3,7 +3,7 @@
 
 #pragma region Public API
 
-GameObject::GameObject(const Mesh& mesh, Material& material, glm::vec3 position, glm::vec3 rotation, float scale)
+GameObject::GameObject(const Mesh& mesh, Material& material, const glm::vec3& position, const glm::vec3& rotation, float scale)
 	: m_Mesh(mesh),
 	m_Material(material),
 	m_Position(position),
@@ -105,6 +105,11 @@ void GameObject::SetTessLevelInner(float value)
 void GameObject::Draw()
 {
 	m_Mesh.Draw();
+}
+
+void GameObject::DrawTesselated()
+{
+	m_Mesh.DrawTesselated();
 }
 
 void GameObject::CleanUp()

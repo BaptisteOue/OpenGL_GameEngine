@@ -8,9 +8,7 @@
 #pragma region Public API
 
 
-ShaderBase::ShaderBase(const char* vertexShaderPath, const char* fragmentShaderPath, const char* tessCtrlPath, const char* tessEvalPath)
-	: m_VertexShaderPath(vertexShaderPath), m_FragmentShaderPath(fragmentShaderPath), 
-	  m_TessCtrlShaderPath(tessCtrlPath), m_TessEvalShaderPath(tessEvalPath)
+ShaderBase::ShaderBase()
 {
 
 }
@@ -41,6 +39,26 @@ void ShaderBase::CleanUp()
 
 
 #pragma region Private API
+
+void ShaderBase::RegisterVertexShader(const char* vertexShaderPath)
+{
+	m_VertexShaderPath =  vertexShaderPath;
+}
+
+void ShaderBase::RegisterFragmentShader(const char * fragmentShaderPath)
+{
+	m_FragmentShaderPath = fragmentShaderPath;
+}
+
+void ShaderBase::RegisterTessCtrlShader(const char * tessCtrlPath)
+{
+	m_TessCtrlShaderPath = tessCtrlPath;
+}
+
+void ShaderBase::RegisterTessEvalShader(const char * tessEvalPath)
+{
+	m_TessEvalShaderPath = tessEvalPath;
+}
 
 void ShaderBase::AddUniform(const std::string& uniformName)
 {

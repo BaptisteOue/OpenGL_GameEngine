@@ -6,14 +6,15 @@
 #include "../engine/render/models/Mesh.h"
 #include "../engine/render/maths/Transformations.h"
 #include "../engine/render/utils/Loader.h"
-#include <chrono>
 
 App::App()
     : dCamera(0, 0, 0),
 	m_Camera(),
 	m_LightScene(),
 	m_GameObjectRenderer(),
-	m_GameObjects()
+	m_GameObjects(),
+	m_ParticuleSystem(),
+	m_ParticuleRenderer()
 {
 
 }
@@ -31,16 +32,25 @@ void App::Init()
 
 	m_GameObjectRenderer.Init();
 
-	Mesh mesh{ Loader::LoadOBJ("./res/cube.obj") };
-	Material material{ glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 0.8f, 100 };
+	m_ParticuleRenderer.Init();
 
-	for (int i = -10; i < 10; i++)
-	{
-		for (int j = -10; j < 10; j++)
-		{
-			m_GameObjects.emplace_back(mesh, material, glm::vec3(-2.5f * i, 0, -2.5f * j));
-		}
-	}
+	Mesh plane{ Loader::LoadOBJ("./res/plane.obj") };
+	Mesh bunny{ Loader::LoadOBJ("./res/bunny.obj") };
+	Mesh dragon{ Loader::LoadOBJ("./res/dragon.obj") };
+	Material material{ glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 0.5f, 150 };
+	
+	m_GameObjects.emplace_back(bunny, material, glm::vec3(-10, 5, -10), glm::vec3(0), 4);
+	m_GameObjects.emplace_back(dragon, material, glm::vec3(10, 5, -10), glm::vec3(0), 1);
+	material.AddTexture(Loader::LoadTexture("./res/Abstract_Organic_002_COLOR.jpg"));
+	m_GameObjects.emplace_back(plane, material, glm::vec3(0), glm::vec3(0), 10);
+
+	m_ParticuleSystem.Init();
+	m_ParticuleSystem.SetCenter(glm::vec3(0, 3, -10));
+
+	//for (PointLight& p : m_LightScene.GetPointLights())
+	//	m_GameObjects.push_back(p.GetLightObject());
+	//for (SpotLight& s : m_LightScene.GetSpotLights())
+	//	m_GameObjects.push_back(s.GetLightObject());
 }
 
 void App::Input(Window& window)
@@ -123,27 +133,13 @@ void App::Update(float interval)
 	m_Camera.Update(dCamera);
 	if(m_LightScene.GetSpotLights().size() > 0)
 		m_LightScene.GetTorch().SimulateTorch(m_Camera);
-
-	static float time = 0;
-	time += interval;
-
-	for (auto& gameObject : m_GameObjects)
-	{
-		auto scale = gameObject.GetScale();
-		auto position = gameObject.GetPosition();
-
-		auto d = glm::distance(glm::vec2(0, 0), glm::vec2(position.x, position.z));
-		auto offset = d;
-		scale.y += cos(-time * 3 + offset/4.0f) * 1;
-		if (scale.y <= 0.5f)
-			scale.y = 0.5f;
-		gameObject.SetScale(scale);
-	}
 }
 
 void App::Render()
 {
+
 	m_GameObjectRenderer.Render(m_GameObjects, m_LightScene, m_Camera);
+	m_ParticuleRenderer.Render(m_ParticuleSystem, m_Camera);
 }
 
 void App::CleanUp()
@@ -154,4 +150,5 @@ void App::CleanUp()
 	m_GameObjects.clear();
 	m_LightScene.CleanUp();
 	m_GameObjectRenderer.CleanUp();
+	m_ParticuleRenderer.CleanUp();
 }
