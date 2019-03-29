@@ -21,7 +21,7 @@ public:
 		glm::vec3 center = glm::vec3{ 0 }, 
 		glm::vec3 gravityForce = glm::vec3{ 0, -1.0f, 0.0f }, 
 		glm::vec3 acceleration = glm::vec3{ 0 },
-		float lifeTime = 7.0f);
+		float lifeTime = 1.0f);
 	~ParticuleSystem();
 	void Init();
 

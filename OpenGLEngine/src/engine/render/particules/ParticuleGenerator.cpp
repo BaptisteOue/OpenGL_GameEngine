@@ -83,7 +83,7 @@ const glm::vec3 & ParticuleGenerator::GenerateRandomConeSpeed(float minAngle, fl
 const float ParticuleGenerator::GenerateRandomStartTime()
 {
 	float random = ((float)rand()) / (float)RAND_MAX;
-	return glm::mix(0.0f, 7.0f, random);
+	return glm::mix(0.0f, 20.0f, random);
 }
 
 #pragma endregion

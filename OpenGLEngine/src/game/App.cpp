@@ -37,17 +37,34 @@ void App::Init()
 	Mesh plane{ Loader::LoadOBJ("./res/plane.obj") };
 	Mesh bunny{ Loader::LoadOBJ("./res/bunny.obj") };
 	Mesh dragon{ Loader::LoadOBJ("./res/dragon.obj") };
-	Material material{ glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 0.5f, 150 };
-	
-	m_GameObjects.emplace_back(bunny, material, glm::vec3(-10, 1, -10), glm::vec3(0), 4);
-	m_GameObjects.emplace_back(dragon, material, glm::vec3(10, 1, -10), glm::vec3(0), 1);
+
+	Material material{ glm::vec3(0.9f, 0.7f, 0.4f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1.5, 100 };
+	m_GameObjects.emplace_back(bunny, material, glm::vec3(0, 1, -10), glm::vec3(0), 4);
+
+	material.SetKa(glm::vec3(0.4f, 0.7f, 0.9f));
+	m_GameObjects.emplace_back(dragon, material, glm::vec3(15, 0, -10), glm::vec3(0), 1);
+
+	material.SetReflectivity(0.1f);
+	material.SetShineDamper(200);
 	material.AddTexture(Loader::LoadTexture("./res/brick.jpg"));
-	m_GameObjects.emplace_back(plane, material, glm::vec3(0), glm::vec3(0), 10);
+	m_GameObjects.emplace_back(plane, material, glm::vec3(0), glm::vec3(0), 5);
+	m_GameObjects.emplace_back(plane, material, glm::vec3(0, 40, 0), glm::vec3(180, 0, 0), 5);
+	m_GameObjects.emplace_back(plane, material, glm::vec3(0, 0, -40), glm::vec3(90, 0, 0), 5);
+	m_GameObjects.emplace_back(plane, material, glm::vec3(0, 0, 40), glm::vec3(-90, 0, 0), 5);
+	m_GameObjects.emplace_back(plane, material, glm::vec3(-40, 0, 0), glm::vec3(0, 0, -90), 5);
+	m_GameObjects.emplace_back(plane, material, glm::vec3(40, 0, 0), glm::vec3(0, 0, 90), 5);
+
+	//for (PointLight& p : m_LightScene.GetPointLights())
+	//	m_GameObjects.push_back(p.GetLightObject());
+	//for (SpotLight& s : m_LightScene.GetSpotLights())
+	//	m_GameObjects.push_back(s.GetLightObject());
 
 
 	ParticuleSystem particuleSystem1{ 1000000 };
-	particuleSystem1.SetCenter(glm::vec3(0, 1, -10));
-	particuleSystem1.SetGravityForce(glm::vec3(0, -5.0f, 0));
+	particuleSystem1.SetCenter(glm::vec3(-15, 0, -10));
+	particuleSystem1.SetAcceleration(glm::vec3(0, 1, 0));
+	particuleSystem1.SetGravityForce(glm::vec3(0, -10.0f, 0));
+	particuleSystem1.SetParticuleLifeTime(10.0f);				// TODO : Should be random per particule
 	particuleSystem1.Init();
 
 	m_ParticuleSystems.push_back(std::move(particuleSystem1));

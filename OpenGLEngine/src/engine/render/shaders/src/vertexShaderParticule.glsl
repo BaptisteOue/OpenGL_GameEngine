@@ -32,6 +32,6 @@ void main()
     else
     {
         float dt = time - startTime;
-        vs_out.transp = 1 - dt / lifeTime;
+        vs_out.transp = 0.5f - dt / lifeTime;
     }
 }

@@ -7,9 +7,9 @@ class ParticuleGenerator
 {
 public:
 	static constexpr float MIN_SPEED = 10.0f;
-	static constexpr float MAX_SPEED = 15.0f;
-	static constexpr float MIN_ANGLE = 30.0f;
-	static constexpr float MAX_ANGLE = 40.0f;
+	static constexpr float MAX_SPEED = 11.0f;
+	static constexpr float MIN_ANGLE = 20.0f;
+	static constexpr float MAX_ANGLE = 22.0f;
 private:
 	int m_NbParticules;
 	std::vector<glm::vec3> m_Positions;

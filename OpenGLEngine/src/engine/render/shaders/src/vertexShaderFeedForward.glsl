@@ -36,15 +36,24 @@ void main()
         }
         else    // Update particule position
         {
-            vs_out.position += velocity * frameTime;
-            vs_out.velocity += (acceleration + gravityForce) * frameTime;
-
-            if(vs_out.position.y <= 0)
+            if(length(vs_out.velocity) <= 0.1f)
             {
-                vs_out.position.y = 0;
-                vs_out.velocity = reflect(vs_out.velocity, vec3(0, 1, 0));
-                vs_out.velocity /= 2;
+                vs_out.velocity = vec3(0);
+                vs_out.position.y = 0.1f;
             }
+            else
+            {
+                vs_out.position += velocity * frameTime;
+                vs_out.velocity +=  (acceleration + gravityForce * dt) * frameTime + gravityForce * frameTime;
+
+                if(vs_out.position.y <= 0)
+                {
+                    vs_out.position.y = 0.1f;
+                    vs_out.velocity = reflect(vs_out.velocity, vec3(0, 1, 0));
+                    vs_out.velocity /= 5;
+                }
+            }
+            
         }
     }
 }

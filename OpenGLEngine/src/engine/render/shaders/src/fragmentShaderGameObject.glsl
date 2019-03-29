@@ -63,6 +63,10 @@ uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform SpotLight spotLights[MAX_SPOT_LIGHTS];
 
 
+vec3 actualKa;
+vec3 actualKd;
+vec3 actualKs;
+
 vec3 phongModel(vec3 fromLightVector, vec3 lightColor)
 {
     vec3 color = vec3(0);
@@ -72,7 +76,7 @@ vec3 phongModel(vec3 fromLightVector, vec3 lightColor)
 
     // Diffuse 
     float diffuseFactor = max(dot(-fromLightVector, normalize_normal), 0);
-    color += material.Kd * lightColor * diffuseFactor;
+    color += actualKd * lightColor * diffuseFactor;
     
     // Specular
     if(diffuseFactor > 0)
@@ -81,11 +85,11 @@ vec3 phongModel(vec3 fromLightVector, vec3 lightColor)
         vec3 toCameraVector = normalize(- fs_in.eye_pos.xyz);
         float specularFactor = max(dot(reflectedLight, toCameraVector), 0);
         specularFactor = pow(specularFactor, material.shineDamper);
-        color += material.Ks * lightColor * material.reflectivity * specularFactor;
+        color += actualKs * lightColor * material.reflectivity * specularFactor;
     }
     
     // Ambiant
-    color += material.Ka * lightColor;
+    color += actualKa * lightColor;
 
     return color;
 }
@@ -128,9 +132,29 @@ vec4 ComputeSpotLight(SpotLight spotLight)
     return color;
 }
 
+void SetUpMaterialColor()
+{
+    if(material.isTextured)
+    {
+        vec4 texColor = texture(textureSampler, fs_in.texCoords * 10);
+        actualKa = texColor.rgb;
+        actualKd = texColor.rgb;
+    }
+    else
+    {
+        actualKa = material.Ka;
+        actualKd = material.Kd;
+    }
+
+    actualKs = material.Ks;
+}
+
 void main()
 {
     fragColor = vec4(0);
+
+    // Setup Ka, Kd, Ks if textured
+    SetUpMaterialColor();
 
     for(int i = 0; i < MAX_DIR_LIGHT; i++)
 	{
@@ -152,11 +176,5 @@ void main()
 			break;
         fragColor += ComputeSpotLight(spotLights[i]);
 	}
-
-    
-    if(material.isTextured)
-    {
-        vec4 texColor = texture(textureSampler, fs_in.texCoords * 10);
-        fragColor += texColor;
-    }    
+ 
 }
