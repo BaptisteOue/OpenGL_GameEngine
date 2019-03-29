@@ -1,5 +1,5 @@
 #include "BasicShader.h"
-#include "../core/Camera.h"
+#include "../../core/Camera.h"
 
 
 #pragma region Public API
@@ -20,6 +20,7 @@ void BasicShader::ConstructShader()
 	m_VertexShader = CreateVertexShader();
 	m_FragmentShader = CreateFragmentShader();
 	m_Program = CreateProgram();
+	LinkProgram(m_Program);
 }
 
 void BasicShader::CreateUniforms()

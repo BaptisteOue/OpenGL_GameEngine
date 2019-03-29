@@ -47,7 +47,7 @@ void RenderEngine::GameLoop()
             lag -= msPerUpdate;
         }
 
-        Render();
+        Render(elapsedTime);
     }
 
     CleanUp();
@@ -80,9 +80,9 @@ void RenderEngine::Update(float interval)
     m_GameLogic.Update(interval);
 }
 
-void RenderEngine::Render()
+void RenderEngine::Render(float frameTime)
 {
-    m_GameLogic.Render();
+    m_GameLogic.Render(frameTime);
     m_Window.Update();
 }
 

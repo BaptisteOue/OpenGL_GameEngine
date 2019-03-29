@@ -23,6 +23,7 @@ void TesselatedShader::ConstructShader()
 	m_TessEvalShader = CreateTessEvalShader();
 	m_FragmentShader = CreateFragmentShader();
 	m_Program = CreateProgram();
+	LinkProgram(m_Program);
 }
 
 void TesselatedShader::CreateUniforms()

@@ -20,10 +20,22 @@ void ParticuleShader::CreateUniforms()
 	AddUniform("modelMatrix");
 	AddUniform("viewMatrix");
 	AddUniform("projectionMatrix");
+	AddUniform("cameraPos");
 
-	AddUniform("gravityForce");
+	AddUniform("maxPointSize");
 	AddUniform("lifeTime");
 	AddUniform("time");
+
+}
+
+void ParticuleShader::LoadCameraPosUniform(const glm::vec3 & value)
+{
+	LoadUniform("cameraPos", value);
+}
+
+void ParticuleShader::LoadMaxPointSizeUniform(float value)
+{
+	LoadUniform("maxPointSize", value);
 }
 
 void ParticuleShader::LoadLifeTimeUniform(float value)
@@ -34,11 +46,6 @@ void ParticuleShader::LoadLifeTimeUniform(float value)
 void ParticuleShader::LoadSimulationTimeUniform(float value)
 {
 	LoadUniform("time", value);
-}
-
-void ParticuleShader::LoadGravityForceUniform(const glm::vec3 & value)
-{
-	LoadUniform("gravityForce", value);
 }
 
 #pragma endregion

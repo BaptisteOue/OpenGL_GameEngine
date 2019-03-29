@@ -3,10 +3,15 @@
 
 #pragma region Public API
 
-ParticuleSystem::ParticuleSystem(int nbParticules, glm::vec3 center, glm::vec3 gravityForce, float lifeTime)
+ParticuleSystem::ParticuleSystem(int nbParticules,
+	glm::vec3 center,
+	glm::vec3 gravityForce,
+	glm::vec3 acceleration,
+	float lifeTime)
 	: m_ParticuleGenerator(nbParticules),
 	m_Center{ center },
 	m_GravityForce{ gravityForce },
+	m_Acceleration{acceleration},
 	m_ParticuleLifetime{ lifeTime },
 	m_NbParticules{ nbParticules }
 {
@@ -21,7 +26,7 @@ void ParticuleSystem::Init()
 	m_StartedTime = std::chrono::high_resolution_clock::now();
 
 	const std::vector<glm::vec3>& particulePos = m_ParticuleGenerator.GetPositions();
-	const std::vector<glm::vec3>& particuleSpeeds = m_ParticuleGenerator.GetSpeeds();
+	const std::vector<glm::vec3>& particuleSpeeds = m_ParticuleGenerator.GetInitialVelocities();
 
 	std::vector<GLfloat> pos;
 	pos.reserve(m_NbParticules * 3);
@@ -54,6 +59,11 @@ const glm::vec3 & ParticuleSystem::GetGravityForce() const
 	return m_GravityForce;
 }
 
+const glm::vec3 & ParticuleSystem::GetAcceleration() const
+{
+	return m_Acceleration;
+}
+
 float ParticuleSystem::GetSimulationTime() const
 {
 	auto currentTime = std::chrono::high_resolution_clock::now();
@@ -67,7 +77,7 @@ float ParticuleSystem::GetParticuleLifetime() const
 	return m_ParticuleLifetime;
 }
 
-const ParticuleGroup & ParticuleSystem::GetParticuleGroup() const
+ParticuleGroup & ParticuleSystem::GetParticuleGroup()
 {
 	return m_ParticuleGroup;
 }
@@ -80,6 +90,11 @@ void ParticuleSystem::SetCenter(const glm::vec3 value)
 void ParticuleSystem::SetGravityForce(const glm::vec3 value)
 {
 	m_GravityForce = value;
+}
+
+void ParticuleSystem::SetAcceleration(const glm::vec3 value)
+{
+	m_Acceleration = value;
 }
 
 void ParticuleSystem::SetParticuleLifeTime(const float value)

@@ -54,15 +54,6 @@
     <ClCompile Include="src\engine\render\models\Mesh.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\render\shaders\BasicShader.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\render\shaders\ShaderBase.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\render\shaders\TesselatedShader.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\render\utils\FileUtils.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -90,10 +81,22 @@
     <ClCompile Include="src\engine\render\renderers\ParticuleRender.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\render\shaders\ParticuleShader.cpp">
+    <ClCompile Include="src\engine\render\particules\ParticuleGroup.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\render\particules\ParticuleGroup.cpp">
+    <ClCompile Include="src\engine\render\shaders\classes\BasicShader.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\render\shaders\classes\ParticuleFeedForwardShader.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\render\shaders\classes\ParticuleShader.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\render\shaders\classes\ShaderBase.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\render\shaders\classes\TesselatedShader.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,15 +143,6 @@
     <ClInclude Include="src\engine\render\models\Mesh.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\render\shaders\BasicShader.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\render\shaders\ShaderBase.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\render\shaders\TesselatedShader.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="src\engine\render\utils\FileUtils.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -164,9 +158,6 @@
     <ClInclude Include="src\engine\render\renderers\GameObjectRenderer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\render\shaders\ParticuleShader.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="src\engine\render\particules\ParticuleSystem.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -177,6 +168,21 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\render\particules\ParticuleGroup.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\render\shaders\classes\BasicShader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\render\shaders\classes\ParticuleFeedForwardShader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\render\shaders\classes\ParticuleShader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\render\shaders\classes\ShaderBase.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\render\shaders\classes\TesselatedShader.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

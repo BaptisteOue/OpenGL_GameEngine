@@ -1,14 +1,14 @@
 #version 460 core
 
 layout (location = 0) in vec3 position;
-layout (location = 1) in vec3 speed;
-layout (location = 2) in float startTime;
+layout (location = 1) in float startTime;
 
 uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
+uniform vec3 cameraPos;
 
-uniform vec3 gravityForce;
+uniform float maxPointSize;
 uniform float lifeTime;
 uniform float time;
 
@@ -20,19 +20,11 @@ out OUT
 void main()
 {
 
-    vec3 pos = position;
+    vec3 pos = (modelMatrix * vec4(position, 1)).xyz;
 
-    if(time >= startTime)
-    {
-        float dt = time - startTime;
+    gl_PointSize = maxPointSize / length(pos - cameraPos);
+    gl_Position = projectionMatrix * viewMatrix * vec4(pos, 1);
 
-        if(dt < lifeTime)
-        {
-            pos += speed * dt + gravityForce * dt * dt;
-        }
-
-        vs_out.transp = 1.0 - dt / lifeTime;
-    }
-
-    gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(pos, 1);
+    float dt = time - startTime;
+    vs_out.transp = 1.0f - dt / lifeTime;
 }

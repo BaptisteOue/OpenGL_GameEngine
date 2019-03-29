@@ -2,14 +2,14 @@
 
 #include <glm/glm.hpp>
 #include "ShaderBase.h"
-#include "../materials/Material.h"
-#include "../lights/DirectionalLight.h"
-#include "../core/Camera.h"
-#include "../lights/BasicLight.h"
-#include "../lights/DirectionalLight.h"
-#include "../lights/PointLight.h"
-#include "../lights/SpotLight.h"
-#include "../lights/LightScene.h"
+#include "../../materials/Material.h"
+#include "../../lights/DirectionalLight.h"
+#include "../../core/Camera.h"
+#include "../../lights/BasicLight.h"
+#include "../../lights/DirectionalLight.h"
+#include "../../lights/PointLight.h"
+#include "../../lights/SpotLight.h"
+#include "../../lights/LightScene.h"
 
 class BasicShader : public ShaderBase
 {

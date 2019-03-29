@@ -2,13 +2,13 @@
 
 #include <glm/glm.hpp>
 #include "BasicShader.h"
-#include "../materials/Material.h"
-#include "../lights/BasicLight.h"
-#include "../lights/DirectionalLight.h"
-#include "../lights/PointLight.h"
-#include "../lights/SpotLight.h"
-#include "../lights/LightScene.h"
-#include "../core/Camera.h"
+#include "../../materials/Material.h"
+#include "../../lights/BasicLight.h"
+#include "../../lights/DirectionalLight.h"
+#include "../../lights/PointLight.h"
+#include "../../lights/SpotLight.h"
+#include "../../lights/LightScene.h"
+#include "../../core/Camera.h"
 
 
 class TesselatedShader : public BasicShader

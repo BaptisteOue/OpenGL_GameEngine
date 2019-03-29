@@ -20,7 +20,7 @@ private:
 	std::vector<GameObject> m_GameObjects;
 	GameObjectRenderer m_GameObjectRenderer;
 	
-	ParticuleSystem m_ParticuleSystem;
+	std::vector<ParticuleSystem> m_ParticuleSystems;
 	ParticuleRender m_ParticuleRenderer;
 
 public:
@@ -30,6 +30,6 @@ public:
     void Init() override;
     void Input(Window& window) override;
     void Update(float Interval) override;
-    void Render() override;
+    void Render(float frameTime) override;
 	void CleanUp() override;
 };

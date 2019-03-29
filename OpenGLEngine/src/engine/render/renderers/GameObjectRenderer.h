@@ -3,8 +3,8 @@
 #include "../models/GameObject.h"
 #include "../lights/LightScene.h"
 #include "../core/Camera.h"
-#include "../shaders/TesselatedShader.h"
-#include "../shaders/BasicShader.h"
+#include "../shaders/classes/TesselatedShader.h"
+#include "../shaders/classes/BasicShader.h"
 
 class GameObjectRenderer
 {

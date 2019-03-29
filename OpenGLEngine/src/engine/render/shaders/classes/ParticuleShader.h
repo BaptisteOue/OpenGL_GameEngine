@@ -1,9 +1,9 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "../materials/Material.h"
-#include "../lights/DirectionalLight.h"
-#include "../core/Camera.h"
+#include "../../materials/Material.h"
+#include "../../lights/DirectionalLight.h"
+#include "../../core/Camera.h"
 #include "BasicShader.h"
 
 
@@ -20,5 +20,6 @@ public:
 
 	void LoadLifeTimeUniform(float value);
 	void LoadSimulationTimeUniform(float value);
-	void LoadGravityForceUniform(const glm::vec3& value);
+	void LoadCameraPosUniform(const glm::vec3& value);
+	void LoadMaxPointSizeUniform(float value);
 };

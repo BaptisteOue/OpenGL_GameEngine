@@ -27,6 +27,7 @@ protected:
 	GLuint CreateFragmentShader();
 	GLuint CreateTessCtrlShader();
 	GLuint CreateTessEvalShader();
+	void LinkProgram(int shaderProgram);
 	GLuint CreateProgram();
 	void AddUniform(const std::string& uniformName);
 	void LoadUniform(const std::string& uniformName, const glm::mat4& value);

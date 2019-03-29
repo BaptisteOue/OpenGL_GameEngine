@@ -7,7 +7,7 @@ ParticuleGenerator::ParticuleGenerator(int nbParticules)
 	: m_nbParticules{ nbParticules }
 {
 	m_Positions.reserve(100);
-	m_Speeds.reserve(100);
+	m_InitialVelocities.reserve(100);
 	GenerateParticules();
 }
 
@@ -20,9 +20,9 @@ const std::vector<glm::vec3>& ParticuleGenerator::GetPositions() const
 	return m_Positions;
 }
 
-const std::vector<glm::vec3>& ParticuleGenerator::GetSpeeds() const
+const std::vector<glm::vec3>& ParticuleGenerator::GetInitialVelocities() const
 {
-	return m_Speeds;
+	return m_InitialVelocities;
 }
 
 const std::vector<float>& ParticuleGenerator::GetStartTimes() const
@@ -45,7 +45,7 @@ void ParticuleGenerator::GenerateParticules()
 	for (int i = 0; i < m_nbParticules; i++)
 	{
 		m_Positions.emplace_back(0, 0, 0);
-		m_Speeds.emplace_back(GenerateRandomConeSpeed());
+		m_InitialVelocities.emplace_back(GenerateRandomConeSpeed());
 		m_StartTimes.emplace_back(GenerateRandomStartTime());
 	}
 }

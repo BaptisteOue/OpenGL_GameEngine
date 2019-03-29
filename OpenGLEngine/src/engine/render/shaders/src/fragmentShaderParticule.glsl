@@ -11,10 +11,6 @@ out vec4 fragColor;
 
 void main()
 {
-
-    if(fs_in.transp <= 0)
-        discard;
-
-    fragColor = vec4(1, 0, 1, 1);
+    fragColor = vec4(fs_in.transp);
     fragColor.a *= fs_in.transp;
 }

@@ -1,8 +1,10 @@
 #pragma once
 
 #include "../particules/ParticuleSystem.h"
-#include "../shaders/ParticuleShader.h"
+#include "../shaders/classes/ParticuleShader.h"
+#include "../shaders/classes/ParticuleFeedForwardShader.h"
 #include "../core/Camera.h"
+#include <vector>
 
 
 class ParticuleRender
@@ -12,6 +14,7 @@ private:
 	static constexpr float nearPlane = 0.01f;
 	static constexpr float farPlane = 1000.0f;
 
+	ParticuleFeedForwardShader m_ParticuleFeedForwardShader;
 	ParticuleShader m_ParticuleShader;
 
 public:
@@ -19,7 +22,7 @@ public:
 	~ParticuleRender();
 
 	void Init();
-	void Render(ParticuleSystem& particuleSystem, Camera& camera);
+	void Render(std::vector<ParticuleSystem> & particuleSystems, Camera& camera, float frameTime);
 	void CleanUp();
 
 };

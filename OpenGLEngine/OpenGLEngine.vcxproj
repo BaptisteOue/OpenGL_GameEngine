@@ -27,7 +27,8 @@
     <ClCompile Include="src\engine\render\particules\ParticuleSystem.cpp" />
     <ClCompile Include="src\engine\render\renderers\GameObjectRenderer.cpp" />
     <ClCompile Include="src\engine\render\renderers\ParticuleRender.cpp" />
-    <ClCompile Include="src\engine\render\shaders\ParticuleShader.cpp" />
+    <ClCompile Include="src\engine\render\shaders\classes\ParticuleFeedForwardShader.cpp" />
+    <ClCompile Include="src\engine\render\shaders\classes\ParticuleShader.cpp" />
     <ClCompile Include="src\game\App.cpp" />
     <ClCompile Include="src\engine\render\core\RenderEngine.cpp" />
     <ClCompile Include="src\engine\render\core\Timer.cpp" />
@@ -41,9 +42,9 @@
     <ClCompile Include="src\engine\render\maths\Transformations.cpp" />
     <ClCompile Include="src\engine\render\models\GameObject.cpp" />
     <ClCompile Include="src\engine\render\models\Mesh.cpp" />
-    <ClCompile Include="src\engine\render\shaders\BasicShader.cpp" />
-    <ClCompile Include="src\engine\render\shaders\ShaderBase.cpp" />
-    <ClCompile Include="src\engine\render\shaders\TesselatedShader.cpp" />
+    <ClCompile Include="src\engine\render\shaders\classes\BasicShader.cpp" />
+    <ClCompile Include="src\engine\render\shaders\classes\ShaderBase.cpp" />
+    <ClCompile Include="src\engine\render\shaders\classes\TesselatedShader.cpp" />
     <ClCompile Include="src\engine\render\utils\FileUtils.cpp" />
     <ClCompile Include="src\engine\render\utils\Loader.cpp" />
   </ItemGroup>
@@ -61,9 +62,10 @@
     <ClInclude Include="src\engine\render\particules\ParticuleSystem.h" />
     <ClInclude Include="src\engine\render\renderers\GameObjectRenderer.h" />
     <ClInclude Include="src\engine\render\renderers\ParticuleRender.h" />
-    <ClInclude Include="src\engine\render\shaders\BasicShader.h" />
+    <ClInclude Include="src\engine\render\shaders\classes\BasicShader.h" />
     <ClInclude Include="src\engine\render\core\Camera.h" />
-    <ClInclude Include="src\engine\render\shaders\ParticuleShader.h" />
+    <ClInclude Include="src\engine\render\shaders\classes\ParticuleFeedForwardShader.h" />
+    <ClInclude Include="src\engine\render\shaders\classes\ParticuleShader.h" />
     <ClInclude Include="src\game\App.h" />
     <ClInclude Include="src\engine\render\core\RenderEngine.h" />
     <ClInclude Include="src\engine\render\core\IGameLogic.h" />
@@ -71,8 +73,8 @@
     <ClInclude Include="src\engine\render\core\Window.h" />
     <ClInclude Include="src\engine\render\maths\Transformations.h" />
     <ClInclude Include="src\engine\render\models\Mesh.h" />
-    <ClInclude Include="src\engine\render\shaders\ShaderBase.h" />
-    <ClInclude Include="src\engine\render\shaders\TesselatedShader.h" />
+    <ClInclude Include="src\engine\render\shaders\classes\ShaderBase.h" />
+    <ClInclude Include="src\engine\render\shaders\classes\TesselatedShader.h" />
     <ClInclude Include="src\engine\render\utils\FileUtils.h" />
     <ClInclude Include="src\engine\render\utils\Loader.h" />
   </ItemGroup>

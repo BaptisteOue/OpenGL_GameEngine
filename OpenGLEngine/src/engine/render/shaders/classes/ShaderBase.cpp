@@ -2,7 +2,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
 #include <iostream>
-#include "../utils/FileUtils.h"
+#include "../../utils/FileUtils.h"
 
 
 #pragma region Public API
@@ -153,7 +153,6 @@ GLuint ShaderBase::CreateProgram()
     GLuint shaderProgram = glCreateProgram();
 
     glAttachShader(shaderProgram, m_VertexShader);
-    glAttachShader(shaderProgram, m_FragmentShader);
 
 	if (glIsShader(m_TessCtrlShader))
 		glAttachShader(shaderProgram, m_TessCtrlShader);
@@ -161,30 +160,39 @@ GLuint ShaderBase::CreateProgram()
 	if (glIsShader(m_TessEvalShader))
 		glAttachShader(shaderProgram, m_TessEvalShader);
 
-    glLinkProgram(shaderProgram);
+	if (glIsShader(m_FragmentShader))
+		glAttachShader(shaderProgram, m_FragmentShader);
 
-    auto isLinked = 0;
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, (int *)&isLinked);
-    if (isLinked == GL_FALSE)
-    {
+	return shaderProgram;
+}
+
+void ShaderBase::LinkProgram(int shaderProgram)
+{
+	glLinkProgram(shaderProgram);
+
+	auto isLinked = 0;
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, (int *)&isLinked);
+	if (isLinked == GL_FALSE)
+	{
 		auto maxLength = 0;
-        glGetProgramiv(shaderProgram, GL_INFO_LOG_LENGTH, &maxLength);
+		glGetProgramiv(shaderProgram, GL_INFO_LOG_LENGTH, &maxLength);
 
 		auto error = new char[maxLength];
-        glGetProgramInfoLog(shaderProgram, maxLength, &maxLength, error);
-        std::cout << error << std::endl;
-        delete[] error;
+		glGetProgramInfoLog(shaderProgram, maxLength, &maxLength, error);
+		std::cout << error << std::endl;
+		delete[] error;
 
-        glDeleteProgram(shaderProgram);
+		glDeleteProgram(shaderProgram);
+		glDeleteShader(m_VertexShader);
 		if (glIsShader(m_TessCtrlShader))
 			glDeleteShader(m_TessCtrlShader);
 		if (glIsShader(m_TessEvalShader))
 			glDeleteShader(m_TessEvalShader);
-        glDeleteShader(m_VertexShader);
-        glDeleteShader(m_FragmentShader);
+		if (glIsShader(m_FragmentShader))
+			glDeleteShader(m_FragmentShader);
 
-        return -1;
-    }
+		return;
+	}
 
 	if (glIsShader(m_VertexShader))
 		glDeleteShader(m_VertexShader);
@@ -195,7 +203,6 @@ GLuint ShaderBase::CreateProgram()
 	if (glIsShader(m_TessEvalShader))
 		glDeleteShader(m_TessEvalShader);
 
-    return shaderProgram;
 }
 
 #pragma endregion

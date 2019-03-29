@@ -24,7 +24,7 @@ private:
 
 	void Input();
 	void Update(float interval);
-	void Render();
+	void Render(float frameTime);
 
 public:
 	RenderEngine(const char* title, int width, int height, IGameLogic& gameLogic);

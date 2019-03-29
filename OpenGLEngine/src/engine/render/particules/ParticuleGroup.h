@@ -8,9 +8,13 @@
 class ParticuleGroup
 {
 private:
-	GLuint m_VaoIDs[1];
 	int m_VertexCount;
 	int m_NbParticules;
+
+	GLuint m_VaoPingPong[2];
+	GLuint m_FeedbackIDs[2];
+	int m_DrawBuffer = 0;
+
 	std::vector<GLuint> m_Vbos;
 
 private:
@@ -20,7 +24,8 @@ public:
 	~ParticuleGroup();
 
 	void LoadParticuleGroup(const std::vector<GLfloat>& positions, const std::vector<GLfloat>& speeds, const std::vector<GLfloat>& startTimes);
-	void Draw() const;
+	void UpdatePass();
+	void RenderPass();
 	void CleanUp();
 
 	void SetNbParticules(int nbParticules);

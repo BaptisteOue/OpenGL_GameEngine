@@ -13,7 +13,7 @@ App::App()
 	m_LightScene(),
 	m_GameObjectRenderer(),
 	m_GameObjects(),
-	m_ParticuleSystem(),
+	m_ParticuleSystems(),
 	m_ParticuleRenderer()
 {
 
@@ -44,8 +44,25 @@ void App::Init()
 	material.AddTexture(Loader::LoadTexture("./res/Abstract_Organic_002_COLOR.jpg"));
 	m_GameObjects.emplace_back(plane, material, glm::vec3(0), glm::vec3(0), 10);
 
-	m_ParticuleSystem.Init();
-	m_ParticuleSystem.SetCenter(glm::vec3(0, 3, -10));
+
+	ParticuleSystem particuleSystem1{};
+	particuleSystem1.Init();
+	particuleSystem1.SetCenter(glm::vec3(-20, 3, -10));
+	particuleSystem1.SetGravityForce(glm::vec3(0, -4, 0));
+
+	ParticuleSystem particuleSystem2{};
+	particuleSystem2.Init();
+	particuleSystem2.SetCenter(glm::vec3(0, 3, -10));
+	particuleSystem2.SetGravityForce(glm::vec3(0, -8, 0));
+
+	ParticuleSystem particuleSystem3{};
+	particuleSystem3.Init();
+	particuleSystem3.SetCenter(glm::vec3(20, 3, -10));
+	particuleSystem3.SetGravityForce(glm::vec3(0, -16, 0));
+
+	m_ParticuleSystems.push_back(particuleSystem1);
+	m_ParticuleSystems.push_back(particuleSystem2);
+	m_ParticuleSystems.push_back(particuleSystem3);
 
 	//for (PointLight& p : m_LightScene.GetPointLights())
 	//	m_GameObjects.push_back(p.GetLightObject());
@@ -135,11 +152,10 @@ void App::Update(float interval)
 		m_LightScene.GetTorch().SimulateTorch(m_Camera);
 }
 
-void App::Render()
+void App::Render(float frameTime)
 {
-
 	m_GameObjectRenderer.Render(m_GameObjects, m_LightScene, m_Camera);
-	m_ParticuleRenderer.Render(m_ParticuleSystem, m_Camera);
+	m_ParticuleRenderer.Render(m_ParticuleSystems, m_Camera, frameTime);
 }
 
 void App::CleanUp()

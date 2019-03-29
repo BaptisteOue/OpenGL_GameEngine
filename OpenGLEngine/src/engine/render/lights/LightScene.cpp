@@ -18,7 +18,7 @@ LightScene::~LightScene()
 void LightScene::Init()
 {
 	// Directional Lights
-	m_DirecationalLights.push_back(DirectionalLight(glm::vec3(1), glm::vec3(1, -1, 1), 0.6f));
+	m_DirecationalLights.push_back(DirectionalLight(glm::vec3(1), glm::vec3(1, -1, 1), 0.1f));
 
 	// Point lights
 	PointLight pointLight(glm::vec3(1, 0, 0), glm::vec3(-10, 20, 0), 4);

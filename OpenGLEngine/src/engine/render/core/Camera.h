@@ -33,6 +33,8 @@ public:
 	void Update(const glm::vec3& dCamera);
 
 	const glm::vec3 GetPos() const;
+	glm::vec3 GetPos();
+
 	const glm::vec3 GetFront() const;
 	const glm::vec3 GetUp() const;
 
