@@ -20,24 +20,24 @@ void ParticuleRender::Init()
 
 void ParticuleRender::Render(std::vector<ParticuleSystem> & particuleSystems, Camera& camera, float frameTime)
 {
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	for (ParticuleSystem& particuleSystem : particuleSystems)
 	{
 		// Compute phase for transformation feedback
+
 		m_ParticuleFeedForwardShader.Use(true);
 		m_ParticuleFeedForwardShader.LoadLifeTimeUniform(particuleSystem.GetParticuleLifetime());
 		m_ParticuleFeedForwardShader.LoadSimulationTimeUniform(particuleSystem.GetSimulationTime());
 		m_ParticuleFeedForwardShader.LoadAccelerationUniform(particuleSystem.GetAcceleration());
 		m_ParticuleFeedForwardShader.LoadGravityForceUniform(particuleSystem.GetGravityForce());
 		m_ParticuleFeedForwardShader.LoadFrameTimeUniform(frameTime);
+		m_ParticuleFeedForwardShader.LoadCenterUniform(particuleSystem.GetCenter());
 		particuleSystem.GetParticuleGroup().UpdatePass();
 		m_ParticuleFeedForwardShader.Use(false);
 
 		// Draw phase
 		glm::mat4 projectionMatrix{ Transformations::GetProjectionMatrix(FOV, nearPlane, farPlane) };
 		glm::mat4 viewMatrix{ Transformations::GetViewMatrix(camera) };
-		glm::mat4 modelMatrix{ Transformations::GetModelMatrix(particuleSystem.GetCenter(), glm::vec3{0}, glm::vec3{1}) };
+		glm::mat4 modelMatrix{ Transformations::GetModelMatrix(glm::vec3{0}, glm::vec3{0}, glm::vec3{1}) };
 
 		m_ParticuleShader.Use(true);
 		m_ParticuleShader.LoadLifeTimeUniform(particuleSystem.GetParticuleLifetime());

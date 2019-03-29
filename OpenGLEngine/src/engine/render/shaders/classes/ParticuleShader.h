@@ -18,8 +18,8 @@ public:
 
 	void CreateUniforms() override;
 
-	void LoadLifeTimeUniform(float value);
 	void LoadSimulationTimeUniform(float value);
 	void LoadCameraPosUniform(const glm::vec3& value);
 	void LoadMaxPointSizeUniform(float value);
+	void LoadLifeTimeUniform(float value);
 };

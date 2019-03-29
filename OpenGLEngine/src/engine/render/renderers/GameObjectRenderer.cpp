@@ -20,7 +20,6 @@ void GameObjectRenderer::Init()
 
 void GameObjectRenderer::Render(std::vector<GameObject>& gameObjects, LightScene& lightScene, Camera& camera)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_TesselatedShader.Use(true);
 

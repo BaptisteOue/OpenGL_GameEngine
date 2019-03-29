@@ -27,4 +27,6 @@ public:
 	void LoadSimulationTimeUniform(float value);
 	void LoadGravityForceUniform(const glm::vec3& value);
 	void LoadAccelerationUniform(const glm::vec3& value);
+	void LoadCenterUniform(const glm::vec3& value);
+
 };

@@ -25,6 +25,13 @@ void main()
     gl_PointSize = maxPointSize / length(pos - cameraPos);
     gl_Position = projectionMatrix * viewMatrix * vec4(pos, 1);
 
-    float dt = time - startTime;
-    vs_out.transp = 1.0f - dt / lifeTime;
+    if(time < startTime)
+    {
+        vs_out.transp = 0;
+    }
+    else
+    {
+        float dt = time - startTime;
+        vs_out.transp = 1 - dt / lifeTime;
+    }
 }

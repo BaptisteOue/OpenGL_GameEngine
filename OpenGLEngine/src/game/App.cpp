@@ -39,35 +39,18 @@ void App::Init()
 	Mesh dragon{ Loader::LoadOBJ("./res/dragon.obj") };
 	Material material{ glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 0.5f, 150 };
 	
-	m_GameObjects.emplace_back(bunny, material, glm::vec3(-10, 5, -10), glm::vec3(0), 4);
-	m_GameObjects.emplace_back(dragon, material, glm::vec3(10, 5, -10), glm::vec3(0), 1);
-	material.AddTexture(Loader::LoadTexture("./res/Abstract_Organic_002_COLOR.jpg"));
+	m_GameObjects.emplace_back(bunny, material, glm::vec3(-10, 1, -10), glm::vec3(0), 4);
+	m_GameObjects.emplace_back(dragon, material, glm::vec3(10, 1, -10), glm::vec3(0), 1);
+	material.AddTexture(Loader::LoadTexture("./res/brick.jpg"));
 	m_GameObjects.emplace_back(plane, material, glm::vec3(0), glm::vec3(0), 10);
 
 
-	ParticuleSystem particuleSystem1{};
+	ParticuleSystem particuleSystem1{ 1000000 };
+	particuleSystem1.SetCenter(glm::vec3(0, 1, -10));
+	particuleSystem1.SetGravityForce(glm::vec3(0, -5.0f, 0));
 	particuleSystem1.Init();
-	particuleSystem1.SetCenter(glm::vec3(-20, 3, -10));
-	particuleSystem1.SetGravityForce(glm::vec3(0, -4, 0));
 
-	ParticuleSystem particuleSystem2{};
-	particuleSystem2.Init();
-	particuleSystem2.SetCenter(glm::vec3(0, 3, -10));
-	particuleSystem2.SetGravityForce(glm::vec3(0, -8, 0));
-
-	ParticuleSystem particuleSystem3{};
-	particuleSystem3.Init();
-	particuleSystem3.SetCenter(glm::vec3(20, 3, -10));
-	particuleSystem3.SetGravityForce(glm::vec3(0, -16, 0));
-
-	m_ParticuleSystems.push_back(particuleSystem1);
-	m_ParticuleSystems.push_back(particuleSystem2);
-	m_ParticuleSystems.push_back(particuleSystem3);
-
-	//for (PointLight& p : m_LightScene.GetPointLights())
-	//	m_GameObjects.push_back(p.GetLightObject());
-	//for (SpotLight& s : m_LightScene.GetSpotLights())
-	//	m_GameObjects.push_back(s.GetLightObject());
+	m_ParticuleSystems.push_back(std::move(particuleSystem1));
 }
 
 void App::Input(Window& window)
@@ -154,6 +137,7 @@ void App::Update(float interval)
 
 void App::Render(float frameTime)
 {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	m_GameObjectRenderer.Render(m_GameObjects, m_LightScene, m_Camera);
 	m_ParticuleRenderer.Render(m_ParticuleSystems, m_Camera, frameTime);
 }

@@ -13,16 +13,15 @@ private:
 	std::chrono::steady_clock::time_point m_StartedTime;
 	float m_ParticuleLifetime;
 	int m_NbParticules;
-
 	ParticuleGenerator m_ParticuleGenerator;
 	ParticuleGroup m_ParticuleGroup;
 
 public:
-	ParticuleSystem(int nbParticule = 2000000, 
+	ParticuleSystem(int nbParticule = 100000, 
 		glm::vec3 center = glm::vec3{ 0 }, 
 		glm::vec3 gravityForce = glm::vec3{ 0, -1.0f, 0.0f }, 
 		glm::vec3 acceleration = glm::vec3{ 0 },
-		float lifeTime = 3.0f);
+		float lifeTime = 7.0f);
 	~ParticuleSystem();
 	void Init();
 

@@ -20,6 +20,7 @@ void ParticuleFeedForwardShader::ConstructShader()
 
 void ParticuleFeedForwardShader::CreateUniforms()
 {
+	AddUniform("center");
 	AddUniform("acceleration");
 	AddUniform("gravityForce");
 	AddUniform("lifeTime");
@@ -51,4 +52,9 @@ void ParticuleFeedForwardShader::LoadGravityForceUniform(const glm::vec3 & value
 void ParticuleFeedForwardShader::LoadAccelerationUniform(const glm::vec3 & value)
 {
 	LoadUniform("acceleration", value);
+}
+
+void ParticuleFeedForwardShader::LoadCenterUniform(const glm::vec3 & value)
+{
+	LoadUniform("center", value);
 }

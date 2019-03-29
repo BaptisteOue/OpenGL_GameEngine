@@ -22,8 +22,8 @@ void ParticuleShader::CreateUniforms()
 	AddUniform("projectionMatrix");
 	AddUniform("cameraPos");
 
-	AddUniform("maxPointSize");
 	AddUniform("lifeTime");
+	AddUniform("maxPointSize");
 	AddUniform("time");
 
 }
@@ -38,14 +38,15 @@ void ParticuleShader::LoadMaxPointSizeUniform(float value)
 	LoadUniform("maxPointSize", value);
 }
 
-void ParticuleShader::LoadLifeTimeUniform(float value)
-{
-	LoadUniform("lifeTime", value);
-}
 
 void ParticuleShader::LoadSimulationTimeUniform(float value)
 {
 	LoadUniform("time", value);
+}
+
+void ParticuleShader::LoadLifeTimeUniform(float value)
+{
+	LoadUniform("lifeTime", value);
 }
 
 #pragma endregion

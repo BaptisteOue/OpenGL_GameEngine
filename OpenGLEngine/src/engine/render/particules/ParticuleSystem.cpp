@@ -23,6 +23,9 @@ ParticuleSystem::~ParticuleSystem()
 
 void ParticuleSystem::Init()
 {
+	// Generate particules
+	m_ParticuleGenerator.Init(m_Center);
+
 	m_StartedTime = std::chrono::high_resolution_clock::now();
 
 	const std::vector<glm::vec3>& particulePos = m_ParticuleGenerator.GetPositions();
@@ -34,6 +37,7 @@ void ParticuleSystem::Init()
 	std::vector<GLfloat> speeds;
 	pos.reserve(m_NbParticules * 3);
 
+	// Fill pos, velocity and startime buffers
 	for (int i = 0; i < m_NbParticules; i++)
 	{
 		pos.push_back(particulePos[i].x);
@@ -45,6 +49,7 @@ void ParticuleSystem::Init()
 		speeds.push_back(particuleSpeeds[i].z);
 	}
 
+	// Load thr "particule group mesh"
 	m_ParticuleGroup.SetNbParticules(m_NbParticules);
 	m_ParticuleGroup.LoadParticuleGroup(pos, speeds, m_ParticuleGenerator.GetStartTimes());
 }
