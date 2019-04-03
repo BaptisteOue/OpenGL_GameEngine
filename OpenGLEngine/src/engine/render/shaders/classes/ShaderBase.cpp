@@ -26,8 +26,12 @@ void ShaderBase::CreateShaderProgram()
 
 void ShaderBase::Use(bool use)
 {
-    glUseProgram(m_Program * (int)use);
+	if (use)
+		glUseProgram(m_Program);
+	else
+		glUseProgram(0);
 }
+
 
 void ShaderBase::CleanUp()
 {
@@ -43,6 +47,11 @@ void ShaderBase::CleanUp()
 void ShaderBase::RegisterVertexShader(const char* vertexShaderPath)
 {
 	m_VertexShaderPath =  vertexShaderPath;
+}
+
+void ShaderBase::RegisterGeometryShader(const char* geometryShaderPath)
+{
+	m_GeometryShaderPath = geometryShaderPath;
 }
 
 void ShaderBase::RegisterFragmentShader(const char * fragmentShaderPath)
@@ -142,6 +151,11 @@ GLuint ShaderBase::CreateTessEvalShader()
 	return CreateShader(GL_TESS_EVALUATION_SHADER, m_TessEvalShaderPath);
 }
 
+GLuint ShaderBase::CreateGeometryShader()
+{
+	return CreateShader(GL_GEOMETRY_SHADER, m_GeometryShaderPath);
+}
+
 GLuint ShaderBase::CreateFragmentShader()
 {
     return CreateShader(GL_FRAGMENT_SHADER, m_FragmentShaderPath);
@@ -159,6 +173,9 @@ GLuint ShaderBase::CreateProgram()
 
 	if (glIsShader(m_TessEvalShader))
 		glAttachShader(shaderProgram, m_TessEvalShader);
+
+	if (glIsShader(m_GeometryShader))
+		glAttachShader(shaderProgram, m_GeometryShader);
 
 	if (glIsShader(m_FragmentShader))
 		glAttachShader(shaderProgram, m_FragmentShader);
@@ -188,6 +205,8 @@ void ShaderBase::LinkProgram(int shaderProgram)
 			glDeleteShader(m_TessCtrlShader);
 		if (glIsShader(m_TessEvalShader))
 			glDeleteShader(m_TessEvalShader);
+		if (glIsShader(m_GeometryShader))
+			glDeleteShader(m_GeometryShader);
 		if (glIsShader(m_FragmentShader))
 			glDeleteShader(m_FragmentShader);
 
@@ -202,7 +221,8 @@ void ShaderBase::LinkProgram(int shaderProgram)
 		glDeleteShader(m_TessCtrlShader);
 	if (glIsShader(m_TessEvalShader))
 		glDeleteShader(m_TessEvalShader);
-
+	if (glIsShader(m_GeometryShader))
+		glDeleteShader(m_GeometryShader);
 }
 
 #pragma endregion

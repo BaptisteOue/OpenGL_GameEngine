@@ -5,7 +5,8 @@
 
 
 LightScene::LightScene()
-	:m_DirecationalLights(),
+	:m_ambientLight(),
+	m_DirecationalLights(),
 	m_PointLights(),
 	m_SpotLights()
 {
@@ -17,8 +18,11 @@ LightScene::~LightScene()
 
 void LightScene::Init()
 {
+	// Ambient light already done (not a vector)
+	m_ambientLight.SetIntensity(0.2f);
+
 	// Directional Lights
-	m_DirecationalLights.push_back(DirectionalLight(glm::vec3(1), glm::vec3(1, -1, 1), 0.1f));
+	m_DirecationalLights.push_back(DirectionalLight(glm::vec3(1.0f), glm::vec3(-1, -1, -1), 0.7f));
 
 	// Point lights
 	PointLight pointLight(glm::vec3(1, 0, 0), glm::vec3(-10, 20, 0), 1);
@@ -34,11 +38,14 @@ void LightScene::Init()
 	m_PointLights.push_back(pointLight);
 
 	// Torch
-	pointLight.SetIntensity(1);
+	pointLight.SetIntensity(5);
 	pointLight.SetColor(glm::vec3(1));
+	pointLight.SetAttenuation(1, 0.05f, 0.005f);
 	m_SpotLights.push_back(SpotLight(pointLight, 10, glm::vec3(0, 0, -1)));
 
 	// Other Spot lights...
+	pointLight.SetAttenuation(1, 0.1f, 0.02f);
+	pointLight.SetIntensity(1.3f);
 	pointLight.SetColor(glm::vec3(1, 1, 0));
 	pointLight.SetPosition(glm::vec3(-30, 30, -30));
 	m_SpotLights.push_back(SpotLight(pointLight, 40, glm::vec3(1, -1, 1)));
@@ -62,6 +69,16 @@ void LightScene::CleanUp()
 	m_DirecationalLights.clear();
 	m_PointLights.clear();
 	m_SpotLights.clear();
+}
+
+const BasicLight & LightScene::GetAmbientLight() const
+{
+	return m_ambientLight;
+}
+
+BasicLight & LightScene::GetAmbientLight()
+{
+	return m_ambientLight;
 }
 
 const std::vector<DirectionalLight>& LightScene::GetDirectionalLights() const

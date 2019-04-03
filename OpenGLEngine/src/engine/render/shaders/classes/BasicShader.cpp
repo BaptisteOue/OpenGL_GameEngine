@@ -1,6 +1,7 @@
 #include "BasicShader.h"
 #include "../../core/Camera.h"
 
+#include <iostream>
 
 #pragma region Public API
 
@@ -52,6 +53,8 @@ void BasicShader::LoadMaterialUniforms(const Material& material)
 
 void BasicShader::LoadLightsUniforms(const LightScene& lightScene, const glm::mat4& matrice)
 {
+	LoadBasicLightUniforms("ambientLight", lightScene.GetAmbientLight());
+
 	auto i = 0;
 	for (const DirectionalLight& directionalLight : lightScene.GetDirectionalLights())
 	{
@@ -82,6 +85,9 @@ void BasicShader::LoadLightsUniforms(const LightScene& lightScene, const glm::ma
 
 void BasicShader::AddLightUniforms(int numDir, int numPoint, int numSpot)
 {
+	// Add an ambientLight
+	AddBasicLightUniforms("ambientLight");
+
 	for (int i = 0; i < numDir; i++)
 		AddDirectionalLightUniforms("directionalLights[" + std::to_string(i) + "]");
 	for (int i = 0; i < numPoint; i++)

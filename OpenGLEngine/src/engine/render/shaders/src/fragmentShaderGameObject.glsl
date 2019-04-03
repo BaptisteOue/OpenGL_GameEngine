@@ -55,9 +55,10 @@ struct SpotLight
 };
 
 
-uniform Material material;
 layout(binding = 0) uniform sampler2D textureSampler;
+uniform Material material;
 
+uniform BaseLight ambientLight;
 uniform DirectionalLight directionalLights[MAX_DIR_LIGHT];
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform SpotLight spotLights[MAX_SPOT_LIGHTS];
@@ -71,7 +72,6 @@ vec3 phongModel(vec3 fromLightVector, vec3 lightColor)
 {
     vec3 color = vec3(0);
 
-    
     vec3 normalize_normal = normalize(fs_in.eye_normal.xyz);
 
     // Diffuse 
@@ -87,9 +87,6 @@ vec3 phongModel(vec3 fromLightVector, vec3 lightColor)
         specularFactor = pow(specularFactor, material.shineDamper);
         color += actualKs * lightColor * material.reflectivity * specularFactor;
     }
-    
-    // Ambiant
-    color += actualKa * lightColor;
 
     return color;
 }
@@ -176,5 +173,7 @@ void main()
 			break;
         fragColor += ComputeSpotLight(spotLights[i]);
 	}
- 
+
+    // Add Ambient light
+    fragColor = max(fragColor, vec4(actualKa * ambientLight.color * ambientLight.intensity, 1));
 }

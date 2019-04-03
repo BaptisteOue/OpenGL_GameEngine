@@ -10,7 +10,7 @@ protected :
 	float m_Intensity;
 
 public:
-	BasicLight(const glm::vec3& color = glm::vec3(1), float intensity = 1);
+	BasicLight(const glm::vec3& color = glm::vec3(1), float intensity = 0.2f);
 	~BasicLight();
 
 	const glm::vec3 GetColor() const;

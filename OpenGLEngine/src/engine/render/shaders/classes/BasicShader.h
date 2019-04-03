@@ -39,6 +39,6 @@ public:
 
 	void LoadMatricesUniforms(const glm::mat4& modelMatrix, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
 	void LoadMaterialUniforms(const Material& material);
-	void LoadLightsUniforms(const LightScene& lightScene, const glm::mat4& matrice);
+	void LoadLightsUniforms(const LightScene& lightScene, const glm::mat4& matrice); // TO FIX : if uniform not stored it can overide other uniforms
 };
 

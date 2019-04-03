@@ -4,6 +4,7 @@
 #include "../shaders/classes/ParticuleShader.h"
 #include "../shaders/classes/ParticuleFeedForwardShader.h"
 #include "../core/Camera.h"
+#include "../lights/LightScene.h"
 #include <vector>
 
 
@@ -22,7 +23,7 @@ public:
 	~ParticuleRender();
 
 	void Init();
-	void Render(std::vector<ParticuleSystem> & particuleSystems, Camera& camera, float frameTime);
+	void Render(std::vector<ParticuleSystem> & particuleSystems, LightScene& lightScene, Camera& camera, float frameTime);
 	void CleanUp();
 
 };

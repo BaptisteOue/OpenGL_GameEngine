@@ -14,10 +14,8 @@
 class TesselatedShader : public BasicShader
 {
 public:
-	static constexpr auto VERTEX_SHADER = "./src/engine/render/shaders/src/vertexShaderGameObject.glsl";
 	static constexpr auto TESS_CTRL_SHADER = "./src/engine/render/shaders/src/tessCtrlShader.glsl";
 	static constexpr auto TESS_EVAL_SHADER = "./src/engine/render/shaders/src/tessEvalShader.glsl";
-	static constexpr auto FRAGMENT_SHADER = "./src/engine/render/shaders/src/fragmentShaderGameObject.glsl";
 
 public:
 	TesselatedShader();

@@ -1,12 +1,14 @@
 #include "ParticuleShader.h"
-
+#include <iostream>
 
 #pragma region Public API
 
 ParticuleShader::ParticuleShader()
 	: BasicShader()
 {
+	// Override BasicShader shaders paths
 	RegisterVertexShader(ParticuleShader::VERTEX_SHADER);
+	RegisterGeometryShader(ParticuleShader::GEOMETRY_SHADER);
 	RegisterFragmentShader(ParticuleShader::FRAGMENT_SHADER);
 }
 
@@ -14,30 +16,26 @@ ParticuleShader::~ParticuleShader()
 {
 }
 
+void ParticuleShader::ConstructShader()
+{
+	m_VertexShader = CreateVertexShader();
+	m_GeometryShader = CreateGeometryShader();
+	m_FragmentShader = CreateFragmentShader();
+	m_Program = CreateProgram();
+	LinkProgram(m_Program);
+}
 
 void ParticuleShader::CreateUniforms()
 {
+	AddLightUniforms(1, 10, 5);
+
 	AddUniform("modelMatrix");
 	AddUniform("viewMatrix");
 	AddUniform("projectionMatrix");
-	AddUniform("cameraPos");
-
 	AddUniform("lifeTime");
-	AddUniform("maxPointSize");
 	AddUniform("time");
 
 }
-
-void ParticuleShader::LoadCameraPosUniform(const glm::vec3 & value)
-{
-	LoadUniform("cameraPos", value);
-}
-
-void ParticuleShader::LoadMaxPointSizeUniform(float value)
-{
-	LoadUniform("maxPointSize", value);
-}
-
 
 void ParticuleShader::LoadSimulationTimeUniform(float value)
 {

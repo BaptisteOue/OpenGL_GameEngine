@@ -16,7 +16,7 @@ ParticuleGenerator::~ParticuleGenerator()
 
 void ParticuleGenerator::Init(const glm::vec3& center)
 {
-	GenerateParticules(center, ParticuleGenerator::MIN_ANGLE, ParticuleGenerator::MAX_ANGLE, ParticuleGenerator::MIN_SPEED, ParticuleGenerator::MAX_SPEED);
+	GenerateParticules(center);
 }
 
 const std::vector<glm::vec3>& ParticuleGenerator::GetPositions() const
@@ -49,23 +49,23 @@ void ParticuleGenerator::SetNbParticules(int value)
 
 #pragma region Private API
 
-void ParticuleGenerator::GenerateParticules(const glm::vec3& center, float minAngle, float maxAngle, float minSpeed, float maxSpeed)
+void ParticuleGenerator::GenerateParticules(const glm::vec3& center)
 {
 	for (int i = 0; i < m_NbParticules; i++)
 	{
 		m_Positions.emplace_back(center);
-		m_InitialVelocities.emplace_back(GenerateRandomConeSpeed(minAngle, maxAngle, minSpeed, maxSpeed));
+		m_InitialVelocities.emplace_back(GenerateRandomConeSpeed());
 		m_StartTimes.emplace_back(GenerateRandomStartTime());
 	}
 }
 
-const glm::vec3 & ParticuleGenerator::GenerateRandomConeSpeed(float minAngle, float maxAngle, float minSpeed, float maxSpeed)
+const glm::vec3 & ParticuleGenerator::GenerateRandomConeSpeed()
 {
 	glm::vec3 v;
 	float random, velocity, theta, phi;
 
 	random = ((float)rand()) / (float)RAND_MAX;
-	theta = glm::mix(glm::radians(minAngle), glm::radians(maxAngle), random);
+	theta = glm::mix(glm::radians(MIN_ANGLE), glm::radians(MAX_ANGLE), random);
 
 	random = ((float)rand()) / (float)RAND_MAX;
 	phi = glm::mix(0.0f, glm::radians(360.0f), random);
@@ -75,7 +75,7 @@ const glm::vec3 & ParticuleGenerator::GenerateRandomConeSpeed(float minAngle, fl
 	v.z = sinf(theta) * sinf(phi);
 
 	random = ((float)rand()) / (float)RAND_MAX;
-	velocity = glm::mix(minSpeed, maxSpeed, random);
+	velocity = glm::mix(MIN_SPEED, MAX_SPEED, random);
 
 	return glm::normalize(v) * velocity;
 }
@@ -83,7 +83,7 @@ const glm::vec3 & ParticuleGenerator::GenerateRandomConeSpeed(float minAngle, fl
 const float ParticuleGenerator::GenerateRandomStartTime()
 {
 	float random = ((float)rand()) / (float)RAND_MAX;
-	return glm::mix(0.0f, 20.0f, random);
+	return glm::mix(MIN_START_TIME, MAX_START_TIME, random);
 }
 
 #pragma endregion

@@ -1,5 +1,6 @@
 #include "ParticuleRender.h"
 #include "../maths/Transformations.h"
+#include <iostream>
 
 ParticuleRender::ParticuleRender()
 	: m_ParticuleShader(), m_ParticuleFeedForwardShader()
@@ -14,16 +15,20 @@ ParticuleRender::~ParticuleRender()
 
 void ParticuleRender::Init()
 {
-	m_ParticuleFeedForwardShader.CreateShaderProgram();
 	m_ParticuleShader.CreateShaderProgram();
+	m_ParticuleFeedForwardShader.CreateShaderProgram();
 }
 
-void ParticuleRender::Render(std::vector<ParticuleSystem> & particuleSystems, Camera& camera, float frameTime)
+void ParticuleRender::Render(std::vector<ParticuleSystem> & particuleSystems, LightScene& lightScene, Camera& camera, float frameTime)
 {
+
+	glm::mat4 projectionMatrix{ Transformations::GetProjectionMatrix(FOV, nearPlane, farPlane) };
+	glm::mat4 viewMatrix{ Transformations::GetViewMatrix(camera) };
+	glm::mat4 modelMatrix{ Transformations::GetModelMatrix(glm::vec3{0}, glm::vec3{0}, glm::vec3{1}) };
+
 	for (ParticuleSystem& particuleSystem : particuleSystems)
 	{
 		// Compute phase for transformation feedback
-
 		m_ParticuleFeedForwardShader.Use(true);
 		m_ParticuleFeedForwardShader.LoadLifeTimeUniform(particuleSystem.GetParticuleLifetime());
 		m_ParticuleFeedForwardShader.LoadSimulationTimeUniform(particuleSystem.GetSimulationTime());
@@ -35,16 +40,11 @@ void ParticuleRender::Render(std::vector<ParticuleSystem> & particuleSystems, Ca
 		m_ParticuleFeedForwardShader.Use(false);
 
 		// Draw phase
-		glm::mat4 projectionMatrix{ Transformations::GetProjectionMatrix(FOV, nearPlane, farPlane) };
-		glm::mat4 viewMatrix{ Transformations::GetViewMatrix(camera) };
-		glm::mat4 modelMatrix{ Transformations::GetModelMatrix(glm::vec3{0}, glm::vec3{0}, glm::vec3{1}) };
-
 		m_ParticuleShader.Use(true);
 		m_ParticuleShader.LoadLifeTimeUniform(particuleSystem.GetParticuleLifetime());
 		m_ParticuleShader.LoadSimulationTimeUniform(particuleSystem.GetSimulationTime());
 		m_ParticuleShader.LoadMatricesUniforms(modelMatrix, viewMatrix, projectionMatrix);
-		m_ParticuleShader.LoadCameraPosUniform(camera.GetPos());
-		m_ParticuleShader.LoadMaxPointSizeUniform(30);
+		m_ParticuleShader.LoadLightsUniforms(lightScene, viewMatrix);
 		particuleSystem.GetParticuleGroup().RenderPass();
 		m_ParticuleShader.Use(false);
 	}

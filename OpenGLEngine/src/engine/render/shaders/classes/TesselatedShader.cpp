@@ -6,8 +6,8 @@
 TesselatedShader::TesselatedShader()
 	: BasicShader()
 {
-	RegisterVertexShader(TesselatedShader::VERTEX_SHADER);
-	RegisterFragmentShader(TesselatedShader::FRAGMENT_SHADER);
+	// Use BasicShader shader path
+	// Add new paths to BasicShader shaders paths
 	RegisterTessCtrlShader(TesselatedShader::TESS_CTRL_SHADER);
 	RegisterTessEvalShader(TesselatedShader::TESS_EVAL_SHADER);
 }

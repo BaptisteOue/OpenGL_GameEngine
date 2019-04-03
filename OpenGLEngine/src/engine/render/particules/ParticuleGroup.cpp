@@ -80,13 +80,11 @@ void ParticuleGroup::UpdatePass()
 
 void ParticuleGroup::RenderPass()
 {
-	glEnable(GL_PROGRAM_POINT_SIZE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBindVertexArray(m_VaoPingPong[m_DrawBuffer]);
 	glDrawTransformFeedback(GL_POINTS, m_FeedbackIDs[m_DrawBuffer]);
 	glDisable(GL_BLEND);
-	glDisable(GL_PROGRAM_POINT_SIZE);
 
 	// Swap buffers
 	m_DrawBuffer = 1 - m_DrawBuffer;

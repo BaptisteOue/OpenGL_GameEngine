@@ -7,9 +7,11 @@ class ParticuleGenerator
 {
 public:
 	static constexpr float MIN_SPEED = 10.0f;
-	static constexpr float MAX_SPEED = 11.0f;
-	static constexpr float MIN_ANGLE = 20.0f;
-	static constexpr float MAX_ANGLE = 22.0f;
+	static constexpr float MAX_SPEED = 17.0f;
+	static constexpr float MIN_ANGLE = 10.0f;
+	static constexpr float MAX_ANGLE = 25.0f;
+	static constexpr float MIN_START_TIME = 1.0f;
+	static constexpr float MAX_START_TIME = 22.0f;
 private:
 	int m_NbParticules;
 	std::vector<glm::vec3> m_Positions;
@@ -27,7 +29,7 @@ public:
 	const int GetNbParticules() const;
 	void SetNbParticules(int value);
 private:
-	void GenerateParticules(const glm::vec3& center, float minAngle, float maxAngle, float minSpeed, float maxSpeed);
-	const glm::vec3& GenerateRandomConeSpeed(float minAngle, float maxAngle, float minSpeed, float maxSpeed);
+	void GenerateParticules(const glm::vec3& center);
+	const glm::vec3& GenerateRandomConeSpeed();
 	const float GenerateRandomStartTime();
 };

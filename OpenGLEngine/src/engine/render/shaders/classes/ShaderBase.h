@@ -10,6 +10,7 @@ class ShaderBase
 protected:
 	GLuint m_VertexShader;
 	GLuint m_FragmentShader;
+	GLuint m_GeometryShader;
 	GLuint m_TessCtrlShader;
 	GLuint m_TessEvalShader;
 	GLuint m_Program;
@@ -17,6 +18,7 @@ protected:
 	std::string m_VertexShaderPath;
 	std::string m_TessCtrlShaderPath;
 	std::string m_TessEvalShaderPath;
+	std::string m_GeometryShaderPath;
 	std::string m_FragmentShaderPath;
 
 	std::map<const std::string, GLuint> m_Uniforms;
@@ -25,6 +27,7 @@ protected:
 	GLuint CreateShader(GLuint shaderType, const std::string& shaderFilePath);
 	GLuint CreateVertexShader();
 	GLuint CreateFragmentShader();
+	GLuint CreateGeometryShader();
 	GLuint CreateTessCtrlShader();
 	GLuint CreateTessEvalShader();
 	void LinkProgram(int shaderProgram);
@@ -37,6 +40,7 @@ protected:
 
 	void RegisterVertexShader(const char* vertexShaderPath);
 	void RegisterFragmentShader(const char* fragmentShaderPath);
+	void RegisterGeometryShader(const char* geometryShaderPath);
 	void RegisterTessCtrlShader(const char* tessCtrlPath);
 	void RegisterTessEvalShader(const char* tessEvalPath);
 

@@ -11,15 +11,15 @@ class ParticuleShader : public BasicShader
 {
 public:
 	static constexpr auto VERTEX_SHADER = "./src/engine/render/shaders/src/vertexShaderParticule.glsl";
+	static constexpr auto GEOMETRY_SHADER = "./src/engine/render/shaders/src/geometryShaderParticule.glsl";
 	static constexpr auto FRAGMENT_SHADER = "./src/engine/render/shaders/src/fragmentShaderParticule.glsl";
 public:
 	ParticuleShader();
 	~ParticuleShader();
 
+	void ConstructShader() override;
 	void CreateUniforms() override;
 
 	void LoadSimulationTimeUniform(float value);
-	void LoadCameraPosUniform(const glm::vec3& value);
-	void LoadMaxPointSizeUniform(float value);
 	void LoadLifeTimeUniform(float value);
 };
