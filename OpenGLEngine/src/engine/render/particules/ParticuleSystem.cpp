@@ -7,13 +7,15 @@ ParticuleSystem::ParticuleSystem(int nbParticules,
 	glm::vec3 center,
 	glm::vec3 gravityForce,
 	glm::vec3 acceleration,
-	float lifeTime)
+	float lifeTime,
+	const Material& material)
 	: m_ParticuleGenerator(nbParticules),
 	m_Center{ center },
 	m_GravityForce{ gravityForce },
 	m_Acceleration{acceleration},
 	m_ParticuleLifetime{ lifeTime },
-	m_NbParticules{ nbParticules }
+	m_NbParticules{ nbParticules },
+	m_Material{material}
 {
 }
 
@@ -87,17 +89,27 @@ ParticuleGroup & ParticuleSystem::GetParticuleGroup()
 	return m_ParticuleGroup;
 }
 
-void ParticuleSystem::SetCenter(const glm::vec3 value)
+const Material & ParticuleSystem::GetMaterial() const
+{
+	return m_Material;
+}
+
+Material & ParticuleSystem::GetMaterial()
+{
+	return m_Material;
+}
+
+void ParticuleSystem::SetCenter(const glm::vec3& value)
 {
 	m_Center = value;
 }
 
-void ParticuleSystem::SetGravityForce(const glm::vec3 value)
+void ParticuleSystem::SetGravityForce(const glm::vec3& value)
 {
 	m_GravityForce = value;
 }
 
-void ParticuleSystem::SetAcceleration(const glm::vec3 value)
+void ParticuleSystem::SetAcceleration(const glm::vec3& value)
 {
 	m_Acceleration = value;
 }
@@ -105,6 +117,11 @@ void ParticuleSystem::SetAcceleration(const glm::vec3 value)
 void ParticuleSystem::SetParticuleLifeTime(const float value)
 {
 	m_ParticuleLifetime = value;
+}
+
+void ParticuleSystem::SetMaterial(const Material & value)
+{
+	m_Material = value;
 }
 
 #pragma endregion

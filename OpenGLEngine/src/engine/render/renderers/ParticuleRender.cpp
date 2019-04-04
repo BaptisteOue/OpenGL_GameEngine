@@ -45,6 +45,7 @@ void ParticuleRender::Render(std::vector<ParticuleSystem> & particuleSystems, Li
 		m_ParticuleShader.LoadSimulationTimeUniform(particuleSystem.GetSimulationTime());
 		m_ParticuleShader.LoadMatricesUniforms(modelMatrix, viewMatrix, projectionMatrix);
 		m_ParticuleShader.LoadLightsUniforms(lightScene, viewMatrix);
+		m_ParticuleShader.LoadMaterialUniforms(particuleSystem.GetMaterial());
 		particuleSystem.GetParticuleGroup().RenderPass();
 		m_ParticuleShader.Use(false);
 	}

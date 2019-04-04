@@ -38,10 +38,11 @@ void App::Init()
 	Mesh bunny{ Loader::LoadOBJ("./res/bunny.obj") };
 	Mesh dragon{ Loader::LoadOBJ("./res/dragon.obj") };
 
-	Material material{ glm::vec3(1), glm::vec3(1), glm::vec3(1), 1.5, 100 };
+	Material material{ glm::vec3(0, 0.9f, 0.5f), glm::vec3(0, 0.9f, 0.5f), glm::vec3(1), 1.5, 150 };
 	m_GameObjects.emplace_back(bunny, material, glm::vec3(0, 1, 20), glm::vec3(0), 4);
 
-	material.SetKa(glm::vec3(1));
+	material.SetKa(glm::vec3(0, 0.5f, 0.9f));
+	material.SetKd(glm::vec3(0, 0.5f, 0.9f));
 	m_GameObjects.emplace_back(dragon, material, glm::vec3(15, 0, -20), glm::vec3(0), 1);
 
 	material.SetReflectivity(0.1f);
@@ -54,15 +55,27 @@ void App::Init()
 	m_GameObjects.emplace_back(plane, material, glm::vec3(-40, 0, 0), glm::vec3(0, 0, -90), 5);
 	m_GameObjects.emplace_back(plane, material, glm::vec3(40, 0, 0), glm::vec3(0, 0, 90), 5);
 
-
-	ParticuleSystem particuleSystem1{ 100000 };
-	particuleSystem1.SetCenter(glm::vec3(-15, 0, -20));
-	particuleSystem1.SetAcceleration(glm::vec3(0, 25, 0));
+	Material particuleMaterial1{ glm::vec3(0.9f, 0.3f, 0.3f), glm::vec3(0.9f, 0.3f, 0.3f), glm::vec3(1), 2, 200 };
+	ParticuleSystem particuleSystem1{ 1000 };
+	particuleSystem1.SetMaterial(particuleMaterial1);
+	particuleSystem1.SetCenter(glm::vec3(-20, 0, -20));
+	particuleSystem1.SetAcceleration(glm::vec3(0, 15, 0));
 	particuleSystem1.SetGravityForce(glm::vec3(0, -12.0f, 0));
 	particuleSystem1.SetParticuleLifeTime(13.0f);				// TODO : Should be random per particule
 	particuleSystem1.Init();
 
+	Material particuleMaterial2{ glm::vec3(0.3f, 0.9f, 0.3f), glm::vec3(0.3f, 0.9f, 0.3f), glm::vec3(1), 2, 200 };
+	ParticuleSystem particuleSystem2{ 1000 };
+	particuleSystem2.SetMaterial(particuleMaterial2);
+	particuleSystem2.SetCenter(glm::vec3(20, 0, 20));
+	particuleSystem2.SetAcceleration(glm::vec3(0, 15, 0));
+	particuleSystem2.SetGravityForce(glm::vec3(0, -12.0f, 0));
+	particuleSystem2.SetParticuleLifeTime(13.0f);				// TODO : Should be random per particule
+	particuleSystem2.Init();
+
 	m_ParticuleSystems.push_back(std::move(particuleSystem1));
+	m_ParticuleSystems.push_back(std::move(particuleSystem2));
+
 
 }
 

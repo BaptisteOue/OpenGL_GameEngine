@@ -18,6 +18,16 @@ out GS_OUT
     vec3 color;
 } gs_out;
 
+/* Material */
+struct Material
+{
+    vec3 Ka;
+    vec3 Kd;
+    vec3 Ks;
+    float reflectivity;
+    float shineDamper;
+    bool isTextured;
+};
 
 /* Lights */
 struct BaseLight
@@ -48,6 +58,9 @@ struct SpotLight
     float cutoffAngle;
 };
 
+layout(binding = 0) uniform sampler2D textureSampler;
+uniform Material material;
+
 uniform int numDirectionalLights;
 uniform int numPointLights;
 uniform int numSpotLights;
@@ -59,20 +72,13 @@ uniform SpotLight spotLights[MAX_SPOT_LIGHTS];
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 
-
-float shineDamper = 200;
-float reflectivity = 1;
-vec3 actualKa = vec3(0, 0.6f, 0.9f);
-vec3 actualKd = vec3(0, 0.6f, 0.9f);
-vec3 actualKs = vec3(1);
-
 vec3 GouraudModel(vec3 eyePos, vec3 fromLightVector, vec3 normal, vec3 lightColor)
 {
     vec3 color = vec3(0);
 
     //Diffuse 
     float diffuseFactor = max(dot(-fromLightVector, normal), 0);
-    color += actualKd * lightColor * diffuseFactor;
+    color += material.Kd * lightColor * diffuseFactor;
     
     // Specular
     if(diffuseFactor > 0)
@@ -80,8 +86,8 @@ vec3 GouraudModel(vec3 eyePos, vec3 fromLightVector, vec3 normal, vec3 lightColo
         vec3 reflectedLight = reflect(fromLightVector, normal);
         vec3 toCameraVector = normalize(- eyePos);
         float specularFactor = max(dot(reflectedLight, toCameraVector), 0);
-        specularFactor = pow(specularFactor, shineDamper);
-        color += actualKs * lightColor * reflectivity * specularFactor;
+        specularFactor = pow(specularFactor, material.shineDamper);
+        color += material.Ks * lightColor * material.reflectivity * specularFactor;
     }
 
     return color;
@@ -146,7 +152,7 @@ vec3 ComputeLighting(vec3 eyePos, vec3 normal)
 	}
 
     // Ambiant
-    color += actualKa * ambientLight.color * ambientLight.intensity;
+    color += material.Ka * ambientLight.color * ambientLight.intensity;
 
     return color;   
 }

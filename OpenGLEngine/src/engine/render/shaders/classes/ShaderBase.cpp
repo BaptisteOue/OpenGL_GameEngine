@@ -79,35 +79,55 @@ void ShaderBase::AddUniform(const std::string& uniformName)
     else
     {
         std::cout << "Can't find uniform : " << uniformName << std::endl;
+		std::cout << "Setting location -1 in uniforms hastable." << std::endl;
+
+		m_Uniforms.emplace(std::pair<const std::string, GLuint>(uniformName, -1));
     }
 }
 
 void ShaderBase::LoadUniform(const std::string& uniformName, const glm::mat4& value)
 {
-    glUniformMatrix4fv(m_Uniforms[uniformName], 1, GL_FALSE, glm::value_ptr(value));
+	if(m_Uniforms[uniformName] != -1)
+		glUniformMatrix4fv(m_Uniforms[uniformName], 1, GL_FALSE, glm::value_ptr(value));
+	//else
+	//	std::cout << "Can't load uniform " << uniformName << std::endl;
 }
 
 void ShaderBase::LoadUniform(const std::string& uniformName, const glm::vec3& value)
 {
-	glUniform3f(m_Uniforms[uniformName], value.x, value.y, value.z);
+	if (m_Uniforms[uniformName] != -1)
+		glUniform3f(m_Uniforms[uniformName], value.x, value.y, value.z);
+	//else
+	//	std::cout << "Can't load uniform " << uniformName << std::endl;
 }
 
 void ShaderBase::LoadUniform(const std::string& uniformName, float value)
 {
-	glUniform1f(m_Uniforms[uniformName], value);
+	if (m_Uniforms[uniformName] != -1)
+		glUniform1f(m_Uniforms[uniformName], value);
+	//else
+	//	std::cout << "Can't load uniform " << uniformName << std::endl;
 }
 
 void ShaderBase::LoadUniform(const std::string & uniformName, int value)
 {
-	glUniform1i(m_Uniforms[uniformName], value);
+	if (m_Uniforms[uniformName] != -1)
+		glUniform1i(m_Uniforms[uniformName], value);
+	//else
+	//	std::cout << "Can't load uniform " << uniformName << std::endl;
 }
 
 void ShaderBase::LoadUniform(const std::string& uniformName, bool value)
 {
-	if(value)
-		glUniform1i(m_Uniforms[uniformName], 1);
-	else
-		glUniform1i(m_Uniforms[uniformName], 0);
+	if (m_Uniforms[uniformName] != -1)
+	{
+		if(value)
+			glUniform1i(m_Uniforms[uniformName], 1);
+		else
+			glUniform1i(m_Uniforms[uniformName], 0);
+	}
+	//else
+	//	std::cout << "Can't load uniform " << uniformName << std::endl;
 }
 
 

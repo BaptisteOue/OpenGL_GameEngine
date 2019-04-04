@@ -30,9 +30,9 @@ void LightScene::Init()
 	m_PointLights.push_back(pointLight);
 
 	// Torch
-	pointLight.SetIntensity(1);
-	pointLight.SetColor(glm::vec3(1));
-	pointLight.SetAttenuation(1, 0.5f, 0.05f);
+	pointLight.SetIntensity(2);
+	pointLight.SetColor(glm::vec3(0, 1, 0));
+	pointLight.SetAttenuation(1, 0.1f, 0.02f);
 	m_SpotLights.push_back(SpotLight(pointLight, 10, glm::vec3(0, 0, -1)));
 
 	// Other Spot lights...

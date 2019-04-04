@@ -26,6 +26,18 @@ Material::Material(const glm::vec3& Ka, const glm::vec3& Kd, const glm::vec3& Ks
 {
 }
 
+Material::Material()
+	: m_Ka(1),
+	m_Kd(1),
+	m_Ks(1),
+	m_Reflectivity(0),
+	m_ShineDamper(1),
+	m_IsTextured(false),
+	m_Texture(nullptr)
+{
+
+}
+
 Material::~Material()
 {
 }

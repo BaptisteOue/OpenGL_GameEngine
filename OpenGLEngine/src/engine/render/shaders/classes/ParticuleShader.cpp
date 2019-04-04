@@ -27,13 +27,10 @@ void ParticuleShader::ConstructShader()
 
 void ParticuleShader::CreateUniforms()
 {
-	AddUniform("modelMatrix");
-	AddUniform("viewMatrix");
-	AddUniform("projectionMatrix");
+
+	BasicShader::CreateUniforms();
 	AddUniform("lifeTime");
 	AddUniform("time");
-
-	AddLightUniforms(1, 1, 1);
 }
 
 void ParticuleShader::LoadSimulationTimeUniform(float value)

@@ -17,6 +17,7 @@ private:
 	Texture* m_Texture;
 
 public:
+	Material();
 	Material(const Material& material);
 	Material(const glm::vec3& Ka, const glm::vec3& Kd, const glm::vec3& Ks, float reflectivity, float shineDamper);
 	~Material();
