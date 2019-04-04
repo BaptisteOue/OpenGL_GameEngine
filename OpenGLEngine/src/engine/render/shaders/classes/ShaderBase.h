@@ -35,7 +35,8 @@ protected:
 	void AddUniform(const std::string& uniformName);
 	void LoadUniform(const std::string& uniformName, const glm::mat4& value);
 	void LoadUniform(const std::string& uniformName, const glm::vec3& value);
-	void LoadUniform(const std::string& uniformName, const float value);
+	void LoadUniform(const std::string& uniformName, float value);
+	void LoadUniform(const std::string& uniformName, int value);
 	void LoadUniform(const std::string& uniformName, bool value);
 
 	void RegisterVertexShader(const char* vertexShaderPath);

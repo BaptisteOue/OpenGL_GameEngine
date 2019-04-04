@@ -38,10 +38,10 @@ void App::Init()
 	Mesh bunny{ Loader::LoadOBJ("./res/bunny.obj") };
 	Mesh dragon{ Loader::LoadOBJ("./res/dragon.obj") };
 
-	Material material{ glm::vec3(0.9f, 0.7f, 0.4f), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), 1.5, 100 };
+	Material material{ glm::vec3(1), glm::vec3(1), glm::vec3(1), 1.5, 100 };
 	m_GameObjects.emplace_back(bunny, material, glm::vec3(0, 1, 20), glm::vec3(0), 4);
 
-	material.SetKa(glm::vec3(0.4f, 0.7f, 0.9f));
+	material.SetKa(glm::vec3(1));
 	m_GameObjects.emplace_back(dragon, material, glm::vec3(15, 0, -20), glm::vec3(0), 1);
 
 	material.SetReflectivity(0.1f);

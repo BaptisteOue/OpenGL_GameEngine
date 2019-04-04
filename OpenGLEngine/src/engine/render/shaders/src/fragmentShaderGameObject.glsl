@@ -1,8 +1,8 @@
 #version 460 core
 
-#define MAX_DIR_LIGHT 3
-#define MAX_POINT_LIGHTS 10
-#define MAX_SPOT_LIGHTS 5
+#define MAX_DIR_LIGHT 1
+#define MAX_POINT_LIGHTS 1
+#define MAX_SPOT_LIGHTS 1
 
 
 in OUT
@@ -58,6 +58,9 @@ struct SpotLight
 layout(binding = 0) uniform sampler2D textureSampler;
 uniform Material material;
 
+uniform int numDirectionalLights;
+uniform int numPointLights;
+uniform int numSpotLights;
 uniform BaseLight ambientLight;
 uniform DirectionalLight directionalLights[MAX_DIR_LIGHT];
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
@@ -153,27 +156,21 @@ void main()
     // Setup Ka, Kd, Ks if textured
     SetUpMaterialColor();
 
-    for(int i = 0; i < MAX_DIR_LIGHT; i++)
+    for(int i = 0; i < numDirectionalLights; i++)
 	{
-		if(directionalLights[i].baseLight.intensity <= 0)
-			break;
         fragColor += ComputeDirectionalLight(directionalLights[i]);
 	}
         
-    for(int i = 0; i < MAX_POINT_LIGHTS; i++)
+    for(int i = 0; i < numPointLights; i++)
 	{
-		if(pointLights[i].baseLight.intensity <= 0)
-			break;
         fragColor += ComputePointLight(pointLights[i]);
 	}
 
-    for(int i = 0; i < MAX_SPOT_LIGHTS; i++)
+    for(int i = 0; i < numSpotLights; i++)
 	{
-        if(spotLights[i].pointLight.baseLight.intensity <= 0)
-			break;
         fragColor += ComputeSpotLight(spotLights[i]);
 	}
 
     // Add Ambient light
-    fragColor = max(fragColor, vec4(actualKa * ambientLight.color * ambientLight.intensity, 1));
+    fragColor += vec4(actualKa * ambientLight.color * ambientLight.intensity, 1);
 }

@@ -97,6 +97,11 @@ void ShaderBase::LoadUniform(const std::string& uniformName, float value)
 	glUniform1f(m_Uniforms[uniformName], value);
 }
 
+void ShaderBase::LoadUniform(const std::string & uniformName, int value)
+{
+	glUniform1i(m_Uniforms[uniformName], value);
+}
+
 void ShaderBase::LoadUniform(const std::string& uniformName, bool value)
 {
 	if(value)

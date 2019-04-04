@@ -1,8 +1,8 @@
 #version 460
 
-#define MAX_DIR_LIGHT 3
-#define MAX_POINT_LIGHTS 10
-#define MAX_SPOT_LIGHTS 5
+#define MAX_DIR_LIGHT 1
+#define MAX_POINT_LIGHTS 1
+#define MAX_SPOT_LIGHTS 1
 
 layout (points) in;
 layout (triangle_strip, max_vertices = 24) out;
@@ -48,6 +48,9 @@ struct SpotLight
     float cutoffAngle;
 };
 
+uniform int numDirectionalLights;
+uniform int numPointLights;
+uniform int numSpotLights;
 uniform BaseLight ambientLight;
 uniform DirectionalLight directionalLights[MAX_DIR_LIGHT];
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
@@ -127,24 +130,18 @@ vec3 ComputeLighting(vec3 eyePos, vec3 normal)
     vec3 color = vec3(0);
 
     // Directional
-    for(int i = 0; i < MAX_DIR_LIGHT; i++)
+    for(int i = 0; i < numDirectionalLights; i++)
 	{
-		if(directionalLights[i].baseLight.intensity <= 0)
-			break;
         color += ComputeDirectionalLight(eyePos, normal, directionalLights[i]);
 	}
 
-    for(int i = 0; i < MAX_POINT_LIGHTS; i++)
+    for(int i = 0; i < numPointLights; i++)
 	{
-		if(pointLights[i].baseLight.intensity <= 0)
-			break;
         color += ComputePointLight(eyePos, normal, pointLights[i]);
 	}
 
-    for(int i = 0; i < MAX_SPOT_LIGHTS; i++)
+    for(int i = 0; i < numSpotLights; i++)
 	{
-        if(spotLights[i].pointLight.baseLight.intensity <= 0)
-			break;
         color += ComputeSpotLight(eyePos, normal, spotLights[i]);
 	}
 

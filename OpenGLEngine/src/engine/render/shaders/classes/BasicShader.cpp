@@ -30,7 +30,7 @@ void BasicShader::CreateUniforms()
 	AddUniform("viewMatrix");
 	AddUniform("projectionMatrix");
 
-	AddLightUniforms(1, 10, 5);
+	AddLightUniforms(1, 1, 1);
 	AddMaterialUniforms();
 }
 
@@ -53,6 +53,9 @@ void BasicShader::LoadMaterialUniforms(const Material& material)
 
 void BasicShader::LoadLightsUniforms(const LightScene& lightScene, const glm::mat4& matrice)
 {
+	LoadUniform("numDirectionalLights", (int) lightScene.GetDirectionalLights().size());
+	LoadUniform("numPointLights", (int)lightScene.GetPointLights().size());
+	LoadUniform("numSpotLights", (int)lightScene.GetSpotLights().size());
 	LoadBasicLightUniforms("ambientLight", lightScene.GetAmbientLight());
 
 	auto i = 0;
@@ -85,6 +88,10 @@ void BasicShader::LoadLightsUniforms(const LightScene& lightScene, const glm::ma
 
 void BasicShader::AddLightUniforms(int numDir, int numPoint, int numSpot)
 {
+	AddUniform("numDirectionalLights");
+	AddUniform("numPointLights");
+	AddUniform("numSpotLights");
+
 	// Add an ambientLight
 	AddBasicLightUniforms("ambientLight");
 
