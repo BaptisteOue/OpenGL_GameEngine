@@ -3,21 +3,19 @@
 layout (location = 0) in vec3 position;
 layout (location = 1) in float startTime;
 
-uniform mat4 modelMatrix;
-
 uniform float lifeTime;
 uniform float time;
 
 out VS_OUT
 {
-    vec4 worldPos;
+    vec4 relativePos;
     float transp;
 } vs_out;
 
 void main()
 {
 
-    vs_out.worldPos =  modelMatrix * vec4(position, 1);
+    vs_out.relativePos =  vec4(position, 1);
 
     if(time < startTime)
     {

@@ -8,7 +8,7 @@ layout (points) in;
 layout (triangle_strip, max_vertices = 24) out;
 
 in VS_OUT {
-    vec4 worldPos;
+    vec4 relativePos;
 	float transp;
 } gs_in[];
 
@@ -69,6 +69,7 @@ uniform DirectionalLight directionalLights[MAX_DIR_LIGHT];
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform SpotLight spotLights[MAX_SPOT_LIGHTS];
 
+uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 
@@ -162,25 +163,25 @@ void main()
     vec4 eyePos = vec4(0);
 
     // Front face
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(-0.5f, -0.5f, 0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(-0.5f, -0.5f, 0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, 0, 1, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(0.5, -0.5f, 0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(0.5, -0.5f, 0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, 0, 1, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(-0.5f, 0.5f, 0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(-0.5f, 0.5f, 0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, 0, 1, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(0.5f, 0.5f, 0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(0.5f, 0.5f, 0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, 0, 1, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
@@ -189,25 +190,25 @@ void main()
     EndPrimitive();
 
     // Back face
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(0.5f, -0.5f, -0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(0.5f, -0.5f, -0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, 0, -1, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(-0.5, -0.5f, -0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(-0.5, -0.5f, -0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, 0, -1, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(0.5f, 0.5f, -0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(0.5f, 0.5f, -0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, 0, -1, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(-0.5f, 0.5f, -0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(-0.5f, 0.5f, -0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, 0, -1, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
@@ -216,24 +217,24 @@ void main()
     EndPrimitive();
 
     // Right face
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(0.5f, -0.5f, 0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(0.5f, -0.5f, 0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(1, 0, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(0.5, -0.5f, -0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(0.5, -0.5f, -0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(1, 0, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(0.5f, 0.5f, 0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(0.5f, 0.5f, 0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(1, 0, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(0.5f, 0.5f, -0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(0.5f, 0.5f, -0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(1, 0, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
@@ -242,25 +243,25 @@ void main()
     EndPrimitive();
 
     // Left face
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(-0.5f, -0.5f, -0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(-0.5f, -0.5f, -0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(-1, 0, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(-0.5, -0.5f, 0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(-0.5, -0.5f, 0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(-1, 0, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(-0.5f, 0.5f, -0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(-0.5f, 0.5f, -0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(-1, 0, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(-0.5f, 0.5f, 0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(-0.5f, 0.5f, 0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(-1, 0, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
@@ -270,25 +271,25 @@ void main()
 
 
     // Top face
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(-0.5f, 0.5f, 0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(-0.5f, 0.5f, 0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, 1, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(0.5, 0.5f, 0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(0.5, 0.5f, 0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, 1, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(-0.5f, 0.5f, -0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(-0.5f, 0.5f, -0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, 1, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(0.5f, 0.5f, -0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(0.5f, 0.5f, -0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, 1, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
@@ -297,25 +298,25 @@ void main()
     EndPrimitive();
 
     // Bottom face
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(-0.5f, -0.5f, -0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(-0.5f, -0.5f, -0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, -1, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(0.5, -0.5f, -0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(0.5, -0.5f, -0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, -1, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(-0.5f, -0.5f, 0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(-0.5f, -0.5f, 0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, -1, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;
     EmitVertex();
 
-    eyePos = viewMatrix * (gs_in[0].worldPos + vec4(0.5f, -0.5f, 0.5f, 1));
+    eyePos = viewMatrix * modelMatrix * (gs_in[0].relativePos + vec4(0.5f, -0.5f, 0.5f, 1));
     gs_out.transp = gs_in[0].transp;
     gs_out.color = ComputeLighting(eyePos.xyz, (viewMatrix * vec4(0, -1, 0, 0)).xyz);
     gl_Position = projectionMatrix * eyePos;

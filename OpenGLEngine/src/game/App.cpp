@@ -56,7 +56,7 @@ void App::Init()
 	m_GameObjects.emplace_back(plane, material, glm::vec3(40, 0, 0), glm::vec3(0, 0, 90), 5);
 
 	Material particuleMaterial1{ glm::vec3(0.9f, 0.3f, 0.3f), glm::vec3(0.9f, 0.3f, 0.3f), glm::vec3(1), 2, 200 };
-	ParticuleSystem particuleSystem1{ 1000 };
+	ParticuleSystem particuleSystem1{ 10000 };
 	particuleSystem1.SetMaterial(particuleMaterial1);
 	particuleSystem1.SetCenter(glm::vec3(-20, 0, -20));
 	particuleSystem1.SetAcceleration(glm::vec3(0, 15, 0));
@@ -65,17 +65,27 @@ void App::Init()
 	particuleSystem1.Init();
 
 	Material particuleMaterial2{ glm::vec3(0.3f, 0.9f, 0.3f), glm::vec3(0.3f, 0.9f, 0.3f), glm::vec3(1), 2, 200 };
-	ParticuleSystem particuleSystem2{ 1000 };
+	ParticuleSystem particuleSystem2{ 10000 };
 	particuleSystem2.SetMaterial(particuleMaterial2);
 	particuleSystem2.SetCenter(glm::vec3(20, 0, 20));
-	particuleSystem2.SetAcceleration(glm::vec3(0, 15, 0));
-	particuleSystem2.SetGravityForce(glm::vec3(0, -12.0f, 0));
+	particuleSystem2.SetAcceleration(glm::vec3(0, 45, 0));
+	particuleSystem2.SetGravityForce(glm::vec3(0, -22.0f, 0));
 	particuleSystem2.SetParticuleLifeTime(13.0f);				// TODO : Should be random per particule
 	particuleSystem2.Init();
 
+	Material particuleMaterial3{ glm::vec3(0.3f, 0.3f, 0.9f), glm::vec3(0.3f, 0.3f, 0.9f), glm::vec3(1), 2, 200 };
+	ParticuleSystem particuleSystem3{ 10000 };
+	particuleSystem3.SetMaterial(particuleMaterial3);
+	particuleSystem3.SetCenter(glm::vec3(-20, 0, 20));
+	particuleSystem3.SetAcceleration(glm::vec3(0, 15, 0));
+	particuleSystem3.SetGravityForce(glm::vec3(0, -12.0f, 0));
+	particuleSystem3.SetParticuleLifeTime(13.0f);				// TODO : Should be random per particule
+	particuleSystem3.Init();
+
+
 	m_ParticuleSystems.push_back(std::move(particuleSystem1));
 	m_ParticuleSystems.push_back(std::move(particuleSystem2));
-
+	m_ParticuleSystems.push_back(std::move(particuleSystem3));
 
 }
 

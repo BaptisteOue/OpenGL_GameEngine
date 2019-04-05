@@ -24,7 +24,7 @@ void ParticuleRender::Render(std::vector<ParticuleSystem> & particuleSystems, Li
 
 	glm::mat4 projectionMatrix{ Transformations::GetProjectionMatrix(FOV, nearPlane, farPlane) };
 	glm::mat4 viewMatrix{ Transformations::GetViewMatrix(camera) };
-	glm::mat4 modelMatrix{ Transformations::GetModelMatrix(glm::vec3{0}, glm::vec3{0}, glm::vec3{1}) };
+	glm::mat4 modelMatrix{ Transformations::GetModelMatrix(glm::vec3{0}, glm::vec3{0}, glm::vec3{0.3f}) };
 
 	for (ParticuleSystem& particuleSystem : particuleSystems)
 	{

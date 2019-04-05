@@ -19,14 +19,14 @@ LightScene::~LightScene()
 void LightScene::Init()
 {
 	// Ambient light already done (not a vector)
-	m_ambientLight.SetIntensity(0.3f);
+	m_ambientLight.SetIntensity(0.01f);
 
 	// Directional Lights
-	m_DirecationalLights.push_back(DirectionalLight(glm::vec3(1.0f), glm::vec3(-1, -1, -1), 0.9f));
+	m_DirecationalLights.push_back(DirectionalLight(glm::vec3(1.0f), glm::vec3(-1, -1, -1), 0.01f));
 
 	// Point lights
-	PointLight pointLight(glm::vec3(1, 0, 0), glm::vec3(0, 10, 0), 3.0f);
-	pointLight.SetAttenuation(1, 0.3f, 0.02f);
+	PointLight pointLight(glm::vec3(1, 1, 1), glm::vec3(0, 10, 0), 2.0f);
+	pointLight.SetAttenuation(1, 0.1f, 0.02f);
 	m_PointLights.push_back(pointLight);
 
 	// Torch
