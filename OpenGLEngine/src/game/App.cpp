@@ -26,9 +26,7 @@ App::~App()
 void App::Init()
 {
 	m_Camera.Init();
-
 	m_LightScene.Init();
-
 	m_MasterRenderer.Init();
 
 	Mesh plane{ Loader::LoadOBJ("./res/plane.obj") };

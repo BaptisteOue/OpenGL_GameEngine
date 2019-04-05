@@ -31,6 +31,7 @@ protected:
 	void LoadSpotLightUniforms(const std::string& uniformName, const SpotLight& spotLight, const glm::mat4& matrice);
 public:
 	BasicShader();
+	BasicShader(const char* vertexShaderPath, const char* fragmentShaderPath);
 	~BasicShader();
 
 	virtual void ConstructShader() override;

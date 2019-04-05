@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\engine\render\framebuffers\FramBuffer.cpp" />
     <ClCompile Include="src\engine\render\lights\BasicLight.cpp" />
     <ClCompile Include="src\engine\render\core\Camera.cpp" />
     <ClCompile Include="src\engine\render\lights\LightScene.cpp" />
@@ -50,6 +51,7 @@
     <ClCompile Include="src\engine\render\utils\Loader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\engine\render\framebuffers\FramBuffer.h" />
     <ClInclude Include="src\engine\render\lights\BasicLight.h" />
     <ClInclude Include="src\engine\render\lights\DirectionalLight.h" />
     <ClInclude Include="src\engine\render\lights\LightScene.h" />

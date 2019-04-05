@@ -12,6 +12,13 @@ BasicShader::BasicShader()
 	RegisterFragmentShader(BasicShader::FRAGMENT_SHADER);
 }
 
+BasicShader::BasicShader(const char* vertexShaderPath, const char* fragmentShaderPath)
+	: ShaderBase()
+{
+	RegisterVertexShader(vertexShaderPath);
+	RegisterFragmentShader(fragmentShaderPath);
+}
+
 BasicShader::~BasicShader()
 {
 }
