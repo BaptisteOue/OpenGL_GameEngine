@@ -8,13 +8,12 @@
 #include "../engine/render/utils/Loader.h"
 
 App::App()
-    : dCamera(0, 0, 0),
+	: dCamera(0, 0, 0),
 	m_Camera(),
 	m_LightScene(),
-	m_GameObjectRenderer(),
+	m_MasterRenderer(),
 	m_GameObjects(),
-	m_ParticuleSystems(),
-	m_ParticuleRenderer()
+	m_ParticuleSystems()
 {
 
 }
@@ -30,9 +29,7 @@ void App::Init()
 
 	m_LightScene.Init();
 
-	m_GameObjectRenderer.Init();
-
-	m_ParticuleRenderer.Init();
+	m_MasterRenderer.Init();
 
 	Mesh plane{ Loader::LoadOBJ("./res/plane.obj") };
 	Mesh bunny{ Loader::LoadOBJ("./res/bunny.obj") };
@@ -56,7 +53,7 @@ void App::Init()
 	m_GameObjects.emplace_back(plane, material, glm::vec3(40, 0, 0), glm::vec3(0, 0, 90), 5);
 
 	Material particuleMaterial1{ glm::vec3(0.9f, 0.3f, 0.3f), glm::vec3(0.9f, 0.3f, 0.3f), glm::vec3(1), 2, 200 };
-	ParticuleSystem particuleSystem1{ 10000 };
+	ParticuleSystem particuleSystem1{ 1000 };
 	particuleSystem1.SetMaterial(particuleMaterial1);
 	particuleSystem1.SetCenter(glm::vec3(-20, 0, -20));
 	particuleSystem1.SetAcceleration(glm::vec3(0, 15, 0));
@@ -65,23 +62,22 @@ void App::Init()
 	particuleSystem1.Init();
 
 	Material particuleMaterial2{ glm::vec3(0.3f, 0.9f, 0.3f), glm::vec3(0.3f, 0.9f, 0.3f), glm::vec3(1), 2, 200 };
-	ParticuleSystem particuleSystem2{ 10000 };
+	ParticuleSystem particuleSystem2{ 1000 };
 	particuleSystem2.SetMaterial(particuleMaterial2);
 	particuleSystem2.SetCenter(glm::vec3(20, 0, 20));
-	particuleSystem2.SetAcceleration(glm::vec3(0, 45, 0));
-	particuleSystem2.SetGravityForce(glm::vec3(0, -22.0f, 0));
+	particuleSystem2.SetAcceleration(glm::vec3(0, 15, 0));
+	particuleSystem2.SetGravityForce(glm::vec3(0, -12.0f, 0));
 	particuleSystem2.SetParticuleLifeTime(13.0f);				// TODO : Should be random per particule
 	particuleSystem2.Init();
 
 	Material particuleMaterial3{ glm::vec3(0.3f, 0.3f, 0.9f), glm::vec3(0.3f, 0.3f, 0.9f), glm::vec3(1), 2, 200 };
-	ParticuleSystem particuleSystem3{ 10000 };
+	ParticuleSystem particuleSystem3{ 1000 };
 	particuleSystem3.SetMaterial(particuleMaterial3);
 	particuleSystem3.SetCenter(glm::vec3(-20, 0, 20));
 	particuleSystem3.SetAcceleration(glm::vec3(0, 15, 0));
 	particuleSystem3.SetGravityForce(glm::vec3(0, -12.0f, 0));
 	particuleSystem3.SetParticuleLifeTime(13.0f);				// TODO : Should be random per particule
 	particuleSystem3.Init();
-
 
 	m_ParticuleSystems.push_back(std::move(particuleSystem1));
 	m_ParticuleSystems.push_back(std::move(particuleSystem2));
@@ -173,9 +169,7 @@ void App::Update(float interval)
 
 void App::Render(float frameTime)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	m_GameObjectRenderer.Render(m_GameObjects, m_LightScene, m_Camera);
-	m_ParticuleRenderer.Render(m_ParticuleSystems, m_LightScene, m_Camera, frameTime);
+	m_MasterRenderer.Render(m_GameObjects, m_ParticuleSystems, m_LightScene, m_Camera, frameTime);
 }
 
 void App::CleanUp()
@@ -185,6 +179,6 @@ void App::CleanUp()
 
 	m_GameObjects.clear();
 	m_LightScene.CleanUp();
-	m_GameObjectRenderer.CleanUp();
-	m_ParticuleRenderer.CleanUp();
+	
+	m_MasterRenderer.CleanUp();
 }

@@ -53,5 +53,6 @@ void ParticuleRender::Render(std::vector<ParticuleSystem> & particuleSystems, Li
 
 void ParticuleRender::CleanUp()
 {
+	m_ParticuleFeedForwardShader.CleanUp();
 	m_ParticuleShader.CleanUp();
 }

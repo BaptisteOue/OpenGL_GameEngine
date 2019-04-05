@@ -4,8 +4,7 @@
 #include "../engine/render/core/Camera.h"
 #include "../engine/render/models/GameObject.h"
 #include "../engine/render/lights/LightScene.h"
-#include "../engine/render/renderers/GameObjectRenderer.h"
-#include "../engine/render/renderers/ParticuleRender.h"
+#include "../engine/render/renderers/MasterRenderer.h"
 #include "../engine/render/particules/ParticuleSystem.h"
 #include <vector>
 
@@ -16,6 +15,8 @@ private:
 	glm::vec3 dCamera;
 
 	LightScene m_LightScene;
+
+	MasterRenderer m_MasterRenderer;
 
 	std::vector<GameObject> m_GameObjects;
 	GameObjectRenderer m_GameObjectRenderer;
