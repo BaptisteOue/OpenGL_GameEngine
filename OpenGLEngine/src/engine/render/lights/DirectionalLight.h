@@ -13,4 +13,5 @@ public:
 	~DirectionalLight();
 
 	const glm::vec3 GetDirection() const;
+	glm::vec3 GetDirection();
 };

@@ -31,6 +31,7 @@
     <ClCompile Include="src\engine\render\renderers\ParticuleRender.cpp" />
     <ClCompile Include="src\engine\render\shaders\classes\ParticuleFeedForwardShader.cpp" />
     <ClCompile Include="src\engine\render\shaders\classes\ParticuleShader.cpp" />
+    <ClCompile Include="src\engine\render\shaders\classes\ShadowMapShader.cpp" />
     <ClCompile Include="src\game\App.cpp" />
     <ClCompile Include="src\engine\render\core\RenderEngine.cpp" />
     <ClCompile Include="src\engine\render\core\Timer.cpp" />
@@ -70,6 +71,7 @@
     <ClInclude Include="src\engine\render\core\Camera.h" />
     <ClInclude Include="src\engine\render\shaders\classes\ParticuleFeedForwardShader.h" />
     <ClInclude Include="src\engine\render\shaders\classes\ParticuleShader.h" />
+    <ClInclude Include="src\engine\render\shaders\classes\ShadowMapShader.h" />
     <ClInclude Include="src\game\App.h" />
     <ClInclude Include="src\engine\render\core\RenderEngine.h" />
     <ClInclude Include="src\engine\render\core\IGameLogic.h" />

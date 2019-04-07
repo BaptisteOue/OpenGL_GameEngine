@@ -16,4 +16,10 @@ const glm::vec3 DirectionalLight::GetDirection() const
 	return m_Direction;
 }
 
+glm::vec3 DirectionalLight::GetDirection()
+{
+	return m_Direction;
+}
+
+
 #pragma endregion

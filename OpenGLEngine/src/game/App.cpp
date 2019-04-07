@@ -38,7 +38,7 @@ void App::Init()
 
 	material.SetKa(glm::vec3(0, 0.5f, 0.9f));
 	material.SetKd(glm::vec3(0, 0.5f, 0.9f));
-	m_GameObjects.emplace_back(dragon, material, glm::vec3(15, 0, -20), glm::vec3(0), 1);
+	m_GameObjects.emplace_back(dragon, material, glm::vec3(0, 0, -10), glm::vec3(0), 1);
 
 	material.SetReflectivity(0.1f);
 	material.SetShineDamper(200);

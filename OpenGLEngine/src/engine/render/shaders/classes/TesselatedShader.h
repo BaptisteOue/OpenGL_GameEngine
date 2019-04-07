@@ -13,7 +13,7 @@
 
 class TesselatedShader : public BasicShader
 {
-public:
+private:
 	static constexpr auto TESS_CTRL_SHADER = "./src/engine/render/shaders/src/tessCtrlShader.glsl";
 	static constexpr auto TESS_EVAL_SHADER = "./src/engine/render/shaders/src/tessEvalShader.glsl";
 

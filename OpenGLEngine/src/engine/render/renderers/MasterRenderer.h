@@ -10,10 +10,6 @@ class MasterRenderer
 private:
 	GameObjectRenderer m_GameObjectRender;
 	ParticuleRender m_ParticuleRender;
-	FrameBuffer m_TestFrameBuffer;
-
-	BasicShader m_TestFBOShader;
-	GLuint m_QuadVAO;
 
 public:
 	MasterRenderer();
