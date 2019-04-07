@@ -36,16 +36,21 @@ void BasicShader::CreateUniforms()
 	AddUniform("modelMatrix");
 	AddUniform("viewMatrix");
 	AddUniform("projectionMatrix");
+	AddUniform("lightSpaceMatrix");
 
 	AddLightUniforms(1, 1, 1);
 	AddMaterialUniforms();
 }
 
-void BasicShader::LoadMatricesUniforms(const glm::mat4 & modelMatrix, const glm::mat4 & viewMatrix, const glm::mat4 & projectionMatrix)
+void BasicShader::LoadMatricesUniforms(const glm::mat4 & modelMatrix,
+									   const glm::mat4 & viewMatrix,
+									   const glm::mat4 & projectionMatrix,
+									   const glm::mat4 & lightSpaceMatrix)
 {
 	LoadUniform("modelMatrix", modelMatrix);
 	LoadUniform("viewMatrix", viewMatrix);
 	LoadUniform("projectionMatrix", projectionMatrix);
+	LoadUniform("lightSpaceMatrix", lightSpaceMatrix);
 }
 
 void BasicShader::LoadMaterialUniforms(const Material& material)

@@ -32,23 +32,36 @@ void App::Init()
 	Mesh plane{ Loader::LoadOBJ("./res/plane.obj") };
 	Mesh bunny{ Loader::LoadOBJ("./res/bunny.obj") };
 	Mesh dragon{ Loader::LoadOBJ("./res/dragon.obj") };
+	Mesh cube{ Loader::LoadOBJ("./res/cube.obj") };
 
 	Material material{ glm::vec3(0, 0.9f, 0.5f), glm::vec3(0, 0.9f, 0.5f), glm::vec3(1), 1.5, 150 };
 	m_GameObjects.emplace_back(bunny, material, glm::vec3(0, 1, 20), glm::vec3(0), 4);
 
 	material.SetKa(glm::vec3(0, 0.5f, 0.9f));
 	material.SetKd(glm::vec3(0, 0.5f, 0.9f));
-	m_GameObjects.emplace_back(dragon, material, glm::vec3(0, 0, -10), glm::vec3(0), 1);
+	m_GameObjects.emplace_back(dragon, material, glm::vec3(0, -0.2f, -10), glm::vec3(0), 1);
 
 	material.SetReflectivity(0.1f);
 	material.SetShineDamper(200);
 	material.AddTexture(Loader::LoadTexture("./res/brick.jpg"));
 	m_GameObjects.emplace_back(plane, material, glm::vec3(0), glm::vec3(0), 5);
-	m_GameObjects.emplace_back(plane, material, glm::vec3(0, 40, 0), glm::vec3(180, 0, 0), 5);
-	m_GameObjects.emplace_back(plane, material, glm::vec3(0, 0, -40), glm::vec3(90, 0, 0), 5);
-	m_GameObjects.emplace_back(plane, material, glm::vec3(0, 0, 40), glm::vec3(-90, 0, 0), 5);
-	m_GameObjects.emplace_back(plane, material, glm::vec3(-40, 0, 0), glm::vec3(0, 0, -90), 5);
-	m_GameObjects.emplace_back(plane, material, glm::vec3(40, 0, 0), glm::vec3(0, 0, 90), 5);
+
+
+	material.AddTexture(Loader::LoadTexture("./res/grass_grass_0052_01_preview.jpg"));
+	material.SetReflectivity(0.0f);
+	material.SetShineDamper(1);
+	m_GameObjects.emplace_back(cube, material, glm::vec3(-20, 10, -10), glm::vec3(35, 17, 90), 2);
+	m_GameObjects.emplace_back(cube, material, glm::vec3(0, 10, 10), glm::vec3(12, 47, 0), 2);
+	m_GameObjects.emplace_back(cube, material, glm::vec3(20, 5, 0), glm::vec3(63, -15, 123), 2);
+	m_GameObjects.emplace_back(cube, material, glm::vec3(10, 10, -15), glm::vec3(47, 20, 47), 2);
+
+
+
+	//m_GameObjects.emplace_back(plane, material, glm::vec3(0, 40, 0), glm::vec3(180, 0, 0), 5);
+	//m_GameObjects.emplace_back(plane, material, glm::vec3(0, 0, -40), glm::vec3(90, 0, 0), 5);
+	//m_GameObjects.emplace_back(plane, material, glm::vec3(0, 0, 40), glm::vec3(-90, 0, 0), 5);
+	//m_GameObjects.emplace_back(plane, material, glm::vec3(-40, 0, 0), glm::vec3(0, 0, -90), 5);
+	//m_GameObjects.emplace_back(plane, material, glm::vec3(40, 0, 0), glm::vec3(0, 0, 90), 5);
 
 	Material particuleMaterial1{ glm::vec3(0.9f, 0.3f, 0.3f), glm::vec3(0.9f, 0.3f, 0.3f), glm::vec3(1), 2, 200 };
 	ParticuleSystem particuleSystem1{ 1000 };
@@ -163,6 +176,15 @@ void App::Update(float interval)
 	m_Camera.Update(dCamera);
 	if(m_LightScene.GetSpotLights().size() > 0)
 		m_LightScene.GetTorch().SimulateTorch(m_Camera);
+	int i = 0;
+	for (auto& gameObject : m_GameObjects)
+	{
+		if (i == 2)
+			continue;
+		glm::vec3 rotation = gameObject.GetRotation();
+		gameObject.SetRotation(rotation + glm::vec3(0, 1.0f, 0));
+		i++;
+	}
 }
 
 void App::Render(float frameTime)

@@ -1,6 +1,6 @@
 #include "ParticuleRender.h"
 #include "../maths/Transformations.h"
-#include <iostream>
+#include "./MasterRenderer.h"
 
 ParticuleRender::ParticuleRender()
 	: m_ParticuleShader(), m_ParticuleFeedForwardShader()
@@ -19,12 +19,13 @@ void ParticuleRender::Init()
 	m_ParticuleFeedForwardShader.CreateShaderProgram();
 }
 
-void ParticuleRender::Render(std::vector<ParticuleSystem> & particuleSystems, LightScene& lightScene, Camera& camera, float frameTime)
+void ParticuleRender::Render(std::vector<ParticuleSystem> & particuleSystems, LightScene& lightScene, Camera& camera, GLuint shadowMap, float frameTime)
 {
 
-	glm::mat4 projectionMatrix{ Transformations::GetProjectionMatrix(FOV, nearPlane, farPlane) };
+	glm::mat4 projectionMatrix{ Transformations::GetProjectionMatrix(MasterRenderer::FOV, MasterRenderer::nearPlane, MasterRenderer::farPlane) };
 	glm::mat4 viewMatrix{ Transformations::GetViewMatrix(camera) };
 	glm::mat4 modelMatrix{ Transformations::GetModelMatrix(glm::vec3{0}, glm::vec3{0}, glm::vec3{0.3f}) };
+	glm::mat4 lightSpaceMatrix = Transformations::GetLightSpaceMatrix(lightScene.GetDirectionalLights()[0], MasterRenderer::nearPlane, MasterRenderer::farPlane);
 
 	for (ParticuleSystem& particuleSystem : particuleSystems)
 	{
@@ -43,7 +44,7 @@ void ParticuleRender::Render(std::vector<ParticuleSystem> & particuleSystems, Li
 		m_ParticuleShader.Use(true);
 		m_ParticuleShader.LoadLifeTimeUniform(particuleSystem.GetParticuleLifetime());
 		m_ParticuleShader.LoadSimulationTimeUniform(particuleSystem.GetSimulationTime());
-		m_ParticuleShader.LoadMatricesUniforms(modelMatrix, viewMatrix, projectionMatrix);
+		m_ParticuleShader.LoadMatricesUniforms(modelMatrix, viewMatrix, projectionMatrix, lightSpaceMatrix);
 		m_ParticuleShader.LoadLightsUniforms(lightScene, viewMatrix);
 		m_ParticuleShader.LoadMaterialUniforms(particuleSystem.GetMaterial());
 		particuleSystem.GetParticuleGroup().RenderPass();

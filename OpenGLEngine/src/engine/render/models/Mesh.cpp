@@ -48,21 +48,17 @@ void Mesh::LoadMesh(const std::vector<GLfloat>& positions,
 
 void Mesh::Draw()
 {
-	glEnable(GL_CULL_FACE);
     glBindVertexArray(m_VaoID);
     glDrawElements(GL_TRIANGLES, m_VertexCount, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
-	glDisable(GL_CULL_FACE);
 }
 
 void Mesh::DrawTesselated()
 {
-	glEnable(GL_CULL_FACE);
 	glBindVertexArray(m_VaoID);
 	glPatchParameteri(GL_PATCH_VERTICES, 3);
 	glDrawElements(GL_PATCHES, m_VertexCount, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
-	glDisable(GL_CULL_FACE);
 }
 
 void Mesh::CleanUp()

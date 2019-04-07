@@ -11,9 +11,6 @@
 class ParticuleRender
 {
 private:
-	static constexpr float FOV = 45.0f;
-	static constexpr float nearPlane = 0.01f;
-	static constexpr float farPlane = 1000.0f;
 
 	ParticuleFeedForwardShader m_ParticuleFeedForwardShader;
 	ParticuleShader m_ParticuleShader;
@@ -23,7 +20,7 @@ public:
 	~ParticuleRender();
 
 	void Init();
-	void Render(std::vector<ParticuleSystem> & particuleSystems, LightScene& lightScene, Camera& camera, float frameTime);
+	void Render(std::vector<ParticuleSystem> & particuleSystems, LightScene& lightScene, Camera& camera, GLuint shadowMap, float frameTime);
 	void CleanUp();
 
 };

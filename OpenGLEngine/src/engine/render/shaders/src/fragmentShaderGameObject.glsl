@@ -4,12 +4,12 @@
 #define MAX_POINT_LIGHTS 1
 #define MAX_SPOT_LIGHTS 1
 
-
 in OUT
 {
     vec4 eye_pos;
     vec4 eye_normal;
     vec2 texCoords;
+    vec4 fragPosLightSpace;
 } fs_in;
 
 out vec4 fragColor;
@@ -55,7 +55,9 @@ struct SpotLight
 };
 
 
-layout(binding = 0) uniform sampler2D textureSampler;
+layout(binding = 0) uniform sampler2D materialTexture;
+layout(binding = 1) uniform sampler2D shadowMap;
+
 uniform Material material;
 
 uniform int numDirectionalLights;
@@ -136,7 +138,7 @@ void SetUpMaterialColor()
 {
     if(material.isTextured)
     {
-        vec4 texColor = texture(textureSampler, fs_in.texCoords * 10);
+        vec4 texColor = texture(materialTexture, fs_in.texCoords * 10);
         actualKa = texColor.rgb;
         actualKd = texColor.rgb;
     }
@@ -147,6 +149,20 @@ void SetUpMaterialColor()
     }
 
     actualKs = material.Ks;
+}
+
+float shadowCalculation(vec4 fragPosLightSpace)
+{
+    vec3 projCoord = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    projCoord = (projCoord + 1) / 2;
+
+    float closestDepth = texture(shadowMap, projCoord.xy).r;
+    float currentDepth = projCoord.z;
+
+    float bias = 0.001;
+    float shadow = currentDepth - bias > closestDepth ? 1.0f : 0.0f;
+
+    return shadow;
 }
 
 void main()
@@ -170,6 +186,10 @@ void main()
 	{
         fragColor += ComputeSpotLight(spotLights[i]);
 	}
+
+    // Add shadow
+    float shadow = shadowCalculation(fs_in.fragPosLightSpace);         
+    fragColor *= (1 - shadow);
 
     // Add Ambient light
     fragColor += vec4(actualKa * ambientLight.color * ambientLight.intensity, 1);
