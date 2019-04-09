@@ -20,7 +20,7 @@ public:
 	~ParticuleRender();
 
 	void Init();
-	void Render(std::vector<ParticuleSystem> & particuleSystems, LightScene& lightScene, Camera& camera, GLuint shadowMap, float frameTime);
+	void Render(std::vector<ParticuleSystem> & particuleSystems, LightScene& lightScene, Camera& camera, float frameTime);
 	void CleanUp();
 
 };

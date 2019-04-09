@@ -19,12 +19,11 @@ void ParticuleRender::Init()
 	m_ParticuleFeedForwardShader.CreateShaderProgram();
 }
 
-void ParticuleRender::Render(std::vector<ParticuleSystem> & particuleSystems, LightScene& lightScene, Camera& camera, GLuint shadowMap, float frameTime)
+void ParticuleRender::Render(std::vector<ParticuleSystem> & particuleSystems, LightScene& lightScene, Camera& camera, float frameTime)
 {
-
 	glm::mat4 projectionMatrix{ Transformations::GetProjectionMatrix(MasterRenderer::FOV, MasterRenderer::nearPlane, MasterRenderer::farPlane) };
 	glm::mat4 viewMatrix{ Transformations::GetViewMatrix(camera) };
-	glm::mat4 modelMatrix{ Transformations::GetModelMatrix(glm::vec3{0}, glm::vec3{0}, glm::vec3{0.3f}) };
+	glm::mat4 modelMatrix{ Transformations::GetModelMatrix(glm::vec3{0}, glm::vec3{0}, glm::vec3{1.0f}) };
 	glm::mat4 lightSpaceMatrix = Transformations::GetLightSpaceMatrix(lightScene.GetDirectionalLights()[0], MasterRenderer::nearPlane, MasterRenderer::farPlane);
 
 	for (ParticuleSystem& particuleSystem : particuleSystems)

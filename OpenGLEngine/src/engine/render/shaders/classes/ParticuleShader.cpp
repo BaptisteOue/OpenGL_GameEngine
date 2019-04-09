@@ -27,7 +27,6 @@ void ParticuleShader::ConstructShader()
 
 void ParticuleShader::CreateUniforms()
 {
-
 	BasicShader::CreateUniforms();
 	AddUniform("lifeTime");
 	AddUniform("time");

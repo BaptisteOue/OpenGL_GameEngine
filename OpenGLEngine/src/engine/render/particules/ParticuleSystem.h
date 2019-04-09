@@ -26,7 +26,7 @@ public:
 		float lifeTime = 1.0f,
 		const Material& material = Material{});
 	~ParticuleSystem();
-	void Init();
+	void Create();
 
 	const glm::vec3& GetCenter() const;
 	const glm::vec3& GetGravityForce() const;

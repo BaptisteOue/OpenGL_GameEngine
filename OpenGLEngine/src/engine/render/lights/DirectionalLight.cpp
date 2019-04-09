@@ -21,5 +21,9 @@ glm::vec3 DirectionalLight::GetDirection()
 	return m_Direction;
 }
 
+void DirectionalLight::SetDirection(const glm::vec3& direction)
+{
+	m_Direction = direction;
+}
 
 #pragma endregion

@@ -14,4 +14,6 @@ public:
 
 	const glm::vec3 GetDirection() const;
 	glm::vec3 GetDirection();
+
+	void SetDirection(const glm::vec3& direction);
 };

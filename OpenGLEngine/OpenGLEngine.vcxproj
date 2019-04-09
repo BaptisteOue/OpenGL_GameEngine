@@ -29,6 +29,8 @@
     <ClCompile Include="src\engine\render\renderers\GameObjectRenderer.cpp" />
     <ClCompile Include="src\engine\render\renderers\MasterRenderer.cpp" />
     <ClCompile Include="src\engine\render\renderers\ParticuleRender.cpp" />
+    <ClCompile Include="src\engine\render\renderers\renderpass\LightingPass.cpp" />
+    <ClCompile Include="src\engine\render\renderers\renderpass\ShadowmapPass.cpp" />
     <ClCompile Include="src\engine\render\shaders\classes\ParticuleFeedForwardShader.cpp" />
     <ClCompile Include="src\engine\render\shaders\classes\ParticuleShader.cpp" />
     <ClCompile Include="src\engine\render\shaders\classes\ShadowMapShader.cpp" />
@@ -67,6 +69,8 @@
     <ClInclude Include="src\engine\render\renderers\GameObjectRenderer.h" />
     <ClInclude Include="src\engine\render\renderers\MasterRenderer.h" />
     <ClInclude Include="src\engine\render\renderers\ParticuleRender.h" />
+    <ClInclude Include="src\engine\render\renderers\renderpass\LightingPass.h" />
+    <ClInclude Include="src\engine\render\renderers\renderpass\ShadowmapPass.h" />
     <ClInclude Include="src\engine\render\shaders\classes\BasicShader.h" />
     <ClInclude Include="src\engine\render\core\Camera.h" />
     <ClInclude Include="src\engine\render\shaders\classes\ParticuleFeedForwardShader.h" />

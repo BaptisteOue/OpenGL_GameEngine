@@ -22,9 +22,6 @@ void GameObjectRenderer::Init()
 
 void GameObjectRenderer::Render(std::vector<GameObject>& gameObjects, LightScene& lightScene, Camera& camera, GLuint shadowMap)
 {
-	// Render the scene using the shadowmap previously calculated
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	m_GameObjectShader.Use(true);
 
 	glm::mat4 projectionMatrix(Transformations::GetProjectionMatrix(MasterRenderer::FOV, MasterRenderer::nearPlane, MasterRenderer::farPlane));

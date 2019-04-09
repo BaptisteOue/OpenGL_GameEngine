@@ -23,7 +23,7 @@ ParticuleSystem::~ParticuleSystem()
 {
 }
 
-void ParticuleSystem::Init()
+void ParticuleSystem::Create()
 {
 	// Generate particules
 	m_ParticuleGenerator.Init(m_Center);
