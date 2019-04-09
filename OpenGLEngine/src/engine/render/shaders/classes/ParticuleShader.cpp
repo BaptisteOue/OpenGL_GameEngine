@@ -4,7 +4,7 @@
 #pragma region Public API
 
 ParticuleShader::ParticuleShader()
-	: BasicShader()
+	: BasicShader("ParticuleShader")
 {
 	// Override BasicShader shaders paths
 	RegisterVertexShader(ParticuleShader::VERTEX_SHADER);

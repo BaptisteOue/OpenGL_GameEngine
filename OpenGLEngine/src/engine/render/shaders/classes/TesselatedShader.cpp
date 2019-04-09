@@ -4,7 +4,7 @@
 #pragma region Public API
 
 TesselatedShader::TesselatedShader()
-	: BasicShader()
+	: BasicShader("TesselatedGameObjectShader")
 {
 	// Use BasicShader shader path
 	// Add new paths to BasicShader shaders paths

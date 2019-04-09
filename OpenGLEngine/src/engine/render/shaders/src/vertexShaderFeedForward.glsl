@@ -5,7 +5,6 @@ layout (location = 1) in float startTime;
 layout (location = 2) in vec3 velocity;
 layout (location = 3) in vec3 initialVelocity;
 
-uniform vec3 center;
 uniform float lifeTime;
 uniform float time;
 uniform vec3 acceleration;
@@ -30,7 +29,7 @@ void main()
 
         if(dt >= lifeTime)  // Re-use particle when it dies
         {
-            vs_out.position = center;
+            vs_out.position = vec3(0);
             vs_out.velocity = initialVelocity;
             vs_out.startTime = time;
         }

@@ -14,6 +14,7 @@ protected:
 	GLuint m_TessCtrlShader;
 	GLuint m_TessEvalShader;
 	GLuint m_Program;
+	std::string m_ShaderName;
 
 	std::string m_VertexShaderPath;
 	std::string m_TessCtrlShaderPath;
@@ -46,7 +47,7 @@ protected:
 	void RegisterTessEvalShader(const char* tessEvalPath);
 
 public:
-	ShaderBase();
+	ShaderBase(const std::string& shaderName);
 	~ShaderBase();
 
 	void CreateShaderProgram();

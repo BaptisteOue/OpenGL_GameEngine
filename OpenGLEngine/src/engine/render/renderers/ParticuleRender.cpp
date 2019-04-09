@@ -23,7 +23,7 @@ void ParticuleRender::Render(std::vector<ParticuleSystem> & particuleSystems, Li
 {
 	glm::mat4 projectionMatrix{ Transformations::GetProjectionMatrix(MasterRenderer::FOV, MasterRenderer::nearPlane, MasterRenderer::farPlane) };
 	glm::mat4 viewMatrix{ Transformations::GetViewMatrix(camera) };
-	glm::mat4 modelMatrix{ Transformations::GetModelMatrix(glm::vec3{0}, glm::vec3{0}, glm::vec3{1.0f}) };
+	glm::mat4 modelMatrix;
 	glm::mat4 lightSpaceMatrix = Transformations::GetLightSpaceMatrix(lightScene.GetDirectionalLights()[0], MasterRenderer::nearPlane, MasterRenderer::farPlane);
 
 	for (ParticuleSystem& particuleSystem : particuleSystems)
@@ -35,11 +35,12 @@ void ParticuleRender::Render(std::vector<ParticuleSystem> & particuleSystems, Li
 		m_ParticuleFeedForwardShader.LoadAccelerationUniform(particuleSystem.GetAcceleration());
 		m_ParticuleFeedForwardShader.LoadGravityForceUniform(particuleSystem.GetGravityForce());
 		m_ParticuleFeedForwardShader.LoadFrameTimeUniform(frameTime);
-		m_ParticuleFeedForwardShader.LoadCenterUniform(particuleSystem.GetCenter());
+		//m_ParticuleFeedForwardShader.LoadCenterUniform(particuleSystem.GetCenter());
 		particuleSystem.GetParticuleGroup().UpdatePass();
 		m_ParticuleFeedForwardShader.Use(false);
 
 		// Draw phase
+		modelMatrix = Transformations::GetModelMatrix(particuleSystem.GetCenter(), glm::vec3{ 0 }, glm::vec3{ 1.0f });
 		m_ParticuleShader.Use(true);
 		m_ParticuleShader.LoadLifeTimeUniform(particuleSystem.GetParticuleLifetime());
 		m_ParticuleShader.LoadSimulationTimeUniform(particuleSystem.GetSimulationTime());

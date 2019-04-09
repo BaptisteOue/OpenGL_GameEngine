@@ -5,15 +5,15 @@
 
 #pragma region Public API
 
-BasicShader::BasicShader()
-	: ShaderBase()
+BasicShader::BasicShader(const std::string& shaderName)
+	: ShaderBase(shaderName)
 {
 	RegisterVertexShader(BasicShader::VERTEX_SHADER);
 	RegisterFragmentShader(BasicShader::FRAGMENT_SHADER);
 }
 
-BasicShader::BasicShader(const char* vertexShaderPath, const char* fragmentShaderPath)
-	: ShaderBase()
+BasicShader::BasicShader(const char* vertexShaderPath, const char* fragmentShaderPath, const std::string& shaderName)
+	: ShaderBase(shaderName)
 {
 	RegisterVertexShader(vertexShaderPath);
 	RegisterFragmentShader(fragmentShaderPath);

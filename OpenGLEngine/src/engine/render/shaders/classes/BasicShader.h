@@ -30,8 +30,8 @@ protected:
 	void LoadPointLightUniforms(const std::string& uniformName, const PointLight& pointLight, const glm::mat4& matrice);
 	void LoadSpotLightUniforms(const std::string& uniformName, const SpotLight& spotLight, const glm::mat4& matrice);
 public:
-	BasicShader();
-	BasicShader(const char* vertexShaderPath, const char* fragmentShaderPath);
+	BasicShader(const std::string& shaderName = "BasicGameObjectShader");
+	BasicShader(const char* vertexShaderPath, const char* fragmentShaderPath, const std::string& shaderName);
 	~BasicShader();
 
 	virtual void ConstructShader() override;

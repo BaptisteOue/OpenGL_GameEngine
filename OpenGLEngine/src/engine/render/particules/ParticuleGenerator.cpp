@@ -14,9 +14,9 @@ ParticuleGenerator::~ParticuleGenerator()
 {
 }
 
-void ParticuleGenerator::Init(const glm::vec3& center)
+void ParticuleGenerator::Init()
 {
-	GenerateParticules(center);
+	GenerateParticules();
 }
 
 const std::vector<glm::vec3>& ParticuleGenerator::GetPositions() const
@@ -49,11 +49,11 @@ void ParticuleGenerator::SetNbParticules(int value)
 
 #pragma region Private API
 
-void ParticuleGenerator::GenerateParticules(const glm::vec3& center)
+void ParticuleGenerator::GenerateParticules()
 {
 	for (int i = 0; i < m_NbParticules; i++)
 	{
-		m_Positions.emplace_back(center);
+		m_Positions.emplace_back(0, 0, 0);
 		m_InitialVelocities.emplace_back(GenerateRandomConeSpeed());
 		m_StartTimes.emplace_back(GenerateRandomStartTime());
 	}

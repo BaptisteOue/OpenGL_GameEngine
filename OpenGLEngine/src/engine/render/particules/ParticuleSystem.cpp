@@ -26,7 +26,7 @@ ParticuleSystem::~ParticuleSystem()
 void ParticuleSystem::Create()
 {
 	// Generate particules
-	m_ParticuleGenerator.Init(m_Center);
+	m_ParticuleGenerator.Init();
 
 	m_StartedTime = std::chrono::high_resolution_clock::now();
 

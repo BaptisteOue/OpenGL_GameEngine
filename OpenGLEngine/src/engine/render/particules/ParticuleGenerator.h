@@ -21,7 +21,7 @@ public:
 	ParticuleGenerator(int nbParticules);
 	~ParticuleGenerator();
 
-	void Init(const glm::vec3& center);
+	void Init();
 
 	const std::vector<glm::vec3>& GetPositions() const;
 	const std::vector<glm::vec3>& GetInitialVelocities() const;
@@ -29,7 +29,7 @@ public:
 	const int GetNbParticules() const;
 	void SetNbParticules(int value);
 private:
-	void GenerateParticules(const glm::vec3& center);
+	void GenerateParticules();
 	const glm::vec3& GenerateRandomConeSpeed();
 	const float GenerateRandomStartTime();
 };

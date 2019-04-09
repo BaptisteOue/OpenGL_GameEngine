@@ -1,7 +1,7 @@
 #include "ParticuleFeedForwardShader.h"
 
 ParticuleFeedForwardShader::ParticuleFeedForwardShader()
-	: ShaderBase()
+	: ShaderBase("ParticuleShaderFeedForward")
 {
 	RegisterVertexShader(ParticuleFeedForwardShader::VERTEX_SHADER);
 }

@@ -50,7 +50,7 @@ void App::Init()
 	material.SetReflectivity(0.0f);
 	material.SetShineDamper(1);
 	m_GameObjects.emplace_back(cube, material, glm::vec3(-20, 10, -20), glm::vec3(35, 17, 90), 2);
-	m_GameObjects.emplace_back(cube, material, glm::vec3(0, 10, 20), glm::vec3(12, 47, 0), 2);
+	m_GameObjects.emplace_back(cube, material, glm::vec3(-20, 10, 20), glm::vec3(12, 47, 0), 2);
 	m_GameObjects.emplace_back(cube, material, glm::vec3(20, 5, 0), glm::vec3(63, -15, 123), 2);
 	m_GameObjects.emplace_back(cube, material, glm::vec3(10, 10, -25), glm::vec3(47, 20, 47), 2);
 
