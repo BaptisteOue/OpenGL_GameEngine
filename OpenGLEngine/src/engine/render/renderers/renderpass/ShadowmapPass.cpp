@@ -23,13 +23,18 @@ void ShadowmapPass::Create()
 	m_ShadowMapShader.CreateShaderProgram();
 }
 
-void ShadowmapPass::GenerateShadowMap(std::vector<GameObject>& gameObjects, LightScene& lightScene)
+void ShadowmapPass::GenerateUnidirectionalShadowMap(std::vector<GameObject>& gameObjects, LightScene& lightScene, Camera& camera)
 {
+	DirectionalLight directionalLight = lightScene.GetDirectionalLight();
+	
+	if (directionalLight.GetIntensity() <= 0.0f || !directionalLight.IsCastingShadow())
+		return;
+
 	// Render the scene to a depth texture
 	m_ShadowMapFB.Bind(true);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	m_ShadowMapShader.Use(true);
-	glm::mat4 lightSpaceMatrix = Transformations::GetLightSpaceMatrix(lightScene.GetDirectionalLights()[0], MasterRenderer::nearPlane, MasterRenderer::farPlane);
+	glm::mat4 lightSpaceMatrix = Transformations::GetLightSpaceMatrixOrtho(directionalLight, MasterRenderer::nearPlane, MasterRenderer::farPlane);
 	glm::mat4 modelMatrix;
 
 	// Game objects
@@ -45,7 +50,12 @@ void ShadowmapPass::GenerateShadowMap(std::vector<GameObject>& gameObjects, Ligh
 	m_ShadowMapFB.Bind(false);
 }
 
-GLuint ShadowmapPass::GetShadowmap()
+void ShadowmapPass::GenerateOmnidirectionalShadowMap()
+{
+	// TODO
+}
+
+GLuint ShadowmapPass::GetUnidirectionalShadowmap()
 {
 	return m_ShadowMapFB.GetDepthTexture();
 }

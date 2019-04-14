@@ -65,19 +65,12 @@ void BasicShader::LoadMaterialUniforms(const Material& material)
 
 void BasicShader::LoadLightsUniforms(const LightScene& lightScene, const glm::mat4& matrice)
 {
-	LoadUniform("numDirectionalLights", (int) lightScene.GetDirectionalLights().size());
 	LoadUniform("numPointLights", (int)lightScene.GetPointLights().size());
 	LoadUniform("numSpotLights", (int)lightScene.GetSpotLights().size());
 	LoadBasicLightUniforms("ambientLight", lightScene.GetAmbientLight());
+	LoadDirectionalLightUniforms("directionalLight", lightScene.GetDirectionalLight(), matrice);
 
-	auto i = 0;
-	for (const DirectionalLight& directionalLight : lightScene.GetDirectionalLights())
-	{
-		LoadDirectionalLightUniforms("directionalLights[" + std::to_string(i) + "]", directionalLight, matrice);
-		i++;
-	}
-
-	i = 0;
+	int i = 0;
 	for (const PointLight& pointLight : lightScene.GetPointLights())
 	{
 		LoadPointLightUniforms("pointLights[" + std::to_string(i) + "]", pointLight, matrice);
@@ -100,15 +93,13 @@ void BasicShader::LoadLightsUniforms(const LightScene& lightScene, const glm::ma
 
 void BasicShader::AddLightUniforms(int numDir, int numPoint, int numSpot)
 {
-	AddUniform("numDirectionalLights");
 	AddUniform("numPointLights");
 	AddUniform("numSpotLights");
 
 	// Add an ambientLight
 	AddBasicLightUniforms("ambientLight");
+	AddDirectionalLightUniforms("directionalLight");
 
-	for (int i = 0; i < numDir; i++)
-		AddDirectionalLightUniforms("directionalLights[" + std::to_string(i) + "]");
 	for (int i = 0; i < numPoint; i++)
 		AddPointLightUniforms("pointLights[" + std::to_string(i) + "]");
 	for (int i = 0; i < numSpot; i++)
@@ -119,6 +110,7 @@ void BasicShader::AddBasicLightUniforms(const std::string & uniformName)
 {
 	AddUniform(uniformName + ".color");
 	AddUniform(uniformName + ".intensity");
+	AddUniform(uniformName + ".castShadow");
 }
 
 void BasicShader::AddDirectionalLightUniforms(const std::string & uniformName)
@@ -159,6 +151,7 @@ void BasicShader::LoadBasicLightUniforms(const std::string& uniformName, const B
 {
 	LoadUniform(uniformName + ".color", basicLight.GetColor());
 	LoadUniform(uniformName + ".intensity", basicLight.GetIntensity());
+	LoadUniform(uniformName + ".castShadow", basicLight.IsCastingShadow());
 }
 
 void BasicShader::LoadDirectionalLightUniforms(const std::string & uniformName, const DirectionalLight & directionalLight, const glm::mat4 & matrice)

@@ -1,6 +1,5 @@
 #version 460
 
-#define MAX_DIR_LIGHT 1
 #define MAX_POINT_LIGHTS 1
 #define MAX_SPOT_LIGHTS 1
 
@@ -34,6 +33,7 @@ struct BaseLight
 {
     vec3 color;
     float intensity;
+    bool castShadow;
 };
 
 struct DirectionalLight
@@ -61,11 +61,10 @@ struct SpotLight
 layout(binding = 0) uniform sampler2D textureSampler;
 uniform Material material;
 
-uniform int numDirectionalLights;
 uniform int numPointLights;
 uniform int numSpotLights;
 uniform BaseLight ambientLight;
-uniform DirectionalLight directionalLights[MAX_DIR_LIGHT];
+uniform DirectionalLight directionalLight;
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform SpotLight spotLights[MAX_SPOT_LIGHTS];
 
@@ -137,10 +136,7 @@ vec3 ComputeLighting(vec3 eyePos, vec3 normal)
     vec3 color = vec3(0);
 
     // Directional
-    for(int i = 0; i < numDirectionalLights; i++)
-	{
-        color += ComputeDirectionalLight(eyePos, normal, directionalLights[i]);
-	}
+    color += ComputeDirectionalLight(eyePos, normal, directionalLight);
 
     for(int i = 0; i < numPointLights; i++)
 	{

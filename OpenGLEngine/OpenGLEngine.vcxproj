@@ -31,9 +31,11 @@
     <ClCompile Include="src\engine\render\renderers\ParticuleRender.cpp" />
     <ClCompile Include="src\engine\render\renderers\renderpass\LightingPass.cpp" />
     <ClCompile Include="src\engine\render\renderers\renderpass\ShadowmapPass.cpp" />
+    <ClCompile Include="src\engine\render\renderers\SkyboxRenderer.cpp" />
     <ClCompile Include="src\engine\render\shaders\classes\ParticuleFeedForwardShader.cpp" />
     <ClCompile Include="src\engine\render\shaders\classes\ParticuleShader.cpp" />
     <ClCompile Include="src\engine\render\shaders\classes\ShadowMapShader.cpp" />
+    <ClCompile Include="src\engine\render\shaders\classes\SkyboxShader.cpp" />
     <ClCompile Include="src\game\App.cpp" />
     <ClCompile Include="src\engine\render\core\RenderEngine.cpp" />
     <ClCompile Include="src\engine\render\core\Timer.cpp" />
@@ -71,11 +73,13 @@
     <ClInclude Include="src\engine\render\renderers\ParticuleRender.h" />
     <ClInclude Include="src\engine\render\renderers\renderpass\LightingPass.h" />
     <ClInclude Include="src\engine\render\renderers\renderpass\ShadowmapPass.h" />
+    <ClInclude Include="src\engine\render\renderers\SkyboxRenderer.h" />
     <ClInclude Include="src\engine\render\shaders\classes\BasicShader.h" />
     <ClInclude Include="src\engine\render\core\Camera.h" />
     <ClInclude Include="src\engine\render\shaders\classes\ParticuleFeedForwardShader.h" />
     <ClInclude Include="src\engine\render\shaders\classes\ParticuleShader.h" />
     <ClInclude Include="src\engine\render\shaders\classes\ShadowMapShader.h" />
+    <ClInclude Include="src\engine\render\shaders\classes\SkyboxShader.h" />
     <ClInclude Include="src\game\App.h" />
     <ClInclude Include="src\engine\render\core\RenderEngine.h" />
     <ClInclude Include="src\engine\render\core\IGameLogic.h" />
@@ -92,32 +96,32 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{F9395040-1ADC-4002-8C96-F090BDCB7B8E}</ProjectGuid>
     <RootNamespace>OpenGLEngine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>

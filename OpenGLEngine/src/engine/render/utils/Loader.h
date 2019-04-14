@@ -17,5 +17,6 @@ private:
 public:
 	Loader() = delete;
     static Mesh& LoadOBJ(const char* objFile);
-	static Texture& LoadTexture(const char* textureFile, GLuint activeTexture = GL_TEXTURE0);
+	static Texture& Load2DTexture(const char* textureFile, GLuint activeTexture = GL_TEXTURE0);
+	static Texture& LoadCubeMapTexture(const char* textureFiles[6], GLuint activeTexture = GL_TEXTURE0);
 };

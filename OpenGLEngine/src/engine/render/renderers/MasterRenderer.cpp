@@ -25,10 +25,10 @@ void MasterRenderer::Render(std::vector<GameObject>& gameObjects, std::vector<Pa
 							LightScene & lightScene, Camera & camera, float frameTime)
 {
 	// Shadowmap pass doesnt take in account particules for now...
-	m_ShadowmapPass.GenerateShadowMap(gameObjects, lightScene);
+	m_ShadowmapPass.GenerateUnidirectionalShadowMap(gameObjects, lightScene, camera);
 
 	// Lighting pass
-	m_LightingPass.ExecuteRenderPass(gameObjects, particuleSystems, lightScene, camera, m_ShadowmapPass.GetShadowmap(), frameTime);
+	m_LightingPass.ExecuteRenderPass(gameObjects, particuleSystems, lightScene, camera, m_ShadowmapPass.GetUnidirectionalShadowmap(), frameTime);
 }
 
 void MasterRenderer::CleanUp()

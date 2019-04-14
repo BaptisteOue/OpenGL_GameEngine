@@ -30,13 +30,10 @@ glm::mat4 Transformations::GetViewMatrix(const Camera& camera)
 	return viewMatrix;
 }
 
-glm::mat4 Transformations::GetLightSpaceMatrix(const DirectionalLight& light, float nearPlane, float farPlane)
+glm::mat4 Transformations::GetLightSpaceMatrixOrtho(const DirectionalLight& light, float nearPlane, float farPlane)
 {
-	glm::mat4 lightProjection = glm::ortho(-50.0f, 50.0f, -50.0f, 50.0f, nearPlane, farPlane);
-	
-	glm::vec3 lightPos = -light.GetDirection();
-	lightPos *= 100;
-	glm::mat4 lightView = glm::lookAt(lightPos,
+	glm::mat4 lightProjection = glm::ortho(-30.0f, 30.0f, -30.0f, 30.0f, nearPlane, farPlane);
+	glm::mat4 lightView = glm::lookAt(light.GetFakePosition(),
 									  glm::vec3(0.0f, 0.0f, 0.0f),
 									  glm::vec3(0.0f, 1.0f, 0.0f));
 

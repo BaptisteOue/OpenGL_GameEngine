@@ -20,7 +20,7 @@ private:
 
 public:
 	static constexpr auto s_Sensitivity = 0.3f;
-	static constexpr auto s_Speed = 2.0f;
+	static constexpr auto s_Speed = 1.5f;
 
 private:
 	void Move(const glm::uvec3& dCamera);

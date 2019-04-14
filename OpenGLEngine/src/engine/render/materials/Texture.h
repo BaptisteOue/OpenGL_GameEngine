@@ -10,6 +10,7 @@ private:
 	GLuint m_ActveTexture;
 
 public:
+	Texture();
 	Texture(GLuint textureID, GLuint activeTexture);
 	~Texture();
 

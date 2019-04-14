@@ -9,7 +9,7 @@ class LightScene
 {
 private:
 	BasicLight m_ambientLight;
-	std::vector<DirectionalLight> m_DirecationalLights;
+	DirectionalLight m_DirecationalLight;
 	std::vector<PointLight> m_PointLights;
 	std::vector<SpotLight> m_SpotLights;
 
@@ -21,13 +21,13 @@ public:
 	void CleanUp();
 
 	const BasicLight& GetAmbientLight() const;
-	const std::vector<DirectionalLight>& GetDirectionalLights() const;
+	const DirectionalLight& GetDirectionalLight() const;
 	const std::vector<PointLight>& GetPointLights() const;
 	const std::vector<SpotLight>& GetSpotLights() const;
 	const SpotLight& GetTorch() const;
 
 	BasicLight& GetAmbientLight();
-	std::vector<DirectionalLight>& GetDirectionalLights();
+	DirectionalLight& GetDirectionalLight();
 	std::vector<PointLight>& GetPointLights();
 	std::vector<SpotLight>& GetSpotLights();
 	SpotLight& GetTorch();

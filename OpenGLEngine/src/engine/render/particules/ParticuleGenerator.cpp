@@ -59,7 +59,7 @@ void ParticuleGenerator::GenerateParticules()
 	}
 }
 
-const glm::vec3 & ParticuleGenerator::GenerateRandomConeSpeed()
+glm::vec3  ParticuleGenerator::GenerateRandomConeSpeed()
 {
 	glm::vec3 v;
 	float random, velocity, theta, phi;

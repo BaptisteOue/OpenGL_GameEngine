@@ -11,16 +11,17 @@
 
 class ParticuleFeedForwardShader : public ShaderBase
 {
-public:
-	static constexpr auto VERTEX_SHADER { "./src/engine/render/shaders/src/vertexShaderFeedForward.glsl" };
-	const char* OUTPUT_NAMES[3] { "OUT.position", "OUT.startTime", "OUT.velocity",  };
+private:
+	static constexpr auto VERTEX_SHADER{ "./src/engine/render/shaders/src/vertexShaderFeedForward.glsl" };
+	const char* OUTPUT_NAMES[3] { "OUT.position", "OUT.startTime", "OUT.velocity" };
+
+protected:
+	void ConstructShader() override;
+	void CreateUniforms() override;
 
 public:
 	ParticuleFeedForwardShader();
 	~ParticuleFeedForwardShader();
-
-	void ConstructShader() override;
-	void CreateUniforms() override;
 
 	void LoadLifeTimeUniform(float value);
 	void LoadFrameTimeUniform(float value);

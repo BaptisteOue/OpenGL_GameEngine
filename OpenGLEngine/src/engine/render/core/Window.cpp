@@ -38,9 +38,8 @@ void Window::Init()
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_SAMPLES, 4);
 
     m_Window = glfwCreateWindow(Window::s_Width, Window::s_Height, Window::s_Title.c_str(), NULL, NULL);
     if(m_Window == NULL)
@@ -100,7 +99,10 @@ void Window::Init()
 	glClearColor(0.001f, 0.0111f, 0.0105f, 0.0f);
 
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_MULTISAMPLE);
+
+	// LEQUAL for the skybox
+	glDepthFunc(GL_LEQUAL);
+
 	glEnable(GL_FRAMEBUFFER_SRGB);
 }
 

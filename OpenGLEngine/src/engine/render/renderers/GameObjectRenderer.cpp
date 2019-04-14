@@ -26,7 +26,8 @@ void GameObjectRenderer::Render(std::vector<GameObject>& gameObjects, LightScene
 
 	glm::mat4 projectionMatrix(Transformations::GetProjectionMatrix(MasterRenderer::FOV, MasterRenderer::nearPlane, MasterRenderer::farPlane));
 	glm::mat4 viewMatrix(Transformations::GetViewMatrix(camera));
-	glm::mat4 lightSpaceMatrix = Transformations::GetLightSpaceMatrix(lightScene.GetDirectionalLights()[0], MasterRenderer::nearPlane, MasterRenderer::farPlane);
+
+	glm::mat4 lightSpaceMatrix = Transformations::GetLightSpaceMatrixOrtho(lightScene.GetDirectionalLight(), MasterRenderer::nearPlane, MasterRenderer::farPlane);
 	glm::mat4 modelMatrix;
 
 	for (auto& gameObject : gameObjects)
@@ -41,8 +42,11 @@ void GameObjectRenderer::Render(std::vector<GameObject>& gameObjects, LightScene
 		}
 
 		// Load shadow map
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, shadowMap);
+		if (lightScene.GetDirectionalLight().GetIntensity() > 0 && lightScene.GetDirectionalLight().IsCastingShadow())
+		{
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, shadowMap);
+		}
 
 		m_GameObjectShader.LoadMatricesUniforms(modelMatrix, viewMatrix, projectionMatrix, lightSpaceMatrix);
 		m_GameObjectShader.LoadLightsUniforms(lightScene, viewMatrix);

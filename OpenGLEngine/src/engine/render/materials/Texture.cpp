@@ -1,6 +1,11 @@
 #include "Texture.h"
 
 
+Texture::Texture()
+	: Texture{0, 0}
+{
+}
+
 Texture::Texture(GLuint textureID, GLuint activeTexture)
 	: m_TextureID(textureID), m_ActveTexture(activeTexture)
 {

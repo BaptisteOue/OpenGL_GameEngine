@@ -2,6 +2,7 @@
 
 #include "../../framebuffers/FramBuffer.h"
 #include "../../shaders/classes/ShadowMapShader.h"
+#include "../../core/Camera.h"
 
 class ShadowmapPass
 {
@@ -12,8 +13,9 @@ public:
 	ShadowmapPass();
 	~ShadowmapPass();
 	void Create();
-	void GenerateShadowMap(std::vector<GameObject>& gameObjects, LightScene& lightScene);
-	GLuint GetShadowmap();
+	void GenerateUnidirectionalShadowMap(std::vector<GameObject>& gameObjects, LightScene& lightScene, Camera& camera);
+	void GenerateOmnidirectionalShadowMap();
+	GLuint GetUnidirectionalShadowmap();
 
 	void CleanUp();
 };

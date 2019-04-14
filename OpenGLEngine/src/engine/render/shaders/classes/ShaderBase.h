@@ -46,6 +46,9 @@ protected:
 	void RegisterTessCtrlShader(const char* tessCtrlPath);
 	void RegisterTessEvalShader(const char* tessEvalPath);
 
+	virtual void CreateUniforms() = 0;
+	virtual void ConstructShader() = 0;
+
 public:
 	ShaderBase(const std::string& shaderName);
 	~ShaderBase();
@@ -53,6 +56,4 @@ public:
 	void CreateShaderProgram();
 	void Use(bool use);
 	void CleanUp();
-	virtual void CreateUniforms() = 0;
-	virtual void ConstructShader() = 0;
 };

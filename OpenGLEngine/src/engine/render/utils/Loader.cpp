@@ -90,7 +90,7 @@ Mesh& Loader::LoadOBJ(const char* objFile)
 	return *m;
 }
 
-Texture& Loader::LoadTexture(const char * textureFile, GLuint activeTexture)
+Texture& Loader::Load2DTexture(const char * textureFile, GLuint activeTexture)
 {
 	Texture* texture = nullptr;
 	GLuint textureID;
@@ -108,7 +108,7 @@ Texture& Loader::LoadTexture(const char * textureFile, GLuint activeTexture)
 	unsigned char *data = stbi_load(textureFile, &width, &height, &nrChannels, 0);
 	if (data)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		texture = new Texture(textureID, activeTexture);
@@ -119,6 +119,40 @@ Texture& Loader::LoadTexture(const char * textureFile, GLuint activeTexture)
 	}
 
 	stbi_image_free(data);
+
+	return *texture;
+}
+
+Texture & Loader::LoadCubeMapTexture(const char * textureFiles[6], GLuint activeTexture)
+{
+	Texture* texture = nullptr;
+	GLuint textureID;
+
+	glGenTextures(1, &textureID);
+	glActiveTexture(activeTexture);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+	int width, height, nrChannels;
+	for (int i = 0; i < 6; i++)
+	{
+		unsigned char *data = stbi_load(textureFiles[i], &width, &height, &nrChannels, 0);
+		if (data)
+		{
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_SRGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			texture = new Texture(textureID, activeTexture);
+			stbi_image_free(data);
+		}
+		else
+		{
+			std::cout << "Cubemap texture failed to load at path: " << textureFiles[i] << std::endl;
+		}
+	}
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	return *texture;
 }

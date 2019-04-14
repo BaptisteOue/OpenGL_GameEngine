@@ -6,7 +6,7 @@
 #pragma region Public API
 
 PointLight::PointLight(const PointLight & pointLight)
-	: BasicLight(pointLight.m_Color, pointLight.m_Intensity),
+	: BasicLight(pointLight.m_Color, pointLight.m_Intensity, pointLight.m_CastShadow),
 	m_Position(pointLight.m_Position),
 	m_ConstAtt(pointLight.m_ConstAtt),
 	m_LinearAtt(pointLight.m_LinearAtt),
@@ -15,12 +15,16 @@ PointLight::PointLight(const PointLight & pointLight)
 	m_LightObject = new GameObject(pointLight.GetLightObject());
 }
 
-PointLight::PointLight(const glm::vec3& color, const glm::vec3& position, float intensity)
-	: BasicLight(color, intensity), m_Position(position)
+PointLight::PointLight(const glm::vec3& color, const glm::vec3& position, float intensity, bool castShadow)
+	: BasicLight(color, intensity, castShadow),
+	m_Position(position),
+	m_QuadraticAtt(0.0f),
+	m_LinearAtt(0.0f),
+	m_ConstAtt(1.0f)
 {
 	Mesh m(Loader::LoadOBJ("./res/sphere.obj"));
 	Material material(glm::vec3(color), glm::vec3(color), glm::vec3(color), 0, 1);
-	m_LightObject = new GameObject(m, material, position, glm::vec3(0), 0.25f);
+	m_LightObject = new GameObject(m, material, position, glm::vec3(0), 1.0f);
 }
 
 PointLight::~PointLight()

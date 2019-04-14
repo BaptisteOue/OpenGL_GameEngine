@@ -30,6 +30,6 @@ public:
 	void SetNbParticules(int value);
 private:
 	void GenerateParticules();
-	const glm::vec3& GenerateRandomConeSpeed();
+	glm::vec3 GenerateRandomConeSpeed();
 	const float GenerateRandomStartTime();
 };

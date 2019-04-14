@@ -34,6 +34,7 @@ void ParticuleGroup::LoadParticuleGroup(const std::vector<GLfloat>& positions, c
 
 	glBindVertexArray(0);
 
+	/* Set up TFOs */
 	glGenTransformFeedbacks(2, m_FeedbackIDs);
 
 	glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, m_FeedbackIDs[m_DrawBuffer]);

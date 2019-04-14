@@ -1,6 +1,5 @@
 #version 460 core
 
-#define MAX_DIR_LIGHT 1
 #define MAX_POINT_LIGHTS 1
 #define MAX_SPOT_LIGHTS 1
 
@@ -30,6 +29,7 @@ struct BaseLight
 {
     vec3 color;
     float intensity;
+    bool castShadow;
 };
 
 struct DirectionalLight
@@ -60,11 +60,10 @@ layout(binding = 1) uniform sampler2D shadowMap;
 
 uniform Material material;
 
-uniform int numDirectionalLights;
 uniform int numPointLights;
 uniform int numSpotLights;
 uniform BaseLight ambientLight;
-uniform DirectionalLight directionalLights[MAX_DIR_LIGHT];
+uniform DirectionalLight directionalLight;
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform SpotLight spotLights[MAX_SPOT_LIGHTS];
 
@@ -72,12 +71,13 @@ uniform SpotLight spotLights[MAX_SPOT_LIGHTS];
 vec3 actualKa;
 vec3 actualKd;
 vec3 actualKs;
+vec4 actualNormal; // In eye space depending on gl_FrontFacing
 
 vec3 phongModel(vec3 fromLightVector, vec3 lightColor)
 {
     vec3 color = vec3(0);
 
-    vec3 normalize_normal = normalize(fs_in.eye_normal.xyz);
+    vec3 normalize_normal = normalize(actualNormal.xyz);
 
     // Diffuse 
     float diffuseFactor = max(dot(-fromLightVector, normalize_normal), 0);
@@ -138,7 +138,7 @@ void SetUpMaterialColor()
 {
     if(material.isTextured)
     {
-        vec4 texColor = texture(materialTexture, fs_in.texCoords * 10);
+        vec4 texColor = texture(materialTexture, fs_in.texCoords * 5);
         actualKa = texColor.rgb;
         actualKd = texColor.rgb;
     }
@@ -179,14 +179,18 @@ void main()
 {
     fragColor = vec4(0);
 
+
+
+    if(gl_FrontFacing)
+        actualNormal = fs_in.eye_normal;
+    else
+        actualNormal = -1 * fs_in.eye_normal;
+
     // Setup Ka, Kd, Ks if textured
     SetUpMaterialColor();
 
-    for(int i = 0; i < numDirectionalLights; i++)
-	{
-        fragColor += ComputeDirectionalLight(directionalLights[i]);
-	}
-        
+    fragColor += ComputeDirectionalLight(directionalLight);
+
     for(int i = 0; i < numPointLights; i++)
 	{
         fragColor += ComputePointLight(pointLights[i]);
@@ -198,8 +202,11 @@ void main()
 	}
 
     // Add shadow
-    float shadow = shadowCalculation(fs_in.fragPosLightSpace);         
-    fragColor *= (1 - shadow);
+    if(directionalLight.baseLight.intensity > 0 && directionalLight.baseLight.castShadow)
+    {
+        float shadow = shadowCalculation(fs_in.fragPosLightSpace);         
+        fragColor *= (1 - shadow);
+    }
 
     // Add Ambient light
     fragColor += vec4(actualKa * ambientLight.color * ambientLight.intensity, 1);

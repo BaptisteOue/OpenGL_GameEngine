@@ -15,14 +15,10 @@ private:
 	glm::vec3 dCamera;
 
 	LightScene m_LightScene;
-
 	MasterRenderer m_MasterRenderer;
 
 	std::vector<GameObject> m_GameObjects;
-	GameObjectRenderer m_GameObjectRenderer;
-	
 	std::vector<ParticuleSystem> m_ParticuleSystems;
-	ParticuleRender m_ParticuleRenderer;
 
 public:
     App();

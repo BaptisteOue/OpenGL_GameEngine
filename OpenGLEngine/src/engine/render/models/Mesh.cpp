@@ -31,7 +31,11 @@ void Mesh::LoadMesh(const std::vector<GLfloat>& positions,
 	glBindVertexArray(m_VaoID);
 
 	AddData(0, 3, positions);
-	AddData(1, 3, normals);
+
+	if (!normals.empty())
+	{
+		AddData(1, 3, normals);
+	}
 
 	if (!texCoords.empty())
 	{
@@ -39,7 +43,6 @@ void Mesh::LoadMesh(const std::vector<GLfloat>& positions,
 		AddData(2, 2, texCoords);
 	}
 		
-
 	AddIndices(indices);
 
 	glBindVertexArray(0);

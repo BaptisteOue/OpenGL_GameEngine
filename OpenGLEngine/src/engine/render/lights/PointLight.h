@@ -17,7 +17,7 @@ protected:
 	
 public:
 	PointLight(const PointLight& pointLight);
-	PointLight(const glm::vec3& color, const glm::vec3& position, float intensity = 1);
+	PointLight(const glm::vec3& color, const glm::vec3& position, float intensity = 1, bool castShadow = false);
 	~PointLight();
 
 	const glm::vec3 GetPosition() const;

@@ -17,12 +17,13 @@ private:
 	static constexpr auto TESS_CTRL_SHADER = "./src/engine/render/shaders/src/tessCtrlShader.glsl";
 	static constexpr auto TESS_EVAL_SHADER = "./src/engine/render/shaders/src/tessEvalShader.glsl";
 
+protected:
+	void ConstructShader() override;
+	void CreateUniforms() override;
+
 public:
 	TesselatedShader();
 	~TesselatedShader();
-
-	void ConstructShader() override;
-	void CreateUniforms() override;
 
 	void LoadTessLevels(float outer, float inner);
 };

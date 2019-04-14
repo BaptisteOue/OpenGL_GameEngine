@@ -79,7 +79,7 @@ void ShaderBase::AddUniform(const std::string& uniformName)
     }
     else
     {
-        std::cout << "Can't find uniform : " << uniformName << "for shader : " << m_ShaderName << std::endl;
+        std::cout << "Can't find uniform : " << uniformName << " for shader : " << m_ShaderName << std::endl;
 		std::cout << "Setting location -1 in uniforms hastable." << std::endl;
 
 		m_Uniforms.emplace(std::pair<const std::string, GLuint>(uniformName, -1));
