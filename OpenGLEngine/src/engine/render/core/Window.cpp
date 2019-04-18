@@ -13,6 +13,7 @@ float Window::s_CurrentY = 0;
 #pragma region Public API
 
 Window::Window(int width, int height, const char* title)
+	: m_Window{nullptr}
 {
     Window::s_Width = width;
     Window::s_Height = height;

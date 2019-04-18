@@ -8,6 +8,7 @@ BasicLight::BasicLight(const glm::vec3& color, float intensity, bool castShadow)
 	m_Intensity(intensity),
 	m_CastShadow(castShadow)
 {
+
 }
 
 

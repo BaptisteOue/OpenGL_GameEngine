@@ -27,11 +27,13 @@
     <ClCompile Include="src\engine\render\particules\ParticuleGenerator.cpp" />
     <ClCompile Include="src\engine\render\particules\ParticuleSystem.cpp" />
     <ClCompile Include="src\engine\render\renderers\GameObjectRenderer.cpp" />
+    <ClCompile Include="src\engine\render\renderers\LightRenderer.cpp" />
     <ClCompile Include="src\engine\render\renderers\MasterRenderer.cpp" />
     <ClCompile Include="src\engine\render\renderers\ParticuleRender.cpp" />
     <ClCompile Include="src\engine\render\renderers\renderpass\LightingPass.cpp" />
     <ClCompile Include="src\engine\render\renderers\renderpass\ShadowmapPass.cpp" />
     <ClCompile Include="src\engine\render\renderers\SkyboxRenderer.cpp" />
+    <ClCompile Include="src\engine\render\shaders\classes\LightShader.cpp" />
     <ClCompile Include="src\engine\render\shaders\classes\ParticuleFeedForwardShader.cpp" />
     <ClCompile Include="src\engine\render\shaders\classes\ParticuleShader.cpp" />
     <ClCompile Include="src\engine\render\shaders\classes\ShadowMapShader.cpp" />
@@ -69,6 +71,7 @@
     <ClInclude Include="src\engine\render\particules\ParticuleGenerator.h" />
     <ClInclude Include="src\engine\render\particules\ParticuleSystem.h" />
     <ClInclude Include="src\engine\render\renderers\GameObjectRenderer.h" />
+    <ClInclude Include="src\engine\render\renderers\LightRenderer.h" />
     <ClInclude Include="src\engine\render\renderers\MasterRenderer.h" />
     <ClInclude Include="src\engine\render\renderers\ParticuleRender.h" />
     <ClInclude Include="src\engine\render\renderers\renderpass\LightingPass.h" />
@@ -80,6 +83,7 @@
     <ClInclude Include="src\engine\render\shaders\classes\ParticuleShader.h" />
     <ClInclude Include="src\engine\render\shaders\classes\ShadowMapShader.h" />
     <ClInclude Include="src\engine\render\shaders\classes\SkyboxShader.h" />
+    <ClInclude Include="src\engine\render\shaders\classes\LightShader.h" />
     <ClInclude Include="src\game\App.h" />
     <ClInclude Include="src\engine\render\core\RenderEngine.h" />
     <ClInclude Include="src\engine\render\core\IGameLogic.h" />

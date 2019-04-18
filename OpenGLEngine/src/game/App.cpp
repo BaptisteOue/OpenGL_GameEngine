@@ -6,6 +6,11 @@
 #include "../engine/render/models/Mesh.h"
 #include "../engine/render/maths/Transformations.h"
 #include "../engine/render/utils/Loader.h"
+#include "../engine/render/lights/BasicLight.h"
+#include "../engine/render/lights/DirectionalLight.h"
+#include "../engine/render/lights/PointLight.h"
+#include "../engine/render/lights/SpotLight.h"
+
 
 App::App()
 	: dCamera(0, 0, 0),
@@ -26,8 +31,11 @@ App::~App()
 void App::Init()
 {
 	m_Camera.Init();
-	m_LightScene.Init();
 	m_MasterRenderer.Init();
+
+	m_LightScene.SetAmbientLight(BasicLight{});
+	m_LightScene.SetDirectionalLight(DirectionalLight{ glm::vec3{1}, glm::vec3{-1, -1, -1}, 5.0f, true });
+	m_LightScene.AddPointLight(PointLight{ glm::vec3{1, 0, 0}, glm::vec3{0, 10, 0}, 5.0f, false });
 
 	Mesh plane{ Loader::LoadOBJ("./res/plane.obj") };
 	Mesh bunny{ Loader::LoadOBJ("./res/bunny.obj") };
@@ -45,7 +53,7 @@ void App::Init()
 	material.SetReflectivity(0.1f);
 	material.SetShineDamper(200);
 	material.AddTexture(Loader::Load2DTexture("./res/brick.jpg"));
-	m_GameObjects.emplace_back(plane, material, glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), 5.0f);
+	m_GameObjects.emplace_back(plane, material, glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), 50.0f);
 
 	material.AddTexture(Loader::Load2DTexture("./res/grass_grass_0052_01_preview.jpg"));
 	material.SetReflectivity(0.0f);
@@ -54,7 +62,6 @@ void App::Init()
 	m_GameObjects.emplace_back(cube, material, glm::vec3(-20, 10, 20), glm::vec3(12, 47, 0), 2.0f);
 	m_GameObjects.emplace_back(cube, material, glm::vec3(20, 5, 0), glm::vec3(63, -15, 123), 2.0f);
 	m_GameObjects.emplace_back(cube, material, glm::vec3(10, 10, -25), glm::vec3(47, 20, 47), 2.0f);
-
 }
 
 void App::Input(Window& window)

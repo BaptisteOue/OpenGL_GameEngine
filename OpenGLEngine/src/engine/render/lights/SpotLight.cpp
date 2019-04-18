@@ -1,5 +1,6 @@
 #include "SpotLight.h"
 #include <glm/glm.hpp>
+#include "../utils/Loader.h"
 
 #pragma region Public API
 
