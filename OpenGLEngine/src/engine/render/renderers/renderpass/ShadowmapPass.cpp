@@ -23,12 +23,12 @@ void ShadowmapPass::Create()
 	m_ShadowMapShader.CreateShaderProgram();
 }
 
-void ShadowmapPass::GenerateUnidirectionalShadowMap(std::vector<GameObject>& gameObjects, LightScene& lightScene, Camera& camera)
+ShadowmapPassOutput ShadowmapPass::GenerateUnidirectionalShadowMap(std::vector<GameObject>& gameObjects, LightScene& lightScene, Camera& camera)
 {
 	DirectionalLight directionalLight = lightScene.GetDirectionalLight();
 	
 	if (directionalLight.GetIntensity() <= 0.0f || !directionalLight.IsCastingShadow())
-		return;
+		return ShadowmapPassOutput{ glm::mat4{}, FrameBuffer{0, 0} };
 
 	// Render the scene to a depth texture
 	m_ShadowMapFB.Bind(true);
@@ -48,6 +48,9 @@ void ShadowmapPass::GenerateUnidirectionalShadowMap(std::vector<GameObject>& gam
 
 	m_ShadowMapShader.Use(false);
 	m_ShadowMapFB.Bind(false);
+
+	ShadowmapPassOutput shadowMapOutput = { lightSpaceMatrix, m_ShadowMapFB };
+	return shadowMapOutput;
 }
 
 void ShadowmapPass::GenerateOmnidirectionalShadowMap()

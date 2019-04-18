@@ -3,6 +3,7 @@
 #include "./ParticuleRender.h"
 #include "./renderpass/ShadowmapPass.h"
 #include "./renderpass/LightingPass.h"
+#include "./renderpass/PostProcessing.h"
 
 class MasterRenderer
 {
@@ -11,6 +12,7 @@ private:
 	// Render passes
 	ShadowmapPass m_ShadowmapPass;
 	LightingPass m_LightingPass;
+	PostProcessing m_PostProcessingPass;
 
 public:
 	static constexpr float FOV = 45.0f;

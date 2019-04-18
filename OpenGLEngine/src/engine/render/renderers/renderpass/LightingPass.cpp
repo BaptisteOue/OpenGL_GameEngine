@@ -1,7 +1,9 @@
 #include "LightingPass.h"
+#include <iostream>
 
 LightingPass::LightingPass()
-	: m_GameObjectRenderer{},
+	: m_LightingFB{1080, 720},
+	m_GameObjectRenderer{},
 	m_ParticuleRender{},
 	m_SkyboxRenderer{},
 	m_LightRenderer{}
@@ -14,20 +16,34 @@ LightingPass::~LightingPass()
 
 void LightingPass::Create()
 {
+	
+	m_LightingFB.Init();
+	m_LightingFB.AddTexture2DColorAttachement();
+	m_LightingFB.AddRBODepthStencilAttachement();
+	if (!m_LightingFB.BindAttachements())
+		std::cout << "Failed to bind shadow FBO" << std::endl;
+
 	m_GameObjectRenderer.Init();
 	m_ParticuleRender.Init();
 	m_SkyboxRenderer.Init();
 	m_LightRenderer.Init();
 }
 
-void LightingPass::ExecuteRenderPass(std::vector<GameObject>& gameObjects, std::vector<ParticuleSystem>& particuleSystems, 
-									 LightScene & lightScene, Camera & camera, GLuint shadowMap, float frameTime)
+LightingPassOutput LightingPass::ExecuteRenderPass(std::vector<GameObject>& gameObjects, std::vector<ParticuleSystem>& particuleSystems,
+									 LightScene & lightScene, Camera & camera, ShadowmapPassOutput& shadowMapOutput, float frameTime)
 {
+	m_LightingFB.Bind(true);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	m_GameObjectRenderer.Render(gameObjects, lightScene, camera, shadowMap);
+
+	m_GameObjectRenderer.Render(gameObjects, lightScene, camera, shadowMapOutput);
 	m_ParticuleRender.Render(particuleSystems, lightScene, camera, frameTime);
 	m_LightRenderer.Render(lightScene, camera);
 	m_SkyboxRenderer.Render(camera);
+
+	m_LightingFB.Bind(false);
+
+	LightingPassOutput lightingOutput{ m_LightingFB };
+	return lightingOutput;
 }
 
 void LightingPass::CleanUp()
@@ -36,4 +52,6 @@ void LightingPass::CleanUp()
 	m_ParticuleRender.CleanUp();
 	m_SkyboxRenderer.CleanUp();
 	m_LightRenderer.CleanUp();
+
+	m_LightingFB.CleanUp();
 }

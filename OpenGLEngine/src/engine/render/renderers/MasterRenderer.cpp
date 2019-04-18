@@ -1,13 +1,15 @@
 #include "MasterRenderer.h"
 #include <iostream>
 #include "../maths/Transformations.h"
+#include "renderpass/RenderPassOutput.h"
 
 
 #pragma region Public API
 
 MasterRenderer::MasterRenderer()
 	:m_ShadowmapPass{},
-	m_LightingPass{}
+	m_LightingPass{},
+	m_PostProcessingPass{}
 {
 }
 
@@ -19,22 +21,27 @@ void MasterRenderer::Init()
 {
 	m_ShadowmapPass.Create();
 	m_LightingPass.Create();
+	m_PostProcessingPass.Create();
 }
 
 void MasterRenderer::Render(std::vector<GameObject>& gameObjects, std::vector<ParticuleSystem>& particuleSystems,
 							LightScene & lightScene, Camera & camera, float frameTime)
 {
 	// Shadowmap pass doesnt take in account particules for now...
-	m_ShadowmapPass.GenerateUnidirectionalShadowMap(gameObjects, lightScene, camera);
+	 ShadowmapPassOutput shadowPassOutput = m_ShadowmapPass.GenerateUnidirectionalShadowMap(gameObjects, lightScene, camera);
 
 	// Lighting pass
-	m_LightingPass.ExecuteRenderPass(gameObjects, particuleSystems, lightScene, camera, m_ShadowmapPass.GetUnidirectionalShadowmap(), frameTime);
+	 LightingPassOutput lightingPassOutput = m_LightingPass.ExecuteRenderPass(gameObjects, particuleSystems, lightScene, camera, shadowPassOutput, frameTime);
+
+	 // Post processing
+	 m_PostProcessingPass.ExecuteRenderPass(lightingPassOutput);
 }
 
 void MasterRenderer::CleanUp()
 {
 	m_ShadowmapPass.CleanUp();
 	m_LightingPass.CleanUp();
+	m_PostProcessingPass.CleanUp();
 }
 
 #pragma endregion

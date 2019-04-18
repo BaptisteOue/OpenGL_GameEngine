@@ -6,6 +6,7 @@
 #include "../../renderers/ParticuleRender.h"
 #include "../../renderers/SkyboxRenderer.h"
 #include "../../renderers/LightRenderer.h"
+#include "RenderPassOutput.h"
 
 
 class LightingPass
@@ -15,13 +16,16 @@ private:
 	GameObjectRenderer m_GameObjectRenderer;
 	SkyboxRenderer m_SkyboxRenderer;
 	LightRenderer m_LightRenderer;
+
+	FrameBuffer m_LightingFB;
+
 public:
 	LightingPass();
 	~LightingPass();
 
 	void Create();
-	void ExecuteRenderPass(std::vector<GameObject>& gameObjects, std::vector<ParticuleSystem>& particuleSystems, LightScene & lightScene, 
-						   Camera & camera, GLuint shadowMap, float frameTime);
+	LightingPassOutput ExecuteRenderPass(std::vector<GameObject>& gameObjects, std::vector<ParticuleSystem>& particuleSystems,
+										 LightScene & lightScene, Camera & camera, ShadowmapPassOutput& shadowMapOutput, float frameTime);
 	void CleanUp();
 
 };

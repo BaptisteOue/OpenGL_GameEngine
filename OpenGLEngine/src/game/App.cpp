@@ -34,8 +34,8 @@ void App::Init()
 	m_MasterRenderer.Init();
 
 	m_LightScene.SetAmbientLight(BasicLight{});
-	m_LightScene.SetDirectionalLight(DirectionalLight{ glm::vec3{1}, glm::vec3{-1, -1, -1}, 5.0f, true });
-	m_LightScene.AddPointLight(PointLight{ glm::vec3{1, 0, 0}, glm::vec3{0, 10, 0}, 5.0f, false });
+	m_LightScene.SetDirectionalLight(DirectionalLight{ glm::vec3{1}, glm::vec3{-1, -1, -1}, 1.0f, true });
+	m_LightScene.AddPointLight(PointLight{ glm::vec3{1, 0, 0}, glm::vec3{0, 10, 0}, 1.0f, false });
 
 	Mesh plane{ Loader::LoadOBJ("./res/plane.obj") };
 	Mesh bunny{ Loader::LoadOBJ("./res/bunny.obj") };
