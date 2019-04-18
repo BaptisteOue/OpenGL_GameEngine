@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\engine\render\framebuffers\FramBuffer.cpp" />
+    <ClCompile Include="src\engine\render\framebuffers\FrameBuffer.cpp" />
     <ClCompile Include="src\engine\render\lights\BasicLight.cpp" />
     <ClCompile Include="src\engine\render\core\Camera.cpp" />
     <ClCompile Include="src\engine\render\lights\LightScene.cpp" />
@@ -58,7 +58,7 @@
     <ClCompile Include="src\engine\render\utils\Loader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\engine\render\framebuffers\FramBuffer.h" />
+    <ClInclude Include="src\engine\render\framebuffers\FrameBuffer.h" />
     <ClInclude Include="src\engine\render\lights\BasicLight.h" />
     <ClInclude Include="src\engine\render\lights\DirectionalLight.h" />
     <ClInclude Include="src\engine\render\lights\LightScene.h" />
@@ -75,6 +75,7 @@
     <ClInclude Include="src\engine\render\renderers\MasterRenderer.h" />
     <ClInclude Include="src\engine\render\renderers\ParticuleRender.h" />
     <ClInclude Include="src\engine\render\renderers\renderpass\LightingPass.h" />
+    <ClInclude Include="src\engine\render\renderers\renderpass\RenderPassOutput.h" />
     <ClInclude Include="src\engine\render\renderers\renderpass\ShadowmapPass.h" />
     <ClInclude Include="src\engine\render\renderers\SkyboxRenderer.h" />
     <ClInclude Include="src\engine\render\shaders\classes\BasicShader.h" />

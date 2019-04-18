@@ -102,9 +102,6 @@
     <ClCompile Include="src\engine\render\renderers\MasterRenderer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\render\framebuffers\FramBuffer.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\render\shaders\classes\ShadowMapShader.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -124,6 +121,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\render\shaders\classes\LightShader.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\render\framebuffers\FrameBuffer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -215,9 +215,6 @@
     <ClInclude Include="src\engine\render\renderers\MasterRenderer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\render\framebuffers\FramBuffer.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="src\engine\render\shaders\classes\ShadowMapShader.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -237,6 +234,12 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\render\shaders\classes\LightShader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\render\renderers\renderpass\RenderPassOutput.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\render\framebuffers\FrameBuffer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

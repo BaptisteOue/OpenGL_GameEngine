@@ -1,4 +1,4 @@
-#include "FramBuffer.h"
+#include "FrameBuffer.h"
 
 FrameBuffer::FrameBuffer(int width, int height)
 	: m_Width{width},

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../framebuffers/FramBuffer.h"
+#include "../../framebuffers/FrameBuffer.h"
 #include "../../shaders/classes/BasicShader.h"
 #include "../../renderers/GameObjectRenderer.h"
 #include "../../renderers/ParticuleRender.h"

@@ -5,7 +5,7 @@
 #include "../core/Camera.h"
 #include "../shaders/classes/TesselatedShader.h"
 #include "../shaders/classes/ShadowMapShader.h"
-#include "../framebuffers/FramBuffer.h"
+#include "../framebuffers/FrameBuffer.h"
 
 class GameObjectRenderer
 {
