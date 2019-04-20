@@ -1,9 +1,9 @@
 #pragma once
 
 #include "RenderPassOutput.h"
-#include "../../shaders/classes/PostProcessingShader.h"
+#include "../../shaders/classes/HDRGammaShader.h"
 
-class PostProcessing
+class HDRGammaCorrectionPass
 {
 private:
 
@@ -16,10 +16,10 @@ private:
 	};
 
 	GLuint m_QuadVAO;
-	PostProcessingShader m_PPShader;
+	HDRGammaShader m_HDRGammaShader;
 public:
-	PostProcessing();
-	~PostProcessing();
+	HDRGammaCorrectionPass();
+	~HDRGammaCorrectionPass();
 
 	void Create();
 	void ExecuteRenderPass(LightingPassOutput lightingPassOutput);

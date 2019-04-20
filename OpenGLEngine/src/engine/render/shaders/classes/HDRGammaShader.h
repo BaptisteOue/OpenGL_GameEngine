@@ -2,7 +2,7 @@
 
 #include "ShaderBase.h"
 
-class PostProcessingShader : public ShaderBase
+class HDRGammaShader : public ShaderBase
 {
 private:
 	static constexpr auto VERTEX_SHADER{ "./src/engine/render/shaders/src/vertexShaderPostProcessing.glsl" };
@@ -13,6 +13,8 @@ protected:
 	void CreateUniforms() override;
 
 public:
-	PostProcessingShader();
-	~PostProcessingShader();
+	HDRGammaShader();
+	~HDRGammaShader();
+
+	void LoadGammaUniform(float gamma = 2.2f);
 };

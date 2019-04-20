@@ -18,6 +18,7 @@ public:
 	static bool s_MouseMooved;
 	static float s_CurrentX;
 	static float s_CurrentY;
+	static float s_Gamma;
 
 public:
     Window(int width, int height, const char* title);

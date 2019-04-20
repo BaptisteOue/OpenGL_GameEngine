@@ -9,6 +9,7 @@ bool Window::s_ShouldClose = false;
 bool Window::s_MouseMooved = false;
 float Window::s_CurrentX = 0;
 float Window::s_CurrentY = 0;
+float Window::s_Gamma = 0;
 
 #pragma region Public API
 
@@ -23,6 +24,7 @@ Window::Window(int width, int height, const char* title)
 	Window::s_MouseMooved = false;
 	Window::s_CurrentX = ((float)width) / 2;
 	Window::s_CurrentY = ((float)height) / 2;
+	Window::s_Gamma = 2.2f;
 }
 
 Window::~Window()
@@ -53,8 +55,8 @@ void Window::Init()
 
     glfwSetKeyCallback(m_Window, [](GLFWwindow* Window, int key, int scancode, int action, int mods)
     {
-        if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
-            glfwSetWindowShouldClose(Window, true);
+		if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
+			glfwSetWindowShouldClose(Window, true);
     });
 
 	glfwSetCursorPosCallback(m_Window, [](GLFWwindow* Window, double xpos = 0, double ypos = 0)

@@ -1,17 +1,17 @@
-#include "PostProcessing.h"
+#include "HDRGammaPass.h"
+#include "../../core/Window.h"
 
-
-PostProcessing::PostProcessing()
-	: m_PPShader{},
+HDRGammaCorrectionPass::HDRGammaCorrectionPass()
+	: m_HDRGammaShader{},
 	m_QuadVAO{0}
 {
 }
 
-PostProcessing::~PostProcessing()
+HDRGammaCorrectionPass::~HDRGammaCorrectionPass()
 {
 }
 
-void PostProcessing::Create()
+void HDRGammaCorrectionPass::Create()
 {
 	// Create a VAO for a 2D quad
 	glGenVertexArrays(1, &m_QuadVAO);
@@ -28,24 +28,26 @@ void PostProcessing::Create()
 	glBindVertexArray(0);
 
 	// Create shader
-	m_PPShader.CreateShaderProgram();
+	m_HDRGammaShader.CreateShaderProgram();
 }
 
-void PostProcessing::ExecuteRenderPass(LightingPassOutput lightingPassOutput)
+void HDRGammaCorrectionPass::ExecuteRenderPass(LightingPassOutput lightingPassOutput)
 {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	m_PPShader.Use(true);
+	m_HDRGammaShader.Use(true);
+	m_HDRGammaShader.LoadGammaUniform(Window::s_Gamma);
+
 	glBindVertexArray(m_QuadVAO);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, lightingPassOutput.outputFramebuffer.GetColorTexture());
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
-	m_PPShader.Use(false);
+	m_HDRGammaShader.Use(false);
 }
 
-void PostProcessing::CleanUp()
+void HDRGammaCorrectionPass::CleanUp()
 {
-	m_PPShader.CleanUp();
+	m_HDRGammaShader.CleanUp();
 }

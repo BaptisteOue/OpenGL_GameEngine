@@ -9,7 +9,7 @@
 MasterRenderer::MasterRenderer()
 	:m_ShadowmapPass{},
 	m_LightingPass{},
-	m_PostProcessingPass{}
+	m_HDRGammaPass{}
 {
 }
 
@@ -21,7 +21,7 @@ void MasterRenderer::Init()
 {
 	m_ShadowmapPass.Create();
 	m_LightingPass.Create();
-	m_PostProcessingPass.Create();
+	m_HDRGammaPass.Create();
 }
 
 void MasterRenderer::Render(std::vector<GameObject>& gameObjects, std::vector<ParticuleSystem>& particuleSystems,
@@ -34,14 +34,14 @@ void MasterRenderer::Render(std::vector<GameObject>& gameObjects, std::vector<Pa
 	 LightingPassOutput lightingPassOutput = m_LightingPass.ExecuteRenderPass(gameObjects, particuleSystems, lightScene, camera, shadowPassOutput, frameTime);
 
 	 // Post processing
-	 m_PostProcessingPass.ExecuteRenderPass(lightingPassOutput);
+	 m_HDRGammaPass.ExecuteRenderPass(lightingPassOutput);
 }
 
 void MasterRenderer::CleanUp()
 {
 	m_ShadowmapPass.CleanUp();
 	m_LightingPass.CleanUp();
-	m_PostProcessingPass.CleanUp();
+	m_HDRGammaPass.CleanUp();
 }
 
 #pragma endregion
