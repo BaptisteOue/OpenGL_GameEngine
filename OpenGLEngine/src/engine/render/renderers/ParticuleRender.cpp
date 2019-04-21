@@ -40,7 +40,7 @@ void ParticuleRender::Render(std::vector<ParticuleSystem> & particuleSystems, Li
 		m_ParticuleFeedForwardShader.Use(false);
 
 		// Draw phase
-		modelMatrix = Transformations::GetModelMatrix(particuleSystem.GetCenter(), glm::vec3{ 0 }, glm::vec3{ 1.0f });
+		modelMatrix = Transformations::GetModelMatrix(particuleSystem.GetCenter(), glm::vec3{ 0 }, glm::vec3{ .3f });
 		m_ParticuleShader.Use(true);
 		m_ParticuleShader.LoadLifeTimeUniform(particuleSystem.GetParticuleLifetime());
 		m_ParticuleShader.LoadSimulationTimeUniform(particuleSystem.GetSimulationTime());

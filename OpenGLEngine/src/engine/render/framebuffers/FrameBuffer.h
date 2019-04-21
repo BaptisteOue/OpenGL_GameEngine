@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GL/glew.h>
+#include <vector>
 
 class FrameBuffer
 {
@@ -9,7 +10,9 @@ private:
 	int m_Height;
 	GLuint m_Fbo;
 
-	GLuint m_ColorTexture;
+	int m_NbColorAttachements;
+
+	std::vector<GLuint> m_ColorTextures;
 	GLuint m_DepthTexture;
 	GLuint m_DepthStencilRBO;
 
@@ -18,13 +21,13 @@ public:
 	~FrameBuffer();
 
 	void Init();
-	void AddTexture2DColorAttachement();
+	void AddTexture2DColorAttachement(int attachmentIndex = 0);
 	void AddTexture2DDepthAttachement();
 	void AddRBODepthStencilAttachement();
 	bool BindAttachements();
 	void Bind(bool value);
 	void CleanUp();
 
-	GLuint GetColorTexture();
+	GLuint GetColorTexture(int index);
 	GLuint GetDepthTexture();
 };

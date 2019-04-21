@@ -33,9 +33,15 @@ void App::Init()
 	m_Camera.Init();
 	m_MasterRenderer.Init();
 
-	m_LightScene.SetAmbientLight(BasicLight{});
-	m_LightScene.SetDirectionalLight(DirectionalLight{ glm::vec3{1}, glm::vec3{-1, -1, -1}, 1.0f, true });
-	m_LightScene.AddPointLight(PointLight{ glm::vec3{1, 0, 0}, glm::vec3{0, 10, 0}, 10.0f, false });
+	m_LightScene.SetAmbientLight(BasicLight{ glm::vec3{1}, 0.00f });
+	m_LightScene.SetDirectionalLight(DirectionalLight{ glm::vec3{1}, glm::vec3{-1, -1, -1}, 0.05f, true });
+	m_LightScene.AddPointLight(PointLight{ glm::vec3{1, 0, 0}, glm::vec3{0, 10, 0}, 5.0f, false });
+	m_LightScene.AddPointLight(PointLight{ glm::vec3{1, 1, 0}, glm::vec3{-10, 10, -10}, 5.0f, false });
+	m_LightScene.AddPointLight(PointLight{ glm::vec3{1, 0, 1}, glm::vec3{10, 10, -10}, 5.0f, false });
+	m_LightScene.AddPointLight(PointLight{ glm::vec3{0, 1, 1}, glm::vec3{10, 10, 10}, 5.0f, false });
+	m_LightScene.AddPointLight(PointLight{ glm::vec3{1, 1, 1}, glm::vec3{-15, 5, -10}, 5.0f, false });
+	m_LightScene.AddPointLight(PointLight{ glm::vec3{0, 0, 1}, glm::vec3{15, 10, 0}, 5.0f, false });
+
 
 	Mesh plane{ Loader::LoadOBJ("./res/plane.obj") };
 	Mesh bunny{ Loader::LoadOBJ("./res/bunny.obj") };
@@ -97,17 +103,23 @@ void App::Input(Window& window)
 
 	if (window.IsKeyPressed(GLFW_KEY_L))
 	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		m_MasterRenderer.SetPolygonMode(GL_LINE);
 	}
 	else if (window.IsKeyPressed(GLFW_KEY_F))
 	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		m_MasterRenderer.SetPolygonMode(GL_FILL);
 	}
 
 	else if (window.IsKeyPressed(GLFW_KEY_RIGHT))
+	{
 		Window::s_Gamma += 0.1f;
+		std::cout << " Gamma : " << Window::s_Gamma << std::endl;
+	}
 	else if (window.IsKeyPressed(GLFW_KEY_LEFT))
+	{
 		Window::s_Gamma -= 0.1f;
+		std::cout << " Gamma : " << Window::s_Gamma << std::endl;
+	}
 
 	if (Window::s_MouseMooved)
 	{

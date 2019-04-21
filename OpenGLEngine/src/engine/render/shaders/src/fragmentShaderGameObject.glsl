@@ -1,7 +1,7 @@
 #version 460 core
 
-#define MAX_POINT_LIGHTS 1
-#define MAX_SPOT_LIGHTS 1
+#define MAX_POINT_LIGHTS 10
+#define MAX_SPOT_LIGHTS 10
 
 in OUT
 {
@@ -11,7 +11,8 @@ in OUT
     vec4 fragPosLightSpace;
 } fs_in;
 
-out vec4 fragColor;
+layout(location = 0) out vec4 fragColor;
+layout(location = 1) out vec4 brightColor;
 
 /* Material */
 struct Material
@@ -138,7 +139,7 @@ void SetUpMaterialColor()
 {
     if(material.isTextured)
     {
-        vec4 texColor = texture(materialTexture, fs_in.texCoords * 5);
+        vec4 texColor = texture(materialTexture, fs_in.texCoords * 20);
         actualKa = texColor.rgb;
         actualKd = texColor.rgb;
     }
@@ -210,4 +211,12 @@ void main()
 
     // Add Ambient light
     fragColor += vec4(actualKa * ambientLight.color * ambientLight.intensity, 1);
+
+
+    // Add brightColor for bloom pass
+    float brightness = dot(fragColor.rgb, vec3(0.2126, 0.7152, 0.0722));
+    if(brightness > 10.0f)
+        brightColor = vec4(fragColor.rgb, 1.0);
+    else
+        brightColor = vec4(0.0, 0.0, 0.0, 1.0);
 }

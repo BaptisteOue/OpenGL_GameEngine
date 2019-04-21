@@ -3,7 +3,8 @@
 #include "./ParticuleRender.h"
 #include "./renderpass/ShadowmapPass.h"
 #include "./renderpass/LightingPass.h"
-#include "./renderpass/HDRGammaPass.h"
+#include "./renderpass/BloomGammaHDRPass.h"
+#include "./renderpass/BlurPass.h"
 
 class MasterRenderer
 {
@@ -12,7 +13,10 @@ private:
 	// Render passes
 	ShadowmapPass m_ShadowmapPass;
 	LightingPass m_LightingPass;
-	HDRGammaCorrectionPass m_HDRGammaPass;
+	BlurPass m_BlurPass;
+	BloomGammaHDRPass m_GammaBloomHDRPass;
+
+	GLuint m_PolygonMode;
 
 public:
 	static constexpr float FOV = 45.0f;
@@ -24,6 +28,7 @@ public:
 	~MasterRenderer();
 
 	void Init();
+	void SetPolygonMode(GLuint polygonMode);
 	void Render(std::vector<GameObject>& gameObjects, 
 				std::vector<ParticuleSystem> & particuleSystems, 
 				LightScene& lightScene, 

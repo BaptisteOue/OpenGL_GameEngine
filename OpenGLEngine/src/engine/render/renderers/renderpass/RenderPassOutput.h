@@ -13,3 +13,8 @@ struct LightingPassOutput
 {
 	FrameBuffer outputFramebuffer;
 };
+
+struct BlurPassOutput
+{
+	FrameBuffer outputFramebuffer;
+};

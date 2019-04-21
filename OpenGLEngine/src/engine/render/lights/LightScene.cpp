@@ -83,7 +83,8 @@ void LightScene::SetDirectionalLight(const DirectionalLight& directionalLight)
 {
 	m_DirecationalLight = std::make_unique<DirectionalLight>(directionalLight);
 	Mesh m(Loader::LoadOBJ("./res/sphere.obj"));
-	Material material(glm::vec3(directionalLight.GetColor()), glm::vec3(directionalLight.GetColor()), glm::vec3(directionalLight.GetColor()), 0, 1);
+	glm::vec3 color = directionalLight.GetColor() * directionalLight.GetIntensity();
+	Material material(color, color, color, 0, 1);
 	m_LightObjects.emplace_back(m, material, directionalLight.GetFakePosition(), glm::vec3(0), 10.0f);
 }
 
@@ -91,7 +92,8 @@ void LightScene::AddPointLight(const PointLight& pointLight)
 {
 	m_PointLights.emplace_back(pointLight);
 	Mesh m(Loader::LoadOBJ("./res/cube.obj"));
-	Material material(glm::vec3(pointLight.GetColor()), glm::vec3(pointLight.GetColor()), glm::vec3(pointLight.GetColor()), 0, 1);
+	glm::vec3 color = pointLight.GetColor() * pointLight.GetIntensity();
+	Material material(color, color, color, 0, 1);
 	m_LightObjects.emplace_back(m, material, pointLight.GetPosition(), glm::vec3(0), 1.0f);
 }
 
@@ -99,7 +101,8 @@ void LightScene::AddSpotLight(const SpotLight& spotLight)
 {
 	m_SpotLights.emplace_back(spotLight);
 	Mesh m(Loader::LoadOBJ("./res/cube.obj"));
-	Material material(glm::vec3(spotLight.GetColor()), glm::vec3(spotLight.GetColor()), glm::vec3(spotLight.GetColor()), 0, 1);
+	glm::vec3 color = spotLight.GetColor() * spotLight.GetIntensity();
+	Material material(color, color, color, 0, 1);
 	m_LightObjects.emplace_back(m, material, spotLight.GetPosition(), glm::vec3(0), 10.0f);
 }
 

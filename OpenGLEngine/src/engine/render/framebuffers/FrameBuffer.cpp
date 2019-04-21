@@ -2,7 +2,12 @@
 
 FrameBuffer::FrameBuffer(int width, int height)
 	: m_Width{width},
-	m_Height{height}
+	m_Height{height},
+	m_ColorTextures{},
+	m_DepthTexture{0},
+	m_DepthStencilRBO{0},
+	m_Fbo{0},
+	m_NbColorAttachements{0}
 {
 	
 }
@@ -20,6 +25,13 @@ bool FrameBuffer::BindAttachements()
 {
 	Bind(true);
 	bool status = glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
+
+	std::vector<GLuint> attachements;
+	for (int i = 0; i < m_NbColorAttachements; i++)
+		attachements.push_back(GL_COLOR_ATTACHMENT0 + i);
+	
+	glDrawBuffers(m_NbColorAttachements, attachements.data());
+
 	Bind(false);
 	return status;
 }
@@ -32,17 +44,23 @@ void FrameBuffer::Bind(bool value)
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void FrameBuffer::AddTexture2DColorAttachement()
+void FrameBuffer::AddTexture2DColorAttachement(int attachmentIndex)
 {
-	glGenTextures(1, &m_ColorTexture);
-	glBindTexture(GL_TEXTURE_2D, m_ColorTexture);
+	GLuint texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+	m_NbColorAttachements++;
+	m_ColorTextures.push_back(texture);
+
 	Bind(true);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ColorTexture, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + attachmentIndex, GL_TEXTURE_2D, texture, 0);
 	Bind(false);
 }
 
@@ -83,17 +101,22 @@ void FrameBuffer::CleanUp()
 {
 	if(glIsRenderbuffer(m_DepthStencilRBO))
 		glDeleteRenderbuffers(1, &m_DepthStencilRBO);
-	if(glIsTexture(m_ColorTexture))
-		glDeleteTextures(1, &m_ColorTexture);
+
 	if(glIsTexture(m_DepthTexture))
 		glDeleteTextures(1, &m_DepthTexture);
+
+	for (GLuint texture : m_ColorTextures)
+	{
+		if (glIsTexture(texture))
+			glDeleteTextures(1, &texture);
+	}
 
 	glDeleteFramebuffers(1, &m_Fbo);
 }
 
-GLuint FrameBuffer::GetColorTexture()
+GLuint FrameBuffer::GetColorTexture(int index)
 {
-	return m_ColorTexture;
+	return m_ColorTextures[index];
 }
 
 GLuint FrameBuffer::GetDepthTexture()

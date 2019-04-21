@@ -17,8 +17,8 @@ PointLight::PointLight(const PointLight & pointLight)
 PointLight::PointLight(const glm::vec3& color, const glm::vec3& position, float intensity, bool castShadow)
 	: BasicLight(color, intensity, castShadow),
 	m_Position(position),
-	m_QuadraticAtt(0.0f),
-	m_LinearAtt(0.0f),
+	m_QuadraticAtt(0.05f),
+	m_LinearAtt(0.2f),
 	m_ConstAtt(1.0f)
 {
 }

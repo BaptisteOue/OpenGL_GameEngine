@@ -1,7 +1,7 @@
 #version 460
 
-#define MAX_POINT_LIGHTS 1
-#define MAX_SPOT_LIGHTS 1
+#define MAX_POINT_LIGHTS 10
+#define MAX_SPOT_LIGHTS 10
 
 layout (points) in;
 layout (triangle_strip, max_vertices = 24) out;

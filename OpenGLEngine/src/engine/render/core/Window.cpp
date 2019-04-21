@@ -24,7 +24,7 @@ Window::Window(int width, int height, const char* title)
 	Window::s_MouseMooved = false;
 	Window::s_CurrentX = ((float)width) / 2;
 	Window::s_CurrentY = ((float)height) / 2;
-	Window::s_Gamma = 2.2f;
+	Window::s_Gamma = 0.8f;
 }
 
 Window::~Window()
@@ -54,7 +54,7 @@ void Window::Init()
     }
 
     glfwSetKeyCallback(m_Window, [](GLFWwindow* Window, int key, int scancode, int action, int mods)
-    {
+	{
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
 			glfwSetWindowShouldClose(Window, true);
     });
@@ -99,7 +99,7 @@ void Window::Init()
 
     glfwSwapInterval(1);
 
-	glClearColor(0.001f, 0.0111f, 0.0105f, 0.0f);
+	glClearColor(0, 0, 0, 1);
 
 	glEnable(GL_DEPTH_TEST);
 

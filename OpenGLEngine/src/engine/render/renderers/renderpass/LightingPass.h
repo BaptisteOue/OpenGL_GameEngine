@@ -14,7 +14,6 @@ class LightingPass
 private:
 	ParticuleRender m_ParticuleRender;
 	GameObjectRenderer m_GameObjectRenderer;
-	SkyboxRenderer m_SkyboxRenderer;
 	LightRenderer m_LightRenderer;
 
 	FrameBuffer m_LightingFB;

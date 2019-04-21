@@ -5,7 +5,6 @@ LightingPass::LightingPass()
 	: m_LightingFB{1080, 720},
 	m_GameObjectRenderer{},
 	m_ParticuleRender{},
-	m_SkyboxRenderer{},
 	m_LightRenderer{}
 {
 }
@@ -18,14 +17,14 @@ void LightingPass::Create()
 {
 	
 	m_LightingFB.Init();
-	m_LightingFB.AddTexture2DColorAttachement();
+	m_LightingFB.AddTexture2DColorAttachement(0);	// HDR buffer
+	m_LightingFB.AddTexture2DColorAttachement(1);	// Brightness buffer
 	m_LightingFB.AddRBODepthStencilAttachement();
 	if (!m_LightingFB.BindAttachements())
 		std::cout << "Failed to bind shadow FBO" << std::endl;
 
 	m_GameObjectRenderer.Init();
 	m_ParticuleRender.Init();
-	m_SkyboxRenderer.Init();
 	m_LightRenderer.Init();
 }
 
@@ -38,7 +37,6 @@ LightingPassOutput LightingPass::ExecuteRenderPass(std::vector<GameObject>& game
 	m_GameObjectRenderer.Render(gameObjects, lightScene, camera, shadowMapOutput);
 	m_ParticuleRender.Render(particuleSystems, lightScene, camera, frameTime);
 	m_LightRenderer.Render(lightScene, camera);
-	m_SkyboxRenderer.Render(camera);
 
 	m_LightingFB.Bind(false);
 
@@ -50,7 +48,6 @@ void LightingPass::CleanUp()
 {
 	m_GameObjectRenderer.CleanUp();
 	m_ParticuleRender.CleanUp();
-	m_SkyboxRenderer.CleanUp();
 	m_LightRenderer.CleanUp();
 
 	m_LightingFB.CleanUp();

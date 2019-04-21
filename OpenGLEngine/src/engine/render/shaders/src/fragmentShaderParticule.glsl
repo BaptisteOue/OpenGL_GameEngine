@@ -7,8 +7,7 @@ in GS_OUT
     vec3 color;
 } fs_in;
 
-out vec4 fragColor;
-
+layout(location = 0) out vec4 fragColor;
 
 void main()
 {

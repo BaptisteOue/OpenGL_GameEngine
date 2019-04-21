@@ -126,10 +126,19 @@
     <ClCompile Include="src\engine\render\framebuffers\FrameBuffer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\render\renderers\renderpass\HDRGammaPass.cpp">
+    <ClCompile Include="src\engine\render\renderers\QuadRenderer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\render\shaders\classes\HDRGammaShader.cpp">
+    <ClCompile Include="src\engine\render\shaders\classes\BlurShader.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\render\renderers\renderpass\BlurPass.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\render\renderers\renderpass\BloomGammaHDRPass.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\render\shaders\classes\BloomGammaHDRShader.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -248,10 +257,19 @@
     <ClInclude Include="src\engine\render\framebuffers\FrameBuffer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\render\renderers\renderpass\HDRGammaPass.h">
+    <ClInclude Include="src\engine\render\renderers\QuadRenderer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\render\shaders\classes\HDRGammaShader.h">
+    <ClInclude Include="src\engine\render\renderers\renderpass\BlurPass.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\render\shaders\classes\BlurShader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\render\renderers\renderpass\BloomGammaHDRPass.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\render\shaders\classes\BloomGammaHDRShader.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

@@ -38,7 +38,7 @@ void BasicShader::CreateUniforms()
 	AddUniform("projectionMatrix");
 	AddUniform("lightSpaceMatrix");
 
-	AddLightUniforms(1, 1, 1);
+	AddLightUniforms(1, 10, 10);
 	AddMaterialUniforms();
 }
 

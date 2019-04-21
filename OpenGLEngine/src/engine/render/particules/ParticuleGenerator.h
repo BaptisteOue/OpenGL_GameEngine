@@ -9,7 +9,7 @@ public:
 	static constexpr float MIN_SPEED = 10.0f;
 	static constexpr float MAX_SPEED = 17.0f;
 	static constexpr float MIN_ANGLE = 10.0f;
-	static constexpr float MAX_ANGLE = 25.0f;
+	static constexpr float MAX_ANGLE = 70.0f;
 	static constexpr float MIN_START_TIME = 1.0f;
 	static constexpr float MAX_START_TIME = 22.0f;
 private:
